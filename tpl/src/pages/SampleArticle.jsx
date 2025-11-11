@@ -4,7 +4,7 @@ import CodeBlock from '../components/CodeBlock'
 import ImageBlock from '../components/ImageBlock'
 import DownloadButton from '../components/DownloadButton'
 
-export default function SamplePage() {
+export function SamplePage() {
   return (
     <Body>
       <h1>This is a sample article/tutorial</h1>

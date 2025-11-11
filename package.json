@@ -1,4 +1,13 @@
 {
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix tpl run dev",
+    "start": "npm --prefix tpl run dev",
+    "build": "npm --prefix tpl run build",
+    "preview": "npm --prefix tpl run preview",
+    "deploy": "npm --prefix tpl run deploy",
+    "install:tpl": "npm --prefix tpl install"
+  },
   "devDependencies": {
     "gh-pages": "^6.3.0"
   }
