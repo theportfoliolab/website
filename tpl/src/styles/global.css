@@ -1,0 +1,10 @@
+@import './layout.css';
+
+:root {
+    /* Colours */
+    --colour-bg: #fafafa;
+
+    /* Defaults */
+    background-color: var(--colour-bg);
+
+}

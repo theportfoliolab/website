@@ -67,15 +67,15 @@
         flex-direction: column;
         align-items: stretch;
         gap: 16px;
-  }
-  .footer__brand {
+    }
+    .footer__brand {
         justify-content: center; /* center brand on mobile */
-  }
-  .footer__logo {
+    }
+    .footer__logo {
         font-size: 1.75rem; /* slightly larger for visibility */
         text-align: center;
-  }
-  .footer__nav {
+    }
+    .footer__nav {
         justify-content: space-between;
     }
 }
