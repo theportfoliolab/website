@@ -10,9 +10,15 @@ const Header = () => {
 
 const styles = {
     header: {
+        position: 'sticky',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1000,
         display: 'flex',
         alignItems: 'center',
         padding: '1rem',
+        marginBottom: 0,
         backgroundColor: '#fff',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     },

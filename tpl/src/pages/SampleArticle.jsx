@@ -10,7 +10,7 @@ export function SamplePage() {
       <h1>This is a sample article/tutorial</h1>
 
       <Section title="This is a sample section title">
-        <p>This is a sample block of text. </p>
+        <p>This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. This is a sample block of text. </p>
         <CodeBlock code={`import pandas as pd\ndf = pd.read_csv("data.csv")\nprint(df.head())`} />
       </Section>
 
