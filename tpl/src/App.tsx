@@ -1,19 +1,15 @@
-import { Routes, Route, Link } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Articles from "./pages/Articles.tsx"
-import Tutorials from "./pages/Tutorials"
+import Tutorials from "./pages/Tutorials.tsx"
+import Contact from "./pages/Contact.tsx"
+import { Header } from "@/components/ui/header.tsx";
 
 function App() {
     return (
         <div>
-            {/* Simple nav bar */}
-            <nav className="flex gap-4 p-4 border-b">
-                <Link to="/">Home</Link>
-                <Link to="/about">About</Link>
-                <Link to="/articles">Articles</Link>
-                <Link to="/tutorials">Tutorials</Link>
-            </nav>
+            <Header/>
 
             {/* Route definitions */}
             <Routes>
@@ -21,6 +17,7 @@ function App() {
                 <Route path="/about" element={<About />} />
                 <Route path="/articles" element={<Articles />} />
                 <Route path="/tutorials" element={<Tutorials />} />
+                <Route path="/contact" element={<Contact />} />
             </Routes>
         </div>
     )

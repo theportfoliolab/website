@@ -8,8 +8,8 @@ interface LogoProps {
 export function Logo({className}: LogoProps) {
     return (
         <Link to="/" className={cn("text-2xl font-bold tracking-tight inline-flex items-center", className)} aria-label="Home">
-            <span className="text-primary">The</span>
-            <span className="text-muted-foreground">PortfolioLab</span>
+            <span className="text-primary/50">The</span>
+            <span className="text-primary">PortfolioLab</span>
         </Link>
     )
 }

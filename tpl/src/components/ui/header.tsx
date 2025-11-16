@@ -4,33 +4,93 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    NavigationMenuViewport,
+    NavigationMenuContent,
     navigationMenuTriggerStyle
 } from "@/components/ui/navigation-menu"
-import { Logo } from "@/components/ui/logo.tsx"
-import {Button} from "@/components/ui/button.tsx";
-import { Link } from "react-router-dom"
+import { Logo } from "@/components/ui/logo"
+import { Button } from "@/components/ui/button"
+import { NavLink } from "react-router-dom"
 
 export function Header() {
     return (
-        <header className="w-full flex items-center justify-between px-8 py-4 border-b">
-            <Logo/>
-            <NavigationMenu className="relative">
-                <NavigationMenuList>
-                    <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
+        <header className=" w-full
+                            flex
+                            justify-between
+                            px-10
+                            py-6
+                            border-b
+                            border-b-secondary
+                            shadow-none
+                            bg-background">
+            <Logo />
+            <NavigationMenu viewport={false}>
+                <NavigationMenuList className="flex gap-6">
+
+                    {/* Articles dropdown */}
                     <NavigationMenuItem>
-                        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                            <Link to="/about">About</Link>
+                        <NavigationMenuTrigger>Articles</NavigationMenuTrigger>
+                        <NavigationMenuContent className="absolute left-0 top-full">
+                            <ul>
+                                <li>
+                                    <NavigationMenuLink asChild>
+                                        <NavLink to="/articles">All Articles</NavLink>
+                                    </NavigationMenuLink>
+                                </li>
+                                <li>
+                                    <NavigationMenuLink asChild>
+                                        <NavLink to="/articles/ma-crossovers">MA Crossovers</NavLink>
+                                    </NavigationMenuLink>
+                                </li>
+                                <li>
+                                    <NavigationMenuLink asChild>
+                                        <NavLink to="/articles/uncorrelated">Uncorrelated Strategies</NavLink>
+                                    </NavigationMenuLink>
+                                </li>
+                            </ul>
+                        </NavigationMenuContent>
+                    </NavigationMenuItem>
+
+                    {/* Tutorials dropdown */}
+                    <NavigationMenuItem>
+                        <NavigationMenuTrigger>Tutorials</NavigationMenuTrigger>
+                        <NavigationMenuContent className="absolute left-0 top-full">
+                            <ul>
+                                <li>
+                                    <NavigationMenuLink asChild>
+                                        <NavLink to="/tutorials">All Tutorials</NavLink>
+                                    </NavigationMenuLink>
+                                </li>
+                                <li>
+                                    <NavigationMenuLink asChild>
+                                        <NavLink to="/tutorials/csv-dataframes">CSV Dataframes</NavLink>
+                                    </NavigationMenuLink>
+                                </li>
+                                <li>
+                                    <NavigationMenuLink asChild>
+                                        <NavLink to="/tutorials/data-cleaning">Cleaning Data</NavLink>
+                                    </NavigationMenuLink>
+                                </li>
+                            </ul>
+                        </NavigationMenuContent>
+                    </NavigationMenuItem>
+
+                    {/* About */}
+                    <NavigationMenuItem>
+                        <NavigationMenuLink
+                            asChild
+                            className={navigationMenuTriggerStyle()}>
+                            <NavLink to="/about">About</NavLink>
                         </NavigationMenuLink>
                     </NavigationMenuItem>
 
+                    {/* Contact button */}
                     <NavigationMenuItem>
-                        <Link to="/contact" aria-label="Contact">
-                            <Button>Contact</Button>
-                        </Link>
+                        <Button asChild>
+                            <NavLink to="/contact">Contact</NavLink>
+                        </Button>
                     </NavigationMenuItem>
                 </NavigationMenuList>
-                <NavigationMenuViewport/>
+
             </NavigationMenu>
         </header>
     )
