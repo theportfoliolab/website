@@ -1,86 +1,68 @@
 import { NavLink } from "react-router-dom"
+import React from "react"
 
 export default function Footer() {
-    return (
-        <footer className="border-t border-gray-200 px-4 py-6 text-gray-900">
-            <div className="w-[50vw] mx-auto flex flex-row gap-6 items-end justify-between
-                      max-sm:flex-col max-sm:items-start max-sm:gap-4">
+  return (
+    <footer className="border-t border-gray-200 px-10 py-8 bg-white text-gray-900">
+      <div className="max-w-5xl mx-auto flex items-start justify-between gap-8">
+        {/* Brand (left) */}
+        <div className="flex-shrink-0">
+          <NavLink to="/" className="font-extrabold text-2xl text-inherit no-underline">
+            ThePortfolioLab
+          </NavLink>
+          <p className="text-sm text-gray-600 mt-1">ThePortfolioLab 2025</p>
+        </div>
 
-                {/* Brand */}
-                <div className="flex flex-col items-center max-sm:items-start">
-                    <NavLink
-                        to="/"
-                        className="font-extrabold text-2xl no-underline text-inherit"
-                    >
-                        ThePortfolioLab
-                    </NavLink>
-                    <p className="text-sm mt-1 text-gray-700">ThePortfolioLab 2025</p>
-                </div>
+        {/* Nav columns (anchored to right) */}
+        <div className="ml-auto flex text-right">
+          <FooterColumn title="Pages">
+            <FooterNavLink to="/tutorials">Tutorials</FooterNavLink>
+            <FooterNavLink to="/articles">Articles</FooterNavLink>
+            <FooterNavLink to="/about">About</FooterNavLink>
+          </FooterColumn>
 
-                {/* Navigation Columns */}
-                <nav
-                    aria-label="Footer Navigation"
-                    className="flex gap-6 flex-[2_1_420px] justify-end w-full max-sm:justify-between"
-                >
-
-                    {/* --- Pages Column --- */}
-                    <div className="flex flex-col min-w-[120px]">
-                        <div className="font-bold text-sm mb-2">Pages</div>
-
-                        <FooterNavLink to="/tutorials">Tutorials</FooterNavLink>
-                        <FooterNavLink to="/articles">Articles</FooterNavLink>
-                        <FooterNavLink to="/about">About</FooterNavLink>
-                        <FooterNavLink to="/contact">Contact</FooterNavLink>
-                    </div>
-
-                    {/* --- Help Column --- */}
-                    <div className="flex flex-col min-w-[120px]">
-                        <div className="font-bold text-sm mb-2">Help</div>
-
-                        <FooterNavLink to="/faq">FAQ</FooterNavLink>
-                        <FooterNavLink to="/ask">Ask</FooterNavLink>
-                    </div>
-
-                    {/* --- Follow Column --- */}
-                    <div className="flex flex-col min-w-[120px]">
-                        <div className="font-bold text-sm mb-2">Follow</div>
-
-                        {/* External links stay <a> */}
-                        <FooterExternalLink href="https://github.com">GitHub</FooterExternalLink>
-                        <FooterExternalLink href="https://linkedin.com">LinkedIn</FooterExternalLink>
-                    </div>
-
-                </nav>
-            </div>
-        </footer>
-    )
+          <FooterColumn title="Follow">
+            <FooterExternalLink href="https://github.com">GitHub</FooterExternalLink>
+            <FooterExternalLink href="https://linkedin.com">LinkedIn</FooterExternalLink>
+          </FooterColumn>
+        </div>
+      </div>
+    </footer>
+  )
 }
 
+/* Helper: column wrapper */
+function FooterColumn({ title, children }: { title: React.ReactNode; children?: React.ReactNode }) {
+  return (
+    <div className="min-w-[120px]">
+      <div className="font-semibold text-sm mb-3">{title}</div>
+      <div className="flex flex-col space-y-2 text-sm">{children}</div>
+    </div>
+  )
+}
 
-/* -------------------------
-   Helper Components
-------------------------- */
-
+/* Internal link */
 function FooterNavLink({ to, children }: { to: string; children: React.ReactNode }) {
-    return (
-        <NavLink
-            to={to}
-            className="text-gray-600 text-sm no-underline hover:underline hover:text-gray-900"
-        >
-            {children}
-        </NavLink>
-    )
+  return (
+    <NavLink
+      to={to}
+      className="text-gray-600 hover:underline hover:text-gray-900 no-underline"
+    >
+      {children}
+    </NavLink>
+  )
 }
 
+/* External link */
 function FooterExternalLink({ href, children }: { href: string; children: React.ReactNode }) {
-    return (
-        <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-600 text-sm no-underline hover:underline hover:text-gray-900"
-        >
-            {children}
-        </a>
-    )
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-gray-600 hover:underline hover:text-gray-900"
+    >
+      {children}
+    </a>
+  )
 }

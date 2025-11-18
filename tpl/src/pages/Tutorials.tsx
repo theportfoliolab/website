@@ -1,7 +1,9 @@
 // src/pages/Tutorials.tsx
 import { NavLink, useParams } from "react-router-dom"
+import { Card } from "@/components/ui/card"
 import { tutorials } from "../tutorials"
 import * as React from "react";
+import {PageTitle} from "@/components/typography/typography.tsx";
 
 /**
  * Helpers
@@ -91,24 +93,33 @@ export default function Tutorials() {
             })
     }, [slug])
 
-    // Case 1: no slug → list all tutorials
+    // Case 1: no slug → show tutorial cards
     if (!slug) {
         return (
             <div className="p-8">
-                <h1 className="text-2xl font-bold mb-4">Tutorials</h1>
-                <ul className="space-y-2">
-                    {list ? (
-                        list.map((t) => (
-                            <li key={t.slug}>
-                                <NavLink to={`/tutorials/${t.slug}`} className="text-blue-600 hover:underline">
-                                    {t.title}
-                                </NavLink>
-                            </li>
-                        ))
-                    ) : (
-                        <li>Loading…</li>
-                    )}
-                </ul>
+                <PageTitle className="my-8">Tutorials</PageTitle>
+                {list ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {list.map((t) => (
+                            <NavLink key={t.slug} to={`/tutorials/${t.slug}`} className="no-underline">
+                                <Card className="h-full hover:shadow-lg transition-shadow">
+                                    <div className="flex flex-col h-full">
+                                        <h3 className="text-lg font-semibold mb-2">{t.title}</h3>
+                                        <p className="text-sm text-muted-foreground grow">
+                                            {/* optional: show raw filename or description later */}
+                                            {t.title}
+                                        </p>
+                                        <div className="mt-4">
+                                            <span className="text-sm text-primary/80">Read →</span>
+                                        </div>
+                                    </div>
+                                </Card>
+                            </NavLink>
+                        ))}
+                    </div>
+                ) : (
+                    <p>Loading…</p>
+                )}
             </div>
         )
     }
