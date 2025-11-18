@@ -1,0 +1,12 @@
+Dynamic Allocation vs Static diversification: Can you beat passive investment?
+
+We all know diversification is a cornetstone principle in investment management. A portfolio of uncorrelated assets reduces risk because the assets don't always rise and fall together, resulting in smoother overall returns.
+
+Traditional diversification assumes a static allocation of capital across assets. But in practice, with changing trends, market conditions, or risk environments, a static portfolio could miss opportunities for greater returns through capital reallocation.
+
+I want to test this and see if greater returns can be achieved using a simple momentum based dynamic allocation strategy.
+
+First, I'll seleect three widely traded, low correlation assets: US equities (SPY), Us Treasury Bonds (IEF), and Gold. These should give a diverse spread across various growth and monetary environments. Daily price data is courced from Yahoo Finance, cover 2015 to 2025.
+
+Static Equal Weight portfolio
+This portfolio holds a constant 1/3 allocation across all three assets, rebalanced daily for consistency.
