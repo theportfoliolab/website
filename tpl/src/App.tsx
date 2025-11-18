@@ -20,6 +20,7 @@ function App() {
                 <Route path="/articles" element={<Articles />} />
                 <Route path="/tutorials" element={<Tutorials />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/tutorials/:slug" element={<Tutorials />} />
             </Routes>
             {/* Main content grows to fill space */}
             <main className="flex-1">
