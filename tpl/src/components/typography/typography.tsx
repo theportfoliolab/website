@@ -11,7 +11,8 @@ export function PageTitle({ children, className, ...props }: TypographyProps) {
     return (
         <h1
             className={cn(
-                "text-[3.0rem] font-extrabold tracking-tight text-foreground",
+                // add a comfortable top margin for page titles
+                "text-4xl font-extrabold tracking-tight text-foreground",
                 className
             )}
             {...props}
@@ -26,22 +27,8 @@ export function Subheading({ children, className, ...props }: TypographyProps) {
     return (
         <h2
             className={cn(
-                "text-[1.8rem] font-medium tracking-tight text-foreground",
-                className
-            )}
-            {...props}
-        >
-            {children}
-        </h2>
-    )
-}
-
-// Subheading — Medium, 3.2rem
-export function SmallHeading({ children, className, ...props }: TypographyProps) {
-    return (
-        <h2
-            className={cn(
-                "text-[1.0rem] font-medium tracking-tight text-foreground",
+                // slightly smaller top margin for subheadings
+                "text-2xl font-medium tracking-tight text-foreground",
                 className
             )}
             {...props}
@@ -56,7 +43,8 @@ export function Kicker({ children, className, ...props }: TypographyProps) {
     return (
         <p
             className={cn(
-                "text-[0.8rem] font-normal uppercase tracking-wide text-foreground/60",
+                // keep kicker slightly separated from previous content
+                "text-sm font-normal uppercase tracking-wide text-foreground/60",
                 className
             )}
             {...props}
@@ -66,12 +54,13 @@ export function Kicker({ children, className, ...props }: TypographyProps) {
     )
 }
 
-// Section Title — Bold, 2.6rem
+// Subsection Title — Bold, 2.6rem
 export function SectionTitle({ children, className, ...props }: TypographyProps) {
     return (
         <h3
             className={cn(
-                "text-[1.6rem] font-bold tracking-tight text-foreground",
+                // section titles get a clear top margin so sections are spaced
+                "text-2xl font-bold tracking-tight text-foreground",
                 className
             )}
             {...props}
@@ -81,12 +70,28 @@ export function SectionTitle({ children, className, ...props }: TypographyProps)
     )
 }
 
-// Lead — Light Italic, 1.6rem, Alpha 0.7
+// Small Heading — replace some subheadings with a compact heading
+export function SmallHeading({ children, className, ...props }: TypographyProps & { children: React.ReactNode }) {
+    return (
+        <h4
+            className={cn(
+                // small headings have moderate spacing above
+                "text-lg font-semibold tracking-tight text-foreground",
+                className
+            )}
+            {...props}
+        >
+            {children}
+        </h4>
+    )
+}
+
+// Lead — Light, 1.6rem, Alpha 0.7
 export function Lead({ children, className, ...props }: TypographyProps) {
     return (
         <p
             className={cn(
-                "text-[1.0rem] font-light text-foreground/70",
+                "text-lg font-light text-foreground/70 mt-2 [&:not(:first-child)]:mb-2",
                 className
             )}
             {...props}
@@ -95,13 +100,12 @@ export function Lead({ children, className, ...props }: TypographyProps) {
         </p>
     )
 }
-
 // Body — Regular, 1.0rem
 export function Body({ children, className, ...props }: TypographyProps) {
     return (
         <p
             className={cn(
-                "text-base font-normal leading-7 text-foreground [&:not(:first-child)]:mt-6",
+                "text-base font-normal leading-7 text-foreground [&:not(:first-child)]:mt-4",
                 className
             )}
             {...props}
@@ -116,7 +120,7 @@ export function Code({ children, className, ...props }: TypographyProps) {
     return (
         <code
             className={cn(
-                "text-[0.8rem] font-mono font-normal bg-muted text-foreground/70 px-[0.3rem] py-[0.2rem] rounded",
+                "text-sm font-mono font-normal bg-muted text-foreground/70 px-[0.3rem] py-[0.2rem] rounded",
                 className
             )}
             {...props}
@@ -136,7 +140,7 @@ export function CodeBlock({
     return (
         <pre
             className={cn(
-                "overflow-auto rounded bg-muted p-4 text-sm font-mono",
+                "overflow-auto rounded bg-muted p-4 text-sm font-mono mb-1 mt-4",
                 className
             )}
             {...props}

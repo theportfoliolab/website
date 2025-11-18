@@ -6,6 +6,8 @@ import Tutorials from "./pages/Tutorials.tsx"
 import Contact from "./pages/Contact.tsx"
 import { Header } from "@/components/ui/header.tsx";
 import Footer from "@/components/ui/footer.tsx";
+import DataCleaningTutorial from "@/tutorials/data-cleaning-tutorial.tsx";
+import PythonCsvTutorial from "@/tutorials/python-csv-tutorial.tsx";
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path="/articles" element={<Articles />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/tutorials/*" element={<Tutorials />} />
+            <Route path="/tutorials/data-cleaning-tutorial" element={<DataCleaningTutorial />} />
+            <Route path="/tutorials/python-csv-tutorial" element={<PythonCsvTutorial />} />
           </Routes>
         </div>
       </main>
