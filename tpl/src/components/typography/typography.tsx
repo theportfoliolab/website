@@ -26,7 +26,22 @@ export function Subheading({ children, className, ...props }: TypographyProps) {
     return (
         <h2
             className={cn(
-                "text-[2.4rem] font-medium tracking-tight text-foreground",
+                "text-[1.8rem] font-medium tracking-tight text-foreground",
+                className
+            )}
+            {...props}
+        >
+            {children}
+        </h2>
+    )
+}
+
+// Subheading — Medium, 3.2rem
+export function SmallHeading({ children, className, ...props }: TypographyProps) {
+    return (
+        <h2
+            className={cn(
+                "text-[1.0rem] font-medium tracking-tight text-foreground",
                 className
             )}
             {...props}
@@ -56,7 +71,7 @@ export function SectionTitle({ children, className, ...props }: TypographyProps)
     return (
         <h3
             className={cn(
-                "text-[2.2rem] font-bold tracking-tight text-foreground",
+                "text-[1.6rem] font-bold tracking-tight text-foreground",
                 className
             )}
             {...props}
@@ -71,7 +86,7 @@ export function Lead({ children, className, ...props }: TypographyProps) {
     return (
         <p
             className={cn(
-                "text-[1.4rem] font-light italic text-foreground/70",
+                "text-[1.0rem] font-light text-foreground/70",
                 className
             )}
             {...props}

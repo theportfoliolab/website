@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom"
-import aboutImg from "@/assets/about-image.jpg" // <-- replace with your image
+import aboutImg from "@/assets/about-image.jpg"
 
 export default function About() {
     return (
-        <div className="w-[90vw] mx-auto py-12">
+        <div className="w-[50vw] mx-auto py-12">
 
             {/* Header */}
             <h1 className="text-4xl font-bold mb-8">About</h1>
