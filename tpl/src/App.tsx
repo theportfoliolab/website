@@ -6,10 +6,6 @@ import Tutorials from "./pages/Tutorials.tsx"
 import Contact from "./pages/Contact.tsx"
 import { Header } from "@/components/ui/header.tsx";
 import Footer from "@/components/ui/footer.tsx";
-import DataCleaningTutorial from "@/tutorials/data-cleaning-tutorial.tsx";
-import PythonCsvTutorial from "@/tutorials/python-csv-tutorial.tsx";
-import MaCrossoversArticle from "@/articles/ma-crossovers-article.tsx";
-import UncorrelatedStrategiesArticle from "@/articles/uncorrelated-strategies-article.tsx";
 
 function App() {
   return (
@@ -26,13 +22,13 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/articles" element={<Articles />} />
+              <Route path="/articles" element={<Articles />} />
+              <Route path="/articles/:slug" element={<Articles />} />
+              <Route path="/tutorials" element={<Tutorials />} />
+              <Route path="/tutorials/:slug" element={<Tutorials />} />
+
             <Route path="/contact" element={<Contact />} />
             <Route path="/tutorials/*" element={<Tutorials />} />
-            <Route path="/tutorials/data-cleaning-tutorial" element={<DataCleaningTutorial />} />
-            <Route path="/tutorials/python-csv-tutorial" element={<PythonCsvTutorial />} />
-            <Route path="/articles/uncorrelated-strategies-article" element={<UncorrelatedStrategiesArticle />} />
-            <Route path="/articles/ma-crossovers-article" element={<MaCrossoversArticle />} />
           </Routes>
         </div>
       </main>

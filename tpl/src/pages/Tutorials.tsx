@@ -1,141 +1,141 @@
 // src/pages/Tutorials.tsx
-import { NavLink, useParams } from "react-router-dom"
-import { Card } from "@/components/ui/card"
-import { tutorials } from "../tutorials"
-import * as React from "react";
-import {PageTitle} from "@/components/typography/typography.tsx";
 
-/**
- * Helpers
- */
-const toKebab = (s: string) =>
-  s
-    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
-    .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
-    .replace(/[\s_]+/g, "-")
-    .toLowerCase()
+import * as React from "react"
+import { NavLink, useParams } from "react-router-dom"
+import { PageTitle } from "@/components/typography/typography"
+import { Card } from "@/components/ui/card"
+import type { PostMeta } from "@/components/content/types"
+
+// Import tutorial TSX files + metadata
+const tutorialModules = import.meta.glob("@/content/tutorials/*.tsx") as Record<
+    string,
+    () => Promise<{ default: React.ComponentType<any>; meta: PostMeta }>
+>
 
 export default function Tutorials() {
     const { slug } = useParams<{ slug?: string }>()
-    const [TutorialComponent, setTutorialComponent] = React.useState<React.ComponentType<any> | null>(null)
-    const [list, setList] = React.useState<{ slug: string; title: string; key: string }[] | null>(null)
 
-    // Build list of available tutorials (use the raw filename and produce a readable title)
+    const [list, setList] = React.useState<
+        { slug: string; title: string; date: string; key: string; meta: PostMeta }[]
+    >([])
+    const [Component, setComponent] = React.useState<React.ComponentType<any> | null>(null)
+    const [meta, setMeta] = React.useState<PostMeta | null>(null)
+
+    // ─────────────────────────────────────────────────────────────
+    // Load all tutorial metadata
+    // ─────────────────────────────────────────────────────────────
     React.useEffect(() => {
-        const keys = Object.keys(tutorials)
-        const items = keys.map((path) => {
-            const filename = path.replace("./", "").replace(".tsx", "")
-            // ensure the public slug always ends with "-tutorial"
-            const base = toKebab(filename)
-            const slug = base.endsWith("-tutorial") ? base : `${base}-tutorial`
-            const title = filename
-                // turn kebab/camel/pascal into readable title
-                .replace(/[-_]/g, " ")
-                .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-                .replace(/\b([a-z])/g, (m) => m.toUpperCase())
-            return { slug, title: title.trim(), key: path }
-        })
-        setList(items)
+        const loadAll = async () => {
+            const entries: {
+                slug: string
+                title: string
+                date: string
+                key: string
+                meta: PostMeta
+            }[] = []
+
+            for (const [key, loader] of Object.entries(tutorialModules)) {
+                const mod = await loader()
+                entries.push({
+                    key,
+                    slug: mod.meta.slug,
+                    title: mod.meta.title,
+                    date: mod.meta.date,
+                    meta: mod.meta
+                })
+            }
+
+            // Sort by date descending
+            entries.sort((a, b) => b.date.localeCompare(a.date))
+
+            setList(entries)
+        }
+
+        loadAll()
     }, [])
 
-    // Load tutorial component when slug changes
+    // ─────────────────────────────────────────────────────────────
+    // Load a single tutorial when slug changes
+    // ─────────────────────────────────────────────────────────────
     React.useEffect(() => {
         if (!slug) {
-            setTutorialComponent(null)
+            setComponent(null)
+            setMeta(null)
             return
         }
 
-        const keys = Object.keys(tutorials)
+        const loadOne = async () => {
+            const match = list.find((p) => p.slug === slug)
 
-        // Try to find the module key by matching a few variants reliably:
-        // - exact filename (e.g. "data-cleaning-tutorial")
-        // - filename lowercased
-        // - filename kebabified
-        // - slug kebabified matches filename kebabified
-        const matchKey = keys.find((path) => {
-            const filename = path.replace("./", "").replace(".tsx", "")
-            const fileKebab = toKebab(filename)
-            const expectedSlug = fileKebab.endsWith("-tutorial") ? fileKebab : `${fileKebab}-tutorial`
-            if (expectedSlug === slug) return true
-            if (expectedSlug.toLowerCase() === slug.toLowerCase()) return true
-            if (fileKebab === toKebab(slug)) return true
-            // allow slug to be a short form contained within filename (e.g. "data-cleaning")
-            if (fileKebab.includes(toKebab(slug)) || toKebab(slug).includes(fileKebab)) return true
-            return false
-        })
+            if (!match) {
+                setComponent(null)
+                setMeta(null)
+                return
+            }
 
-        if (!matchKey) {
-            console.warn("[Tutorials] no match for slug:", slug, "available:", keys)
-            setTutorialComponent(null)
-            return
+            const mod = await tutorialModules[match.key]()
+            setComponent(() => mod.default)
+            setMeta(mod.meta)
         }
 
-        const loader = tutorials[matchKey]
-        if (!loader) {
-            setTutorialComponent(null)
-            return
-        }
+        loadOne()
+    }, [slug, list])
 
-        // Load module; be defensive about mod vs mod.default shapes
-        loader()
-            .then((mod) => {
-                const Comp = (mod && (mod as any).default) ?? mod
-                if (Comp && (typeof Comp === "function" || typeof Comp === "object")) {
-                    setTutorialComponent(Comp as React.ComponentType<any>)
-                } else {
-                    console.warn("[Tutorials] module is not a component:", matchKey, mod)
-                    setTutorialComponent(null)
-                }
-            })
-            .catch((err) => {
-                console.error("[Tutorials] failed to load", matchKey, err)
-                setTutorialComponent(null)
-            })
-    }, [slug])
-
-    // Case 1: no slug → show tutorial cards
+    // ─────────────────────────────────────────────────────────────
+    // LIST VIEW
+    // ─────────────────────────────────────────────────────────────
     if (!slug) {
         return (
             <div className="p-8">
                 <PageTitle className="my-8">Tutorials</PageTitle>
-                {list ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {list.map((t) => (
-                            <NavLink key={t.slug} to={`/tutorials/${t.slug}`} className="no-underline">
-                                <Card className="h-full hover:shadow-lg transition-shadow">
-                                    <div className="flex flex-col h-full">
-                                        <h3 className="text-lg font-semibold mb-2">{t.title}</h3>
-                                        <p className="text-sm text-muted-foreground grow">
-                                            {/* optional: show raw filename or description later */}
-                                            {t.title}
-                                        </p>
-                                        <div className="mt-4">
-                                            <span className="text-sm text-primary/80">Read →</span>
-                                        </div>
-                                    </div>
-                                </Card>
-                            </NavLink>
-                        ))}
-                    </div>
-                ) : (
-                    <p>Loading…</p>
-                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {list.map((p) => (
+                        <NavLink key={p.slug} to={`/tutorials/${p.slug}`} className="no-underline">
+                            <Card className="h-full p-4 flex flex-col hover:shadow-lg transition-shadow">
+                                <h3 className="text-lg font-semibold">{p.title}</h3>
+                                <p className="text-xs opacity-60">
+                                    {new Date(p.date).toLocaleDateString()}
+                                </p>
+                                <p className="text-sm text-muted-foreground mt-2 flex-grow">
+                                    {p.meta.description}
+                                </p>
+                                <div className="mt-3 text-primary/80 text-sm">Read →</div>
+                            </Card>
+                        </NavLink>
+                    ))}
+                </div>
             </div>
         )
     }
 
-    // Case 2: slug exists → render tutorial component (or show not found)
+    // ─────────────────────────────────────────────────────────────
+    // TUTORIAL VIEW
+    // ─────────────────────────────────────────────────────────────
     return (
-        <div className="prose mx-auto p-8">
-            {TutorialComponent ? (
-                <TutorialComponent />
-            ) : (
-                <div>
-                    <h2>Not found</h2>
-                    <p>Could not locate a tutorial matching: <strong>{slug}</strong></p>
-                    <p>Open the browser console to see attempted keys and loader errors.</p>
-                </div>
+        <div className="prose mx-auto p-8 max-w-4xl">
+            {meta && (
+                <header className="mb-10">
+                    <h1 className="text-4xl font-bold">{meta.title}</h1>
+                    <p className="text-muted-foreground">{meta.description}</p>
+                    <p className="text-sm opacity-60 mt-1">
+                        {new Date(meta.date).toLocaleDateString()}
+                    </p>
+
+                    <div className="flex gap-2 mt-3">
+                        {meta.tags.map((tag) => (
+                            <span
+                                key={tag}
+                                className="px-2 py-1 bg-secondary rounded text-xs"
+                            >
+                                {tag}
+                            </span>
+                        ))}
+                    </div>
+                </header>
             )}
+
+            {Component ? <Component /> : <p>Loading…</p>}
         </div>
     )
 }

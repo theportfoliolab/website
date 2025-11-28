@@ -1,138 +1,129 @@
 // src/pages/Articles.tsx
 import * as React from "react"
 import { NavLink, useParams } from "react-router-dom"
-import {PageTitle} from "@/components/typography/typography.tsx";
-import {Card} from "@/components/ui/card.tsx";
+import { PageTitle } from "@/components/typography/typography"
+import { Card } from "@/components/ui/card"
+import type { PostMeta } from "@/components/content/types"
 
-// Dynamically import all article TSX components from src/articles
-// Each article should default-export a React component.
-// Keys will look like "./SomeArticle.tsx"
-const articleModules = import.meta.glob("../articles/*.tsx", { import: "default" }) as Record<
-  string,
-  () => Promise<React.ComponentType<any>>
+// Import all article components + metadata
+const articleModules = import.meta.glob("@/content/articles/*.tsx") as Record<
+    string,
+    () => Promise<{ default: React.ComponentType<any>; meta: PostMeta }>
 >
 
-const toKebab = (s: string) =>
-  s
-    .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
-    .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
-    .replace(/[\s_]+/g, "-")
-    .toLowerCase()
-
 export default function Articles() {
-  const { slug } = useParams<{ slug?: string }>()
-  const [ArticleComponent, setArticleComponent] = React.useState<React.ComponentType<any> | null>(null)
-  const [list, setList] = React.useState<{ slug: string; title: string; key: string }[] | null>(null)
+    const { slug } = useParams<{ slug?: string }>()
 
-  // build the list of available articles from the import map
-  React.useEffect(() => {
-    const keys = Object.keys(articleModules)
-    const items = keys.map((path) => {
-      const filename = path.replace("../articles/", "").replace(".tsx", "")
-      // public slug: ensure kebab-case and suffix "-article"
-      const base = toKebab(filename)
-      const slug = base.endsWith("-article") ? base : `${base}-article`
-      const title = filename
-        .replace(/[-_]/g, " ")
-        .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-        .replace(/\b([a-z])/g, (m) => m.toUpperCase())
-      return { slug, title: title.trim(), key: path }
-    })
-    setList(items)
-  }, [])
+    const [list, setList] = React.useState<
+        { slug: string; title: string; date: string; key: string; meta: PostMeta }[]
+    >([])
+    const [Component, setComponent] = React.useState<React.ComponentType<any> | null>(null)
+    const [meta, setMeta] = React.useState<PostMeta | null>(null)
 
-  // load the selected article component when slug changes
-  React.useEffect(() => {
-    if (!slug) {
-      setArticleComponent(null)
-      return
-    }
+    // ─────────────────────────────────────────────────────────────
+    // Load metadata for all posts
+    // ─────────────────────────────────────────────────────────────
+    React.useEffect(() => {
+        const loadAll = async () => {
+            const entries = []
 
-    const keys = Object.keys(articleModules)
+            for (const [key, loader] of Object.entries(articleModules)) {
+                const mod = await loader()
+                entries.push({
+                    key,
+                    slug: mod.meta.slug,
+                    title: mod.meta.title,
+                    date: mod.meta.date,
+                    meta: mod.meta
+                })
+            }
 
-    const matchKey = keys.find((path) => {
-      const filename = path.replace("../articles/", "").replace(".tsx", "")
-      const fileKebab = toKebab(filename)
-      const expectedSlug = fileKebab.endsWith("-article") ? fileKebab : `${fileKebab}-article`
+            // Newest → Oldest
+            entries.sort((a, b) => b.date.localeCompare(a.date))
 
-      if (expectedSlug === slug) return true
-      if (expectedSlug.toLowerCase() === slug.toLowerCase()) return true
-      if (fileKebab === toKebab(slug)) return true
-      if (fileKebab.includes(toKebab(slug)) || toKebab(slug).includes(fileKebab)) return true
-      return false
-    })
-
-    if (!matchKey) {
-      console.warn("[Articles] no match for slug:", slug)
-      setArticleComponent(null)
-      return
-    }
-
-    const loader = articleModules[matchKey]
-    if (!loader) {
-      setArticleComponent(null)
-      return
-    }
-
-    loader()
-      .then((mod) => {
-        const Comp = (mod && (mod as any).default) ?? mod
-        if (Comp && (typeof Comp === "function" || typeof Comp === "object")) {
-          setArticleComponent(Comp as React.ComponentType<any>)
-        } else {
-          console.warn("[Articles] module is not a component:", matchKey, mod)
-          setArticleComponent(null)
+            setList(entries)
         }
-      })
-      .catch((err) => {
-        console.error("[Articles] failed to load", matchKey, err)
-        setArticleComponent(null)
-      })
-  }, [slug])
 
-    // Case 1: no slug → show tutorial cards
+        loadAll()
+    }, [])
+
+    // ─────────────────────────────────────────────────────────────
+    // If a slug is provided → load that article (via metadata only)
+    // ─────────────────────────────────────────────────────────────
+    React.useEffect(() => {
+        if (!slug) {
+            setComponent(null)
+            setMeta(null)
+            return
+        }
+
+        const loadOne = async () => {
+            // Find article by meta.slug
+            const match = list.find((p) => p.slug === slug)
+            if (!match) {
+                setComponent(null)
+                setMeta(null)
+                return
+            }
+
+            const mod = await articleModules[match.key]()
+            setComponent(() => mod.default)
+            setMeta(mod.meta)
+        }
+
+        loadOne()
+    }, [slug, list])
+
+    // ─────────────────────────────────────────────────────────────
+    // LIST VIEW
+    // ─────────────────────────────────────────────────────────────
     if (!slug) {
         return (
             <div className="p-8">
                 <PageTitle className="my-8">Articles</PageTitle>
-                {list ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {list.map((t) => (
-                            <NavLink key={t.slug} to={`/articles/${t.slug}`} className="no-underline">
-                                <Card className="h-full hover:shadow-lg transition-shadow">
-                                    <div className="flex flex-col h-full">
-                                        <h3 className="text-lg font-semibold mb-2">{t.title}</h3>
-                                        <p className="text-sm text-muted-foreground grow">
-                                            {/* optional: show raw filename or description later */}
-                                            {t.title}
-                                        </p>
-                                        <div className="mt-4">
-                                            <span className="text-sm text-primary/80">Read →</span>
-                                        </div>
-                                    </div>
-                                </Card>
-                            </NavLink>
-                        ))}
-                    </div>
-                ) : (
-                    <p>Loading…</p>
-                )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {list.map((p) => (
+                        <NavLink key={p.slug} to={`/articles/${p.slug}`} className="no-underline">
+                            <Card className="h-full p-4 flex flex-col hover:shadow-lg transition-shadow">
+                                <h3 className="text-lg font-semibold">{p.title}</h3>
+                                <p className="text-xs opacity-60">{new Date(p.date).toLocaleDateString()}</p>
+                                <p className="text-sm text-muted-foreground mt-2 flex-grow">
+                                    {p.meta.description}
+                                </p>
+                                <div className="mt-3 text-primary/80 text-sm">Read →</div>
+                            </Card>
+                        </NavLink>
+                    ))}
+                </div>
             </div>
         )
     }
 
-    // Case 2: slug exists → render article component (or show not found)
+    // ─────────────────────────────────────────────────────────────
+    // ARTICLE VIEW
+    // ─────────────────────────────────────────────────────────────
     return (
-        <div className="prose mx-auto p-8">
-            {ArticleComponent ? (
-                <ArticleComponent />
-            ) : (
-                <div>
-                    <h2>Not found</h2>
-                    <p>Could not locate an article matching: <strong>{slug}</strong></p>
-                    <p>Open the browser console to see attempted keys and loader errors.</p>
-                </div>
+        <div className="prose mx-auto p-8 max-w-4xl">
+            {meta && (
+                <header className="mb-10">
+                    <h1 className="text-4xl font-bold">{meta.title}</h1>
+                    <p className="text-muted-foreground">{meta.description}</p>
+                    <p className="text-sm opacity-60 mt-1">
+                        {new Date(meta.date).toLocaleDateString()}
+                    </p>
+
+                    <div className="flex gap-2 mt-3">
+                        {meta.tags.map((tag) => (
+                            <span key={tag} className="px-2 py-1 bg-secondary rounded text-xs">
+                {tag}
+              </span>
+                        ))}
+                    </div>
+                </header>
             )}
+
+            {Component ? <Component /> : <p>Loading…</p>}
         </div>
     )
 }
