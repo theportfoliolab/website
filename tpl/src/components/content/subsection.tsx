@@ -1,6 +1,5 @@
 import * as React from "react"
-import { Lead, Body, SmallHeading } from "./typography"
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils.ts"
 
 interface SectionProps {
   title?: React.ReactNode
@@ -15,8 +14,8 @@ export function Subsection({ title, subtitle, children, className, image, imageA
   return (
       <div className="mb-10">
           <section className={cn("mt-4 mb-4", className)}>
-              {title ? <SmallHeading>{title}</SmallHeading> : null}
-              {subtitle ? <Lead>{subtitle}</Lead> : null}
+              {title ? <h3 className="text-2xl font-bold">{title}</h3> : null}
+              {subtitle ? <h5>{subtitle}</h5> : null}
 
               {image ? (
                   typeof image === "string" ? (
@@ -31,7 +30,7 @@ export function Subsection({ title, subtitle, children, className, image, imageA
               ) : null}
 
               <div className={cn(typeof children === "string" ? "prose" : "")}>
-                  <Body>{children}</Body>
+                  {children}
               </div>
           </section>
       </div>

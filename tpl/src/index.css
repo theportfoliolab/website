@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource/merriweather";
+@import "@fontsource/merriweather/700.css"; /* bold */
+@import "@fontsource/merriweather/300.css"; /* light */
 
 @custom-variant dark (&:is(.dark *));
 
@@ -111,10 +114,13 @@
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+    blockquote {
+        @apply font-serif italic pl-4 border-l-4 border-muted;
+    }
 }

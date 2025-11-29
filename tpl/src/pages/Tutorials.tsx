@@ -2,9 +2,9 @@
 
 import * as React from "react"
 import { NavLink, useParams } from "react-router-dom"
-import { PageTitle } from "@/components/typography/typography"
 import { Card } from "@/components/ui/card"
 import type { PostMeta } from "@/components/content/types"
+import { ContentHeader } from "@/components/ui/header"
 
 // Import tutorial TSX files + metadata
 const tutorialModules = import.meta.glob("@/content/tutorials/*.tsx") as Record<
@@ -87,14 +87,14 @@ export default function Tutorials() {
     if (!slug) {
         return (
             <div className="p-8">
-                <PageTitle className="my-8">Tutorials</PageTitle>
+                <h1 className="text-4xl font-extrabold my-8">Tutorials</h1>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {list.map((p) => (
                         <NavLink key={p.slug} to={`/tutorials/${p.slug}`} className="no-underline">
-                            <Card className="h-full p-4 flex flex-col hover:shadow-lg transition-shadow">
-                                <h3 className="text-lg font-semibold">{p.title}</h3>
-                                <p className="text-xs opacity-60">
+                            <Card className="h-full py-6 flex flex-col gap-2 hover:shadow-lg transition-shadow">
+                                <h3 className="text-lg font-semibold mb-0">{p.title}</h3>
+                                <p className="text-sm opacity-60 mt-0">
                                     {new Date(p.date).toLocaleDateString()}
                                 </p>
                                 <p className="text-sm text-muted-foreground mt-2 flex-grow">
@@ -113,26 +113,16 @@ export default function Tutorials() {
     // TUTORIAL VIEW
     // ─────────────────────────────────────────────────────────────
     return (
-        <div className="prose mx-auto p-8 max-w-4xl">
+        <div className="prose mx-auto p-8 max-w-3xl">
             {meta && (
-                <header className="mb-10">
-                    <h1 className="text-4xl font-bold">{meta.title}</h1>
-                    <p className="text-muted-foreground">{meta.description}</p>
-                    <p className="text-sm opacity-60 mt-1">
-                        {new Date(meta.date).toLocaleDateString()}
-                    </p>
-
-                    <div className="flex gap-2 mt-3">
-                        {meta.tags.map((tag) => (
-                            <span
-                                key={tag}
-                                className="px-2 py-1 bg-secondary rounded text-xs"
-                            >
-                                {tag}
-                            </span>
-                        ))}
-                    </div>
-                </header>
+                <>
+                    <ContentHeader
+                        title={meta.title}
+                        description={meta.description}
+                        date={meta.date}
+                        tags={meta.tags}
+                    />
+                </>
             )}
 
             {Component ? <Component /> : <p>Loading…</p>}

@@ -16,7 +16,7 @@ export function Logo({ className }: LogoProps) {
             <img
                 src={logoUrl}
                 alt="ThePortfolioLab Logo"
-                className="h-20 w-auto"
+                className="h-[40px] w-auto -translate-y-1.5"
             />
         </Link>
     )

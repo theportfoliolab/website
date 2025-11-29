@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom"
+import "@fontsource/merriweather/700.css"; // optional bold
+import "@fontsource/merriweather/300.css"; // optional light
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Articles from "./pages/Articles.tsx"
@@ -6,6 +8,7 @@ import Tutorials from "./pages/Tutorials.tsx"
 import Contact from "./pages/Contact.tsx"
 import { Header } from "@/components/ui/header.tsx";
 import Footer from "@/components/ui/footer.tsx";
+
 
 function App() {
   return (
