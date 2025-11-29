@@ -1,1 +1,0 @@
-import{n as e,t}from"./index-CnW3HpS-.js";var n=e(t(),1);function r({children:e,className:t}){return(0,n.jsx)(`article`,{className:t,children:e})}function i({title:e,children:t,className:r}){return(0,n.jsxs)(`section`,{className:r??`section`,children:[(0,n.jsx)(`h2`,{children:e}),(0,n.jsx)(`div`,{className:`section_content`,children:t})]})}export{r as n,i as t};
