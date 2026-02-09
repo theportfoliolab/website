@@ -22,8 +22,8 @@ export default function Footer() {
           </FooterColumn>
 
           <FooterColumn title="Follow">
-            <FooterExternalLink href="https://github.com">GitHub</FooterExternalLink>
-            <FooterExternalLink href="https://linkedin.com">LinkedIn</FooterExternalLink>
+            <FooterExternalLink href="https://github.com/theportfoliolab">GitHub</FooterExternalLink>
+            <FooterExternalLink href="https://www.linkedin.com/in/asher-mckee-9b0182392/">LinkedIn</FooterExternalLink>
           </FooterColumn>
         </div>
       </div>

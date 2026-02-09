@@ -6,7 +6,7 @@ interface TextProps {
     heading?: string
     lead?: string
     code?: string
-    content?: string
+    content?: string | React.ReactNode
     quote?: string
     bullets?: string[]
     image?: {

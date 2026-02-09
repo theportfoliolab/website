@@ -1,0 +1,31 @@
+“Building a Simple Momentum-Based Reallocation Model to Try and Beat the Market”
+
+Market conditions vary as a result of a nearly infinite number of factors. Sometimes, static portfolios work well, and other times more complex models can outperform.
+By matching portfolio strategy to market conditions, greater returns may be achieved.
+
+A simple target factor could be how sensitive the market is to momentum.
+Given certain market sentiment, economic conditions, political or legal conditions, financial markets may show a tendency to either follow collective trends, or may ignore trends and remain stable.
+By defining a simple momentum indicator, and a model to rebalance a portfolio based on that momentum indicator, it may be possible to enjoy the benefits of market stability, whilst also taking advantage of increased market activity during momentum trends.
+
+This investigation will consider three uncorrelated assets: SPY, GLD, and IEF. This should give a good representation of uncorrelated assets with which to rebalance a portfolio to achieve portfolio diversity.
+
+Building the Simple Momentum Model
+
+My model will leverage this simple principle:
+If the daily price of an asset is above the 100 day moving average for that price, then allocate to that asset. Otherwise, do not.
+In addition, I will add a reallocation limit, where some portion of each assert cannot be sold, to retain some level of diversification during a trend following phase.
+In theory, this strategy will try to follow trends in each security, dynamically riding rallies as they appear.
+
+Testing
+
+First, I grabbed some data from Yahoo finance. I computed the moving average of ther series and used it to generate buy/sell signals. I converted those signals into portfolio weights, and finally, computed an equity curve.
+
+Then I plotted the results:
+
+Chart 1: Momentum strategy vs. Static Equal weights
+
+Commentary on Chart 1
+
+
+
+

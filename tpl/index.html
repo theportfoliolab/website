@@ -1,13 +1,38 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- Favicon -->
+    <!-- Use PNG for broad support; SVG is fine for modern browsers -->
+    <link rel="icon" type="image/png" href="src/assets/favicon.png" />
+
+    <!-- Responsive -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>tpl</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+
+    <!-- Tab header -->
+    <title>The Portfolio Lab</title>
+
+    <!-- Optional: SEO / description -->
+    <meta name="description" content="The Portfolio Lab – Finance and tech projects hub" />
+
+    <!-- Optional: GitHub Pages SPA fallback -->
+    <script type="text/javascript">
+        // If user refreshes a subpage on GitHub Pages, redirect to index.html
+        if (location.pathname !== '/' && !document.getElementById('root').innerHTML) {
+            window.location.href = '/';
+        }
+    </script>
+
+</head>
+<body>
+<div id="root"></div>
+
+<!-- Your main React entry -->
+<script type="module" src="src/main.tsx"></script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
+</body>
 </html>
