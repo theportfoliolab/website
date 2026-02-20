@@ -1,87 +1,104 @@
+import { cn } from "@/lib/utils";
 import {
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    navigationMenuTriggerStyle
-} from "@/components/ui/navigation-menu"
-import { Logo } from "@/components/ui/logo"
-import { NavLink } from "react-router-dom"
+    navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import { Logo } from "@/components/ui/logo";
+import { NavLink } from "react-router-dom";
 
+const NAV_PAGES = ["Articles", "Tutorials", "About"] as const;
 
 export function Header() {
     return (
-        <header className=" w-full
-                            flex
-                            gap-16
-                            justify-between
-                            py-6
-                            px-8
-                            border-b
-                            border-b-secondary
-                            shadow-none
-                            bg-background">
-            <Logo />
-            <NavigationMenu viewport={false}>
-                <NavigationMenuList className="flex gap-0">
+        <header
+            className="
+        w-full
+        border-b border-secondary-light-fg dark:border-secondary-dark-fg
+        bg-primary-light-bg dark:bg-primary-dark-bg
+        shadow-none
+      "
+        >
+            {/* Inner container (matches content/footer width on widescreen) */}
+            <div
+                className="
+          mx-auto max-w-6xl
+          px-md md:px-xl
+          pt-xl pb-lg
+          flex flex-col gap-sm
+          md:flex-row md:items-center md:justify-between md:gap-lg
+        "
+            >
+                {/* Logo */}
+                <Logo className="h-14 md:h-16 self-start md:self-auto" />
 
-                    {/* Articles dropdown */}
-                    <NavigationMenuItem>
-                        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                            <NavLink to="/articles">Articles</NavLink>
-                        </NavigationMenuLink>
-                    </NavigationMenuItem>
-
-                    {/* Tutorials dropdown */}
-                    <NavigationMenuItem>
-                        <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                            <NavLink to="/tutorials">Tutorials</NavLink>
-                        </NavigationMenuLink>
-                    </NavigationMenuItem>
-
-                    {/* About */}
-                    <NavigationMenuItem>
-                        <NavigationMenuLink
-                            asChild
-                            className={navigationMenuTriggerStyle()}>
-                            <NavLink to="/about">About</NavLink>
-                        </NavigationMenuLink>
-                    </NavigationMenuItem>
-                </NavigationMenuList>
-
-            </NavigationMenu>
+                {/* Navigation */}
+                <NavigationMenu viewport={false} className="self-stretch md:self-auto">
+                    <NavigationMenuList
+                        className="
+              flex w-full items-center justify-between
+              md:w-auto md:justify-end
+              gap-md font-medium text-body tracking-[0.02em]
+              md:translate-y-[1px]
+            "
+                    >
+                        {NAV_PAGES.map((page) => (
+                            <NavigationMenuItem key={page} className="flex-1 md:flex-none">
+                                <NavigationMenuLink
+                                    asChild
+                                    className={cn(navigationMenuTriggerStyle(), "w-full md:w-auto px-md py-sm")}
+                                >
+                                    <NavLink
+                                        to={`/${page.toLowerCase()}`}
+                                        className="
+                      text-primary-light-fg dark:text-primary-dark-fg
+                      hover:text-primary-light-accent dark:hover:text-primary-dark-accent
+                    "
+                                    >
+                                        {page}
+                                    </NavLink>
+                                </NavigationMenuLink>
+                            </NavigationMenuItem>
+                        ))}
+                    </NavigationMenuList>
+                </NavigationMenu>
+            </div>
         </header>
-    )
+    );
 }
 
 interface ContentHeaderProps {
-    title: string
-    description: string
-    date: string
-    tags?: string[]
+    title: string;
+    description: string;
+    date: string;
+    tags?: string[];
 }
 
-export function ContentHeader({title, description, date, tags}: ContentHeaderProps){
+export function ContentHeader({ title, description, date, tags }: ContentHeaderProps) {
     return (
-        <div className="mb-12">
-            <h1 className="text-5xl font-extrabold my-5 leading-14">{title}</h1>
-            <h4 className="text-xl font-medium text-muted-foreground mb-8">{description}</h4>
-            <p className="text-sm text-muted-foreground opacity-80 my-2">
+        <div className="mb-3xl">
+            <h1 className="text-pageTitle font-pageTitle my-sm leading-[1.1]">{title}</h1>
+            <h4 className="text-subheading font-subheading text-secondary-light-fg dark:text-secondary-dark-fg mb-lg">
+                {description}
+            </h4>
+            <p className="text-tiny font-tiny text-secondary-light-fg dark:text-secondary-dark-fg opacity-80 my-xs">
                 Published on {new Date(date).toLocaleDateString()}
             </p>
 
             {tags && (
-                <div className="flex gap-2 mt-3">
+                <div className="flex gap-sm mt-sm">
                     {tags.map((tag) => (
                         <span
                             key={tag}
-                            className="px-2 py-1 bg-secondary rounded text-xs"
+                            className="px-sm py-xs bg-secondary-light-accent dark:bg-secondary-dark-accent rounded-sm text-tiny font-tiny"
                         >
-                            {tag}
-                        </span>
+              {tag}
+            </span>
                     ))}
                 </div>
             )}
         </div>
-    )
+    );
 }

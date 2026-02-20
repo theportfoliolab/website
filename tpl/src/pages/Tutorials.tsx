@@ -1,10 +1,11 @@
 // src/pages/Tutorials.tsx
-
 import * as React from "react"
 import { NavLink, useParams } from "react-router-dom"
 import { Card } from "@/components/ui/card"
 import type { PostMeta } from "@/components/content/types"
-import { ContentHeader } from "@/components/ui/header"
+
+// ✅ use the same layout as articles
+import ArticleLayout from "@/components/layout/articlelayout"
 
 // Import tutorial TSX files + metadata
 const tutorialModules = import.meta.glob("@/content/tutorials/*.tsx") as Record<
@@ -26,13 +27,8 @@ export default function Tutorials() {
     // ─────────────────────────────────────────────────────────────
     React.useEffect(() => {
         const loadAll = async () => {
-            const entries: {
-                slug: string
-                title: string
-                date: string
-                key: string
-                meta: PostMeta
-            }[] = []
+            const entries: { slug: string; title: string; date: string; key: string; meta: PostMeta }[] =
+                []
 
             for (const [key, loader] of Object.entries(tutorialModules)) {
                 const mod = await loader()
@@ -41,13 +37,11 @@ export default function Tutorials() {
                     slug: mod.meta.slug,
                     title: mod.meta.title,
                     date: mod.meta.date,
-                    meta: mod.meta
+                    meta: mod.meta,
                 })
             }
 
-            // Sort by date descending
             entries.sort((a, b) => b.date.localeCompare(a.date))
-
             setList(entries)
         }
 
@@ -66,7 +60,6 @@ export default function Tutorials() {
 
         const loadOne = async () => {
             const match = list.find((p) => p.slug === slug)
-
             if (!match) {
                 setComponent(null)
                 setMeta(null)
@@ -94,12 +87,8 @@ export default function Tutorials() {
                         <NavLink key={p.slug} to={`/tutorials/${p.slug}`} className="no-underline">
                             <Card className="h-full py-6 flex flex-col gap-2 hover:shadow-lg transition-shadow">
                                 <h3 className="text-lg font-semibold mb-0">{p.title}</h3>
-                                <p className="text-sm opacity-60 mt-0">
-                                    {new Date(p.date).toLocaleDateString()}
-                                </p>
-                                <p className="text-sm text-muted-foreground mt-2 flex-grow">
-                                    {p.meta.description}
-                                </p>
+                                <p className="text-sm opacity-60 mt-0">{new Date(p.date).toLocaleDateString()}</p>
+                                <p className="text-sm text-muted-foreground mt-2 flex-grow">{p.meta.description}</p>
                                 <div className="mt-3 text-primary/80 text-sm">Read →</div>
                             </Card>
                         </NavLink>
@@ -112,20 +101,13 @@ export default function Tutorials() {
     // ─────────────────────────────────────────────────────────────
     // TUTORIAL VIEW
     // ─────────────────────────────────────────────────────────────
-    return (
-        <div className="prose mx-auto p-8 max-w-3xl">
-            {meta && (
-                <>
-                    <ContentHeader
-                        title={meta.title}
-                        description={meta.description}
-                        date={meta.date}
-                        tags={meta.tags}
-                    />
-                </>
-            )}
+    if (!meta) {
+        return (
+            <main className="mx-auto w-full max-w-6xl px-md py-2xl">
+                <p>Loading…</p>
+            </main>
+        )
+    }
 
-            {Component ? <Component /> : <p>Loading…</p>}
-        </div>
-    )
+    return <ArticleLayout meta={meta}>{Component ? <Component /> : <p>Loading…</p>}</ArticleLayout>
 }

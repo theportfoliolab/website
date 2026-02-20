@@ -23,7 +23,7 @@ export default function Tutorial() {
         <Body>
 
             <Text
-                title="Intro"
+                heading="Intro"
                 content={`Once your financial data is loaded into a DataFrame, the next step is almost always cleaning it.
 Real-world data — especially financial data — is rarely perfect. Missing values, inconsistent date formats, extra whitespace, or duplicated rows can all cause problems when performing calculations or visualisations.
 
@@ -32,7 +32,7 @@ By the end, you’ll have a clean, analysis-ready dataset that can be easily sav
             />
 
             <Text
-                title="Setup"
+                heading="Setup"
                 content={`To follow along, make sure you have:`}
                 bullets={[
                     "Basic familiarity with pandas and DataFrames (from the previous tutorial)",
@@ -43,7 +43,7 @@ By the end, you’ll have a clean, analysis-ready dataset that can be easily sav
             />
 
             <Text
-                title="1. Loading and Inspecting the Data"
+                heading="1. Loading and Inspecting the Data"
                 content={`Let’s start by loading the CSV file and taking a quick look at the data.`}
                 code={`import pandas as pd
 
@@ -65,7 +65,7 @@ If you notice columns like Date are stored as strings (object), or numeric colum
             />
 
             <Text
-                title="2. Parsing Dates and Setting Index"
+                heading="2. Parsing Dates and Setting Index"
                 content={`Dates are a crucial part of financial data, so it’s best to convert them to proper datetime objects.`}
                 code={`df["Date"] = pd.to_datetime(df["Date"], errors="coerce")
 df = df.set_index("Date")
@@ -83,7 +83,7 @@ errors="coerce" replaces invalid date entries with NaT (Not a Time).
             />
 
             <Text
-                title="3. Identifying Missing Values"
+                heading="3. Identifying Missing Values"
                 content={`Next, check for missing or incomplete data.`}
                 code={`print(df.isnull().sum())`}
             />
@@ -100,7 +100,7 @@ You’ll need to decide whether to remove or fill these gaps.`}
             />
 
             <Text
-                title="4. Handling Missing Data"
+                heading="4. Handling Missing Data"
                 content={`There are two main ways to deal with missing values: dropping or filling.
 
 Dropping rows:`}
@@ -121,7 +121,7 @@ df["Volume"] = df["Volume"].fillna(0)             # replace with zero`}
             />
 
             <Text
-                title="5. Converting Data Types"
+                heading="5. Converting Data Types"
                 content={`Sometimes, CSV files load numeric data as text. This can prevent calculations.
 You can fix this using pd.to_numeric():`}
                 code={`df["Open"] = pd.to_numeric(df["Open"], errors="coerce")
@@ -135,7 +135,7 @@ Then, you can check again with:`}
             />
 
             <Text
-                title="6. Removing Duplicates"
+                heading="6. Removing Duplicates"
                 content={`Duplicate rows can occur during data merges or exports.
 To remove them:`}
                 code={`print("Before:", len(df))
@@ -153,7 +153,7 @@ print("After:", len(df))`}
             />
 
             <Text
-                title="7. Renaming and Reordering Columns"
+                heading="7. Renaming and Reordering Columns"
                 content={`For consistent analysis, you might want shorter or cleaner column names:`}
                 code={`df = df.rename(columns={
     "Adj": "Adjusted",
@@ -171,7 +171,7 @@ print("After:", len(df))`}
             />
 
             <Text
-                title="8. Detecting and Handling Outliers"
+                heading="8. Detecting and Handling Outliers"
                 content={`Outliers can distort averages and volatility calculations.
 One quick way to check for them is using .describe():`}
                 code={`print(df["Close"].describe())`}
@@ -187,7 +187,7 @@ One quick way to check for them is using .describe():`}
             />
 
             <Text
-                title="9. Resampling and Filling Gaps"
+                heading="9. Resampling and Filling Gaps"
                 content={`To ensure your data covers every trading day (or specific frequency), you can resample by day:`}
                 code={`df = df.resample("D").ffill()`}
             />
@@ -197,7 +197,7 @@ One quick way to check for them is using .describe():`}
             />
 
             <Text
-                title="10. Verifying Clean Data"
+                heading="10. Verifying Clean Data"
                 content={`After all transformations, always verify the results:`}
                 code={`print(df.info())
 print(df.head())
@@ -215,7 +215,7 @@ Dates are correctly parsed and indexed`}
             />
 
             <Text
-                title="11. Saving Clean Data"
+                heading="11. Saving Clean Data"
                 content={`Once cleaned, save the new DataFrame for later use.`}
                 code={`df.to_csv("aapl_prices_cleaned.csv", index=True)`}
             />
@@ -231,7 +231,7 @@ Optionally, export to Excel or parquet for future tutorials`}
             />
 
             <Text
-                title="Summary"
+                heading="Summary"
                 content={`In this tutorial, you learned:
 
 How to detect and fix missing, invalid, or duplicate data

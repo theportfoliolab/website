@@ -1,83 +1,199 @@
 // src/pages/Home.tsx
 import * as React from "react"
 import { NavLink } from "react-router-dom"
-import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import type { PostMeta } from "@/components/content/types"
-import { loadPostList, type PostModule } from "@/components/content/loadpostlist"
+import TagPill from "@/components/content/tagpill"
 
-// Import all article components + metadata
-const articleModules = import.meta.glob("@/content/articles/*.tsx") as Record<string, PostModule>
+type LoadedPost = {
+    key: string
+    meta: PostMeta
+    href: string
+    kindLabel: "article" | "tutorial"
+}
 
-// Import all tutorial components + metadata
-const tutorialModules = import.meta.glob("@/content/tutorials/*.tsx") as Record<string, PostModule>
+// Avoid `any` in module typing
+type ContentModule = {
+    default: React.ComponentType
+    meta: PostMeta
+}
 
-function postUrl(meta: PostMeta) {
-    return meta.type === "article" ? `/articles/${meta.slug}` : `/tutorials/${meta.slug}`
+const articleModules = import.meta.glob("@/content/articles/*.tsx") as Record<
+    string,
+    () => Promise<ContentModule>
+>
+
+const tutorialModules = import.meta.glob("@/content/tutorials/*.tsx") as Record<
+    string,
+    () => Promise<ContentModule>
+>
+
+function formatDate(date: string) {
+    try {
+        return new Date(date).toLocaleDateString()
+    } catch {
+        return date
+    }
 }
 
 export default function Home() {
-    const [latest, setLatest] = React.useState<Array<{ key: string; meta: PostMeta }>>([])
+    const [featured, setFeatured] = React.useState<LoadedPost[]>([])
+    const [loading, setLoading] = React.useState(true)
 
     React.useEffect(() => {
         const load = async () => {
-            const [articles, tutorials] = await Promise.all([
-                loadPostList(articleModules),
-                loadPostList(tutorialModules)
-            ])
+            setLoading(true)
 
-            const merged = [...articles, ...tutorials]
-                .sort((a, b) => b.meta.date.localeCompare(a.meta.date))
-                .slice(0, 3)
+            const posts: LoadedPost[] = []
 
-            setLatest(merged)
+            for (const [key, loader] of Object.entries(articleModules)) {
+                const mod = await loader()
+                posts.push({
+                    key,
+                    meta: mod.meta,
+                    href: `/articles/${mod.meta.slug}`,
+                    kindLabel: "article",
+                })
+            }
+
+            for (const [key, loader] of Object.entries(tutorialModules)) {
+                const mod = await loader()
+                posts.push({
+                    key,
+                    meta: mod.meta,
+                    href: `/tutorials/${mod.meta.slug}`,
+                    kindLabel: "tutorial",
+                })
+            }
+
+            posts.sort((a, b) => (b.meta.date ?? "").localeCompare(a.meta.date ?? ""))
+
+            setFeatured(posts.slice(0, 3))
+            setLoading(false)
         }
 
+        // Handle the ignored promise warning + avoid setState after unmount
+        let cancelled = false
+
         load()
+            .catch((err) => {
+                if (!cancelled) {
+                    console.error("Failed to load homepage content:", err)
+                    setFeatured([])
+                    setLoading(false)
+                }
+            })
+
+        return () => {
+            cancelled = true
+        }
     }, [])
 
     return (
-        <div className="w-[50vw] mx-auto py-20">
-            <h1 className="text-center text-4xl">Welcome to ThePortfolioLab!</h1>
-            <h4 className="text-center mt-8">Choose a place to start.</h4>
+        <main className="mx-auto w-full max-w-6xl px-md py-2xl">
+            {/* HERO */}
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-2xl items-start">
+                <div className="flex flex-col gap-lg">
+                    <div className="flex flex-col gap-sm">
+                        <p className="text-lead font-body italic">
+                            Welcome to ThePortfolioLab: Practical experiments in markets, code, and decision making.
+                        </p>
+                    </div>
 
-            <div className="flex flex-row items-center justify-center gap-4 py-8 md:py-8">
-                <Button asChild>
-                    <NavLink to={"/articles"}>Articles</NavLink>
-                </Button>
-                <Button asChild>
-                    <NavLink to={"/tutorials"}>Tutorials</NavLink>
-                </Button>
-            </div>
+                    <p className="text-body font-body opacity-90 max-w-6xl whitespace-pre-line">
+                        {`ThePortfolioLab is a collection of quantitative experiments, analytical tools, and practical tutorials at the intersection of finance and programming.
 
-            {/* Latest content */}
-            <div className="mt-10">
-                <h2 className="text-2xl font-semibold mb-4">Latest</h2>
+Projects range from strategy backtests and investment analysis to algorithm design and data workflows.
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {latest.map(({ meta }) => (
-                        <NavLink
-                            key={`${meta.type}:${meta.slug}`}
-                            to={postUrl(meta)}
-                            className="no-underline"
-                        >
-                            <Card className="h-full py-6 flex flex-col gap-2 hover:shadow-lg transition-shadow">
-                                <h3 className="text-lg font-semibold mb-0">{meta.title}</h3>
+Each piece is built on a simple principle: financial ideas should be tested, measured, and understood, not simply accepted.`}
+                    </p>
 
-                                <p className="text-sm opacity-60 mt-0">
-                                    {meta.type} · {new Date(meta.date).toLocaleDateString()}
-                                </p>
-
-                                <p className="text-sm text-muted-foreground mt-2 flex-grow">
-                                    {meta.description}
-                                </p>
-
-                                <div className="mt-3 text-primary/80 text-sm">Open →</div>
-                            </Card>
+                    <div className="flex flex-wrap gap-sm">
+                        <NavLink to="/articles" className="no-underline">
+              <span className="inline-flex items-center rounded-md px-4 py-2 bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
+                Browse Articles →
+              </span>
                         </NavLink>
-                    ))}
+
+                        <NavLink to="/tutorials" className="no-underline">
+              <span className="inline-flex items-center rounded-md px-4 py-2 bg-secondary text-secondary-foreground hover:opacity-90 transition-opacity">
+                Browse Tutorials →
+              </span>
+                        </NavLink>
+                    </div>
+
+                    <div className="flex flex-wrap gap-sm pt-sm">
+                        <TagPill>Quant & markets</TagPill>
+                        <TagPill>Python</TagPill>
+                        <TagPill>Data work</TagPill>
+                        <TagPill>Algorithms</TagPill>
+                    </div>
                 </div>
-            </div>
-        </div>
+
+                {/* FEATURED */}
+                <div className="flex flex-col gap-md">
+                    <div className="flex items-baseline justify-between">
+                        <h2 className="text-sectionTitle font-sectionTitle">Featured</h2>
+                        <span className="text-tiny opacity-70">Newest work</span>
+                    </div>
+
+                    <div className="grid grid-cols-1 gap-md">
+                        {loading ? (
+                            <Card className="p-6">
+                                <p className="text-body opacity-70">Loading…</p>
+                            </Card>
+                        ) : (
+                            featured.map((p) => (
+                                <NavLink key={p.key} to={p.href} className="no-underline">
+                                    <Card className="p-6 hover:shadow-md transition-shadow">
+                                        <div className="flex items-center gap-sm mb-sm">
+                      <span className="text-tiny opacity-70">
+                        {p.kindLabel} · {formatDate(p.meta.date)}
+                      </span>
+                                        </div>
+
+                                        <h3 className="text-subheading font-subheading leading-snug">
+                                            {p.meta.title}
+                                        </h3>
+
+                                        <p className="text-body opacity-80 mt-sm">
+                                            {p.meta.description}
+                                        </p>
+
+                                        <div className="mt-md text-primary/80 text-sm">Open →</div>
+                                    </Card>
+                                </NavLink>
+                            ))
+                        )}
+                    </div>
+                </div>
+            </section>
+
+            {/* VALUE PROPS (borderless, editorial) */}
+            <section className="mt-3xl border-t border-border pt-2xl">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-2xl">
+                    <div>
+                        <h3 className="text-sectionTitle font-sectionTitle text-[1.6rem]">Reproducible</h3>
+                        <p className="text-body opacity-80 mt-sm">
+                            Every project is written to be rerun and verified — not just a screenshot.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 className="text-sectionTitle font-sectionTitle text-[1.6rem]">Practical finance</h3>
+                        <p className="text-body opacity-80 mt-sm">
+                            Focused on techniques you can actually apply: modeling, backtests, and analytics.
+                        </p>
+                    </div>
+
+                    <div>
+                        <h3 className="text-sectionTitle font-sectionTitle text-[1.6rem]">Learn by building</h3>
+                        <p className="text-body opacity-80 mt-sm">
+                            Tutorials teach the building blocks behind the articles, so you can extend them.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </main>
     )
 }

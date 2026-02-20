@@ -24,7 +24,7 @@ export default function Tutorial() {
         <Body>
 
             <Text
-                title="Introduction"
+                heading="Introduction"
                 content={`Regular expressions (shortened to regex) are a compact method of describing a pattern in a series of symbols. `}
             />
 
@@ -34,7 +34,7 @@ export default function Tutorial() {
             />
 
             <Text
-                title="Formal Definition and terminology"
+                heading="Formal Definition and terminology"
                 lead="The character alphabet"
                 content={`The alphabet is all the characters which we can match against using a regex. In Python's regex package, the regex alphabet is the set of all Unicode characters, plus a set of special metacharacters used as operator symbols which define the language itself.`}
             />
@@ -131,7 +131,7 @@ export default function Tutorial() {
             />
 
             <Text
-                title="The final operator, and precedence in regexes"
+                heading="The final operator, and precedence in regexes"
                 lead="( ) : Capture or group"
                 content={`This is used to control precedence. A group placed inside the brackets is treated as isolated from any preceding or following expressions, just like the brackets in arithmetic. (abc) accepts 'abc' but not 'a', 'ab', or 'cba'.`}
             />
@@ -214,7 +214,7 @@ export default function Tutorial() {
             />
 
             <Text
-                title="Using Python's re package: Example code"
+                heading="Using Python's re package: Example code"
                 lead={"Here is a quick example to help you explore regexes in a simple console app."}
 
                 code={`
@@ -312,14 +312,14 @@ main()`}
             />
 
             <Text
-                title="Summary"
+                heading="Summary"
                 content={`Regex lets you describe patterns in text precisely and compactly. 
     By mastering literals, concatenation, alternation, quantifiers, and grouping, 
     you can extract exactly what you want from messy text, validate inputs, or detect patterns in data.`}
             />
 
             <Text
-                lead="Exciting Applications in Data Analysis and Trading"
+                lead="Applications in Data Analysis and Trading"
                 bullets={[
                     "Parsing financial news to detect sentiment or price-moving keywords.",
                     "Extracting ticker symbols, dates, or numeric values from reports automatically.",

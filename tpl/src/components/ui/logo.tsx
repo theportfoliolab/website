@@ -1,9 +1,10 @@
-import { cn } from "@/lib/utils"
-import { Link } from "react-router-dom"
-import logoUrl from "@/assets/logo.svg"
+import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
+import logoLightUrl from "@/assets/logo.svg";
+import logoDarkUrl from "@/assets/logo-dark.svg";
 
 interface LogoProps {
-    className?: string
+    className?: string;
 }
 
 export function Logo({ className }: LogoProps) {
@@ -11,13 +12,18 @@ export function Logo({ className }: LogoProps) {
         <Link
             to="/"
             aria-label="Home"
-            className={cn("inline-flex items-center", className)}
+            className={cn("inline-flex items-center shrink-0 leading-none", className)}
         >
             <img
-                src={logoUrl}
+                src={logoLightUrl}
                 alt="ThePortfolioLab Logo"
-                className="h-[40px] w-auto -translate-y-1.5"
+                className="h-full w-auto md:-translate-y-1 dark:hidden"
+            />
+            <img
+                src={logoDarkUrl}
+                alt="ThePortfolioLab Logo"
+                className="h-full w-auto md:-translate-y-1 hidden dark:inline"
             />
         </Link>
-    )
+    );
 }

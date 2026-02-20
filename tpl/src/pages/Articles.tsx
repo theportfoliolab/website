@@ -3,7 +3,7 @@ import * as React from "react"
 import { NavLink, useParams } from "react-router-dom"
 import { Card } from "@/components/ui/card"
 import type { PostMeta } from "@/components/content/types"
-import { ContentHeader } from "@/components/ui/header"
+import ArticleLayout from "@/components/layout/articlelayout"
 
 // Import all article components + metadata
 const articleModules = import.meta.glob("@/content/articles/*.tsx") as Record<
@@ -25,7 +25,8 @@ export default function Articles() {
     // ─────────────────────────────────────────────────────────────
     React.useEffect(() => {
         const loadAll = async () => {
-            const entries = []
+            const entries: { slug: string; title: string; date: string; key: string; meta: PostMeta }[] =
+                []
 
             for (const [key, loader] of Object.entries(articleModules)) {
                 const mod = await loader()
@@ -34,13 +35,12 @@ export default function Articles() {
                     slug: mod.meta.slug,
                     title: mod.meta.title,
                     date: mod.meta.date,
-                    meta: mod.meta
+                    meta: mod.meta,
                 })
             }
 
             // Newest → Oldest
             entries.sort((a, b) => b.date.localeCompare(a.date))
-
             setList(entries)
         }
 
@@ -48,7 +48,7 @@ export default function Articles() {
     }, [])
 
     // ─────────────────────────────────────────────────────────────
-    // If a slug is provided → load that article (via metadata only)
+    // If a slug is provided → load that article
     // ─────────────────────────────────────────────────────────────
     React.useEffect(() => {
         if (!slug) {
@@ -58,7 +58,6 @@ export default function Articles() {
         }
 
         const loadOne = async () => {
-            // Find article by meta.slug
             const match = list.find((p) => p.slug === slug)
             if (!match) {
                 setComponent(null)
@@ -105,20 +104,18 @@ export default function Articles() {
     // ─────────────────────────────────────────────────────────────
     // ARTICLE VIEW
     // ─────────────────────────────────────────────────────────────
-    return (
-        <div className="prose mx-auto p-8 max-w-3xl">
-            {meta && (
-                <>
-                    <ContentHeader
-                        title={meta.title}
-                        description={meta.description}
-                        date={meta.date}
-                        tags={meta.tags}
-                    />
-                </>
-            )}
+    if (!meta) {
+        // Loading state while we resolve the slug
+        return (
+            <main className="mx-auto w-full max-w-3xl px-md py-2xl">
+                <p>Loading…</p>
+            </main>
+        )
+    }
 
+    return (
+        <ArticleLayout meta={meta}>
             {Component ? <Component /> : <p>Loading…</p>}
-        </div>
+        </ArticleLayout>
     )
 }

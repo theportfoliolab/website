@@ -25,7 +25,7 @@ export default function Article() {
             />
 
             <Text
-                title="Methodology"
+                heading="Methodology"
                 lead="To be able to test a solving algorithm, I first had to reproduce a copy of the game."
                 content={`After this, I could plug an algorithm into the game's inputs and outputs to make guesses and observe feedback.
                 From there, the only remaining task was to design the algorithm itself, starting with an obvious first approach: a letter frequency based strategy.`}
@@ -37,7 +37,7 @@ export default function Article() {
             />
 
             <Text
-                title="A Greedy Letter Frequency Approach"
+                heading="A Greedy Letter Frequency Approach"
                 lead="A natural first strategy is to favour guesses that test the most common letters across the remaining candidate words."
                 content={`At any point in the game, the feedback received so far determines a set of remaining candidate words.
 The goal of the next guess is therefore not necessarily to be correct, but to extract as much information as possible.`}
@@ -101,7 +101,7 @@ play best_guess`}
             />
 
             <Text
-                title="Where the Letter Frequency Approach Falls Flat"
+                heading="Where the Letter Frequency Approach Falls Flat"
                 lead="Despite its effectiveness, the letter frequency strategy only considers immediate information."
                 content={`This can lead to locally optimal decisions that produce longer solution paths later in the game. 
 A greedy guess can look informative (lots of greens/yellows), while still failing to reduce the candidate space meaningfully.`}
@@ -120,12 +120,10 @@ MATCH
 
             <Text
                 content={`Now assume the true answer is WATCH. A frequency-based heuristic may be attracted to guesses that overlap heavily with the candidates, because they tend to score highly.`}
-                code={`Answer:
-WATCH`}
             />
 
             <Text
-                content={`If you guess CATCH, you get a pattern that looks very informative: four green letters.`}
+                content={`If you trust the frequency heuristic, and you guess CATCH, you get a pattern that looks very informative: four green letters.`}
                 code={`Guess:
 CATCH
 
@@ -134,7 +132,7 @@ BGGGG`}
             />
 
             <Text
-                content={`The problem is that BGGGG doesn't actually isolate the answer. It confirms the “ATCH” structure, but many candidates still remain valid. 
+                content={`The problem is that BGGGG doesn't actually isolate the answer. It confirms the “ATCH” structure, but many candidates still remain valid (HATCH, MATCH etc.). 
 You’ve learned a lot about the form of the word, but you haven’t reduced the remaining options as much as you might expect.`}
             />
 
@@ -159,7 +157,7 @@ So how can we better select guesses based on future game states?`}
 
 
             <Text
-                title="Introducing Dynamic Programming"
+                heading="Introducing Dynamic Programming"
                 lead="Dr Tony Smith's words still echo in my mind: Dynamic programming is useful when a problem can be broken down into smaller subproblems whose solutions can be reused."
                 content="In the context of Wordle, each game state can be defined by the set of remaining candidate words. Choosing guesses partitions this set into smaller subsets based on the possible feedback patterns. By estimating the expected number of future guesses required for each subset, it becomes possible to select guesses that optimise overall performance, rather than immediate gain."
             />
@@ -178,9 +176,9 @@ So how can we better select guesses based on future game states?`}
 
 
             <Text
-                title="How far should we look ahead? Introducing the DP Limit"
-                lead="Fully evaluating all future guess sequences is computationally expensive. In fact, you can see in the code where I added testing features to limit problem size simply because it was taking too long to compute anwsers!"
-                content="To keep things workable, I created a dynamic programming limit that activates the DP strategy only once the number of remaining candidates falls below a chosen threshold. Early in the game, when the solution space is large, the solver behaves greedily. Later, when decisions become more sensitive, it switches to a more deliberate planning approach."
+                heading="How far should we look ahead? Introducing the DP Limit"
+                content="Fully evaluating all future guess sequences is computationally expensive. In fact, you can see in the code where I added testing features to limit problem size simply because it was taking too long to compute anwsers!
+                To keep things workable, I created a dynamic programming limit that activates the DP strategy only once the number of remaining candidates falls below a chosen threshold. Early in the game, when the solution space is large, the solver behaves greedily. Later, when decisions become more sensitive, it switches to a more deliberate planning approach."
             />
             <Text
                 content={`To keep the problem computationally manageable, the solver only applies dynamic programming once the number of remaining candidates falls below a fixed threshold.`}
@@ -197,14 +195,14 @@ So how can we better select guesses based on future game states?`}
             />
 
             <Text
-                title="Results"
+                heading="Results"
                 lead="With the optimised DP limit in place, the dynamic programming approach does outperformed the greedy frequency model: It completes all the puzzles with a mean score of 3.395 guesses. That might not seems like much, but "
                 content="While the absolute improvement in average guesses is modest, it is consistent across the full answer set. This suggests that limited lookahead can meaningfully improve decision quality, even in a relatively small problem like Wordle."
             />
             <Imageblock
                 src={model_score_distribution}
                 alt="Distribution of Wordle solve attempts for frequency and DP models"
-                className="my-8 max-w-3xl mx-auto"
+                className="my-8 mx-auto"
             />
             <Text
                 content={`This chart shows how often each model solved the puzzle in 1 to 6 guesses across the full valid word set.
@@ -213,13 +211,13 @@ So how can we better select guesses based on future game states?`}
 
 
             <Text
-                title="Limitations and Further Improvements"
+                heading="Limitations and Further Improvements"
                 lead="This investigation makes several simplifying assumptions."
                 content="In particular, the solver is restricted to guessing only valid solution words. Other approaches allow guesses from a much larger dictionary, using so called probe words to extract information more efficiently. Additionally, the model assumes no knowledge of previously used Wordle solutions, although filtering recent answers could plausibly improve real-world performance, by betting that a recently used answer won't reappear in the puzzle."
             />
 
             <Text
-                title="Conclusion"
+                heading="Conclusion"
                 lead="Although this approach does not produce the absolute highest performing Wordle solver, it demonstrates how even a simple game can be used to explore ideas from greedy algorithms, information reduction, and dynamic programming."
                 content="More importantly, it highlights how modest increases in algorithmic sophistication can produce measurable improvements, and how empirical testing is essential for understanding where additional complexity actually provides meaningful benefits."
             />

@@ -1,48 +1,33 @@
+// src/App.tsx
 import { Routes, Route } from "react-router-dom"
-import "@fontsource/merriweather/700.css"; // optional bold
-import "@fontsource/merriweather/300.css"; // optional light
+import "@fontsource/merriweather/700.css"
+import "@fontsource/merriweather/300.css"
+
 import Home from "./pages/Home"
 import About from "./pages/About"
-import Articles from "./pages/Articles.tsx"
-import Tutorials from "./pages/Tutorials.tsx"
-import Contact from "./pages/Contact.tsx"
-import { Header } from "@/components/ui/header.tsx";
-import Footer from "@/components/ui/footer.tsx";
+import Articles from "./pages/Articles"
+import Tutorials from "./pages/Tutorials"
+import Contact from "./pages/Contact"
 
+import { MainLayout } from "@/components/layout/MainLayout"
 
 function App() {
-  return (
-    <div className="min-h-screen flex flex-col">
-      {/* Centered wrapper with max width applied to header, main and footer */}
-      <div className="w-full flex justify-center">
-        <div className="w-full max-w-5xl px-6">
-          <Header />
-        </div>
-      </div>
+    return (
+        <MainLayout>
+            <Routes>
+                <Route path="/" element={<Home />} />
 
-      <main className="flex-1 w-full flex justify-center">
-        <div className="w-full max-w-5xl px-6">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-              <Route path="/articles" element={<Articles />} />
-              <Route path="/articles/:slug" element={<Articles />} />
-              <Route path="/tutorials" element={<Tutorials />} />
-              <Route path="/tutorials/:slug" element={<Tutorials />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
 
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/tutorials/*" element={<Tutorials />} />
-          </Routes>
-        </div>
-      </main>
+                <Route path="/articles" element={<Articles />} />
+                <Route path="/articles/:slug" element={<Articles />} />
 
-      <div className="w-full flex justify-center">
-        <div className="w-full max-w-5xl px-6">
-          <Footer />
-        </div>
-      </div>
-    </div>
-  )
+                <Route path="/tutorials" element={<Tutorials />} />
+                <Route path="/tutorials/:slug" element={<Tutorials />} />
+            </Routes>
+        </MainLayout>
+    )
 }
 
 export default App

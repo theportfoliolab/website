@@ -1,0 +1,181 @@
+Symbolic Time Series for Financial Analysis: 3 Methods
+
+Objective
+
+Financial time series are noisy, high-frequency, and difficult to interpret directly.
+Pattern mining requires discrete states.
+Text-processing tools (like regex) operate on symbolic sequences, not numbers.
+Therefore, we must transform continuous price data into symbolic representations.
+
+How does the choice of symbolic encoding affect the structure and statistical properties of financial time series?
+
+2. Theoretical Background
+
+2.1 What Is Symbolic Time Series Analysis?
+Continuous → discrete transformation
+Enables pattern mining, compression, similarity search
+Reduces dimensionality
+Introduces abstraction
+
+Explain that the encoding method defines what information is preserved vs. discarded.
+
+2.2 Challenges in Financial Data
+
+Key properties of markets:
+Heavy-tailed returns
+Volatility clustering
+Non-stationarity
+Regime shifts
+
+Make the key insight:
+An encoding method designed for Gaussian signals may behave differently on financial data.
+
+3. Data and Experimental Setup
+Keep this professional and reproducible.
+
+Data
+
+Instrument (e.g., S&P 500, NZX 50, or a liquid equity)
+Timeframe (daily)
+Period length (e.g., 10–20 years)
+Preprocessing
+Log returns instead of raw prices
+Rolling volatility calculation
+Standardisation where required
+
+For data, I will use the daily closing prices for SPY from October 2014 to May 2025, sourced from Iress.
+I clean this data, and add log returns ready for analysis later on. 
+
+Clarify:
+
+No forward-looking bias
+No optimization for trading
+
+4. Encoding Method 1 — Directional Encoding (Baseline)
+Method:
+
+Define simple states:
+
+U = positive return above threshold
+D = negative return below threshold
+S = small movement
+
+Threshold could be:
+
+Fixed (e.g., ±0.5%)
+Or volatility-adjusted
+
+What It Captures:
+
+Momentum
+Run-length
+Reversals
+
+What It Discards:
+
+Magnitude beyond threshold
+Volatility structure
+Distribution shape
+
+Include:
+
+Example transformation
+Resulting symbol string excerpt
+
+5. Encoding Method 2 — Quantile-Based Encoding
+
+This is likely your strongest method.
+
+Method:
+
+Divide return distribution into equal-frequency bins (e.g., 5 bins).
+Assign symbols A–E.
+
+Example:
+
+A = bottom 20%
+E = top 20%
+
+Why This Is Strong:
+
+Adapts to fat tails
+Avoids Gaussian assumptions
+Ensures balanced symbol frequencies
+
+Analysis:
+
+Symbol distribution
+Entropy comparison
+State transition matrix
+
+Key insight:
+Quantile encoding produces statistically stable symbolic distributions.
+
+6. Encoding Method 3 — SAX (Shape-Based Encoding)
+
+Explain clearly but concisely:
+
+Steps:
+
+Normalize (z-score)
+Apply Piecewise Aggregate Approximation (PAA)
+Use Gaussian breakpoints to assign symbols
+
+Important Discussion:
+
+Gaussian breakpoint assumption
+What happens with fat-tailed returns?
+Does symbol frequency remain balanced?
+This is where you critically evaluate theory vs. financial reality.
+
+7. Comparative Analysis
+
+
+Compare:
+
+7.1 Symbol Frequency Distribution
+Are symbols evenly distributed?
+Which method compresses information most?
+
+7.2 Entropy
+
+Shannon entropy of symbolic sequence
+Higher entropy = more information retained
+
+7.3 State Persistence
+
+Probability of same-symbol continuation
+Regime persistence insight
+
+7.4 Transition Matrices
+
+Markov-like transition structure
+Does volatility clustering appear symbolically?
+This shows real quantitative thinking.
+
+8. What This Means for Pattern Mining
+
+Explain:
+
+Regex requires discrete symbols.
+Encoding determines what patterns are even possible.
+Poor encoding → meaningless patterns.
+Good encoding → interpretable structural signals.
+
+Example:
+
+Directional encoding → good for run detection
+Quantile encoding → good for extremal-event analysis
+SAX → good for macro-shape matching
+
+9. Key Insights
+
+Strong, concise takeaways:
+Financial time series are not Gaussian.
+Quantile encoding handles heavy tails better.
+Encoding choice drastically changes statistical structure.
+Symbolisation is not neutral — it embeds assumptions.
+
+10. Preview: Regex-Based Pattern Discovery
+
+With a symbolic representation constructed, we can now apply text-pattern techniques — including regular expressions — to systematically search for structural motifs preceding extreme market events.

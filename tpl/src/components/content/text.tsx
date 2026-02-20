@@ -1,5 +1,6 @@
-import ImageBlock from "@/components/content/imageblock.tsx";
-import CodeBlock from "@/components/content/codeblock.tsx";
+import ImageBlock from "@/components/content/imageblock"
+import CodeBlock from "@/components/content/codeblock"
+import { cn } from "@/lib/utils"
 
 interface TextProps {
     title?: string
@@ -29,38 +30,35 @@ export function Text({
                          className,
                      }: TextProps) {
     return (
-        <section className={className ?? "my-4 space-y-6"}>
-            {title && (
-                <h2 className="text-4xl font-extrabold mb-2 mt-20">{title}</h2>
-            )}
-            {heading && (
-                <h4 className="text-2xl my-4 font-bold leading-8 mt-14">{heading}</h4>
-            )}
-            {lead && (
-                <p className="my-4 text-xl font-light leading-8">{lead}</p>
-            )}
+        <section className={cn("flex flex-col gap-md", className)}>
+            {title && <h2 className="text-pageTitle">{title}</h2>}
+
+            {heading && <h3 className="text-sectionTitle">{heading}</h3>}
+
+            {lead && <p className="text-lead">{lead}</p>}
+
             {quote && (
-                <blockquote className="text-2xl font-serif italic opacity-90">
+                <blockquote className="pl-md border-l-4 border-muted text-body italic opacity-80">
                     {quote}
                 </blockquote>
             )}
-            {content && (
-                <p className="mt-4 leading-7">{content}</p>
-            )}
-            {code && (
-                <CodeBlock code={code} />
-            )}
 
-            {bullets && bullets.length > 0 && (
-                <ul className="text-xl font-light leading-8 list-disc list-outside my-4 space-y-4 px-6">
+            {content && <p className="text-body">{content}</p>}
+
+            {code && <CodeBlock code={code} />}
+
+            {bullets?.length ? (
+                <ul className="list-disc list-outside pl-lg flex flex-col gap-sm">
                     {bullets.map((b, i) => (
-                        <li key={i}>{b}</li>
+                        <li key={i} className="text-body">
+                            {b}
+                        </li>
                     ))}
                 </ul>
-            )}
+            ) : null}
 
             {image && (
-                <ImageBlock className="mb-12" src={image.src} alt={image.alt ?? ""} />
+                <ImageBlock src={image.src} alt={image.alt ?? ""} className={image.className} />
             )}
         </section>
     )

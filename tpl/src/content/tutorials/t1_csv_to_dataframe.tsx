@@ -1,5 +1,5 @@
-import Body from "@/components/content/body"
-import { Text } from "@/components/content/text.tsx"
+import ArticleLayout from "@/components/layout/articlelayout"
+import { Text } from "@/components/content/text"
 import type { PostMeta } from "@/components/content/types"
 
 // ─────────────────────────────────────────────
@@ -12,7 +12,7 @@ export const meta: PostMeta = {
     date: "2025-02-12",
     tags: ["python", "pandas", "data cleaning", "csv"],
     type: "tutorial",
-    slug: "t1_csv_to_dataframe"
+    slug: "t1_csv_to_dataframe",
 }
 
 // ─────────────────────────────────────────────
@@ -20,10 +20,9 @@ export const meta: PostMeta = {
 // ─────────────────────────────────────────────
 export default function Tutorial() {
     return (
-        <Body>
-
+        <ArticleLayout meta={meta}>
             <Text
-                title="Introduction"
+                heading="Introduction"
                 content={`Financial analysis using Python usually involves some kind of series,
 and running some kind of computation on that series. When approaching the task, 
 you are likely to encounter Comma Separated Value (.csv) files. These files can hold value for tables.But alone, a table is not much help to us. We need some kind of way to look through the table,
@@ -37,18 +36,18 @@ process the data, and perform computations on its values.`}
             />
 
             <Text
-                title="Setup"
+                heading="Setup"
                 lead="To start, I will assume:"
                 bullets={[
                     "You are familiar with basic object oriented programming coding concepts",
                     "You are familiar with Git, that is, you can fetch a repository",
                     "You are familiar with Python development, that is, you can create and run a script, using the terminal",
-                    "You will also need to have the Pandas library installed (pip install pandas)."
+                    "You will also need to have the Pandas library installed (pip install pandas).",
                 ]}
             />
 
             <Text
-                title="Explaining CSVs"
+                heading="Explaining CSVs"
                 content={`First, let's learn a little bit about CSVs.
 
 Lines represent a "row" of data, values are separated with a comma in between each value.`}
@@ -91,7 +90,7 @@ To make a well formed CSV:`}
             />
 
             <Text
-                title="Loading CSVs Into DataFrames"
+                heading="Loading CSVs Into DataFrames"
                 content={`Opening the CSV and creating the dataframe can be done in two lines of code:`}
                 code={`import pandas as pd
 
@@ -100,11 +99,7 @@ df = pd.read_csv(filename)`}
             />
 
             <Text
-                content={`Create graphic explaining each part... (left verbatim as requested)`}
-            />
-
-            <Text
-                title="Exploring DataFrames"
+                heading="Exploring DataFrames"
                 content={`The new dataframe has many useful methods and properties, some of which I will explain here:`}
                 bullets={[".head()", ".shape", ".columns", ".info()"]}
                 code={`import pandas as pd
@@ -126,7 +121,7 @@ print(df.info())`}
             />
 
             <Text
-                title="Accessing Data"
+                heading="Accessing Data"
                 content={`Once your data is loaded into a dataframe, you can access specific columns, rows, or individual cells…`}
                 code={`import pandas as pd
 
@@ -148,7 +143,7 @@ print(df.iloc[0, 4])`}
             />
 
             <Text
-                title="Selecting and Processing Data"
+                heading="Selecting and Processing Data"
                 content={`Once you know how to access specific parts of a DataFrame, you can start filtering, sorting, and modifying your data…`}
                 code={`import pandas as pd
 
@@ -167,7 +162,7 @@ print(df[["Date", "High", "Low", "Range"]].head())`}
             />
 
             <Text
-                title="Other Useful Stuff"
+                heading="Other Useful Stuff"
                 bullets={[
                     ".dropna()",
                     ".fillna(value)",
@@ -176,26 +171,30 @@ print(df[["Date", "High", "Low", "Range"]].head())`}
                     ".unique()",
                     ".nunique()",
                     ".sample()",
-                    ".head(n) / .tail(n)"
+                    ".head(n) / .tail(n)",
                 ]}
             />
 
             <Text
-                title="Saving Changes"
+                heading="Saving Changes"
                 content={`Once you’ve finished processing or cleaning your data, you’ll often want to save…`}
                 code={`df.to_csv("new_data.csv", index=False)`}
             />
 
             <Text code={`df.to_excel("output.xlsx", index=False)`} />
 
-            <Text code={`df[["Date", "Close", "Volume"]].to_csv("selected_data.csv", index=False)`} />
-
-            <Text code={`df.to_csv("data.csv", mode="a", header=False, index=False)`} />
-
             <Text
-                content={`Best Practice:\nKeep a backup…`}
+                code={`df[["Date", "Close", "Volume"]].to_csv("selected_data.csv", index=False)`}
             />
 
-        </Body>
+            <Text
+                code={`df.to_csv("data.csv", mode="a", header=False, index=False)`}
+            />
+
+            <Text
+                content={`Best Practice:
+Keep a backup…`}
+            />
+        </ArticleLayout>
     )
 }

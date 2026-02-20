@@ -6,121 +6,284 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Tailwind v4: declare utilities from CSS variables */
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+    /* ---- spacing tokens -> p-*, px-*, py-*, gap-*, etc ---- */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+    --spacing-3xl: 4rem;
+
+    /* ---- radius tokens -> rounded-* ---- */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 24px;
+
+    /* ---- colors (light/dark variants as utilities) ---- */
+    --color-primary-light-bg: #FDFBF7;
+    --color-primary-light-fg: #0E0C21;
+    --color-primary-light-accent: #3FC083;
+    --color-primary-light-link: #0A95FF;
+
+    --color-primary-dark-bg: #0E0C21;
+    --color-primary-dark-fg: #FDFBF7;
+    --color-primary-dark-accent: #3FC083;
+    --color-primary-dark-link: #0A95FF;
+
+    --color-secondary-light-bg: #EEEFE6;
+    --color-secondary-light-fg: #464F54;
+    --color-secondary-light-accent: #98BD92;
+    --color-secondary-light-link: #91A5F7;
+
+    --color-secondary-dark-bg: #464F54;
+    --color-secondary-dark-fg: #EEEFE6;
+    --color-secondary-dark-accent: #98BD92;
+    --color-secondary-dark-link: #91A5F7;
+
+    /* ---- shadcn-style semantic aliases ---- */
+    --color-background: var(--primary-light-bg);
+    --color-foreground: var(--primary-light-fg);
+
+    --color-card: var(--primary-light-bg);
+    --color-card-foreground: var(--primary-light-fg);
+
+    --color-popover: var(--primary-light-bg);
+    --color-popover-foreground: var(--primary-light-fg);
+
+    --color-primary: var(--primary-light-accent);
+    --color-primary-foreground: var(--primary-light-bg);
+
+    --color-secondary: var(--secondary-light-bg);
+    --color-secondary-foreground: var(--secondary-light-fg);
+
+    --color-muted: var(--secondary-light-bg);
+    --color-muted-foreground: var(--secondary-light-fg);
+
+    --color-accent: var(--primary-light-accent);
+    --color-accent-foreground: var(--primary-light-bg);
+
+    /* keep these if you rely on them */
+    --color-border: var(--secondary-light-fg);
+    --color-input: var(--secondary-light-fg);
+    --color-ring: var(--primary-light-accent);
+
+    /* ---- typography tokens (from tokens.ts) ---- */
+    --font-pageTitle-size: 4.5rem;
+    --font-pageTitle-weight: 800;
+    --font-pageTitle-style: normal;
+    --font-pageTitle-letterSpacing: normal;
+    --font-pageTitle-transform: none;
+    --font-pageTitle-opacity: 1;
+    --font-pageTitle-lineHeight: 1.1;
+
+    --font-subheading-size: 3.2rem;
+    --font-subheading-weight: 500;
+    --font-subheading-style: normal;
+    --font-subheading-letterSpacing: normal;
+    --font-subheading-transform: none;
+    --font-subheading-opacity: 1;
+    --font-subheading-lineHeight: 1.2;
+
+    --font-kicker-size: 0.8rem;
+    --font-kicker-weight: 400;
+    --font-kicker-style: normal;
+    --font-kicker-letterSpacing: 0.08em;
+    --font-kicker-transform: uppercase;
+    --font-kicker-opacity: 0.6;
+    --font-kicker-lineHeight: 1.4;
+
+    --font-sectionTitle-size: 2.6rem;
+    --font-sectionTitle-weight: 700;
+    --font-sectionTitle-style: normal;
+    --font-sectionTitle-letterSpacing: normal;
+    --font-sectionTitle-transform: none;
+    --font-sectionTitle-opacity: 1;
+    --font-sectionTitle-lineHeight: 1.25;
+
+    --font-lead-size: 1.6rem;
+    --font-lead-weight: 300;
+    --font-lead-style: italic;
+    --font-lead-letterSpacing: normal;
+    --font-lead-transform: none;
+    --font-lead-opacity: 0.7;
+    --font-lead-lineHeight: 1.6;
+
+    --font-body-size: 1rem;
+    --font-body-weight: 400;
+    --font-body-style: normal;
+    --font-body-letterSpacing: normal;
+    --font-body-transform: none;
+    --font-body-opacity: 1;
+    --font-body-lineHeight: 1.7;
+
+    --font-code-size: 1rem;
+    --font-code-weight: 400;
+    --font-code-style: normal;
+    --font-code-letterSpacing: normal;
+    --font-code-transform: none;
+    --font-code-opacity: 0.7;
+    --font-code-lineHeight: 1.6;
+
+    --font-tiny-size: 0.8rem;
+    --font-tiny-weight: 500;
+    --font-tiny-style: normal;
+    --font-tiny-letterSpacing: normal;
+    --font-tiny-transform: none;
+    --font-tiny-opacity: 0.6;
+    --font-tiny-lineHeight: 1.4;
 }
 
+/* Actual theme values used by semantic tokens above */
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.13 0.028 261.692);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.13 0.028 261.692);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.13 0.028 261.692);
-  --primary: oklch(0.21 0.034 264.665);
-  --primary-foreground: oklch(0.985 0.002 247.839);
-  --secondary: oklch(0.967 0.003 264.542);
-  --secondary-foreground: oklch(0.21 0.034 264.665);
-  --muted: oklch(0.967 0.003 264.542);
-  --muted-foreground: oklch(0.551 0.027 264.364);
-  --accent: oklch(0.967 0.003 264.542);
-  --accent-foreground: oklch(0.21 0.034 264.665);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.928 0.006 264.531);
-  --input: oklch(0.928 0.006 264.531);
-  --ring: oklch(0.707 0.022 261.325);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0.002 247.839);
-  --sidebar-foreground: oklch(0.13 0.028 261.692);
-  --sidebar-primary: oklch(0.21 0.034 264.665);
-  --sidebar-primary-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-accent: oklch(0.967 0.003 264.542);
-  --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
-  --sidebar-border: oklch(0.928 0.006 264.531);
-  --sidebar-ring: oklch(0.707 0.022 261.325);
+    /* optional “design system” vars you can reuse elsewhere */
+    --primary-light-bg: #FDFBF7;
+    --primary-light-fg: #0E0C21;
+    --primary-light-accent: #3FC083;
+    --primary-light-link: #0A95FF;
+
+    --primary-dark-bg: #0E0C21;
+    --primary-dark-fg: #FDFBF7;
+    --primary-dark-accent: #3FC083;
+    --primary-dark-link: #0A95FF;
+
+    --secondary-light-bg: #EEEFE6;
+    --secondary-light-fg: #464F54;
+    --secondary-light-accent: #98BD92;
+    --secondary-light-link: #91A5F7;
+
+    --secondary-dark-bg: #464F54;
+    --secondary-dark-fg: #EEEFE6;
+    --secondary-dark-accent: #98BD92;
+    --secondary-dark-link: #91A5F7;
 }
 
+/* Dark mode: switch the semantic aliases, not every utility name */
 .dark {
-  --background: oklch(0.13 0.028 261.692);
-  --foreground: oklch(0.985 0.002 247.839);
-  --card: oklch(0.21 0.034 264.665);
-  --card-foreground: oklch(0.985 0.002 247.839);
-  --popover: oklch(0.21 0.034 264.665);
-  --popover-foreground: oklch(0.985 0.002 247.839);
-  --primary: oklch(0.928 0.006 264.531);
-  --primary-foreground: oklch(0.21 0.034 264.665);
-  --secondary: oklch(0.278 0.033 256.848);
-  --secondary-foreground: oklch(0.985 0.002 247.839);
-  --muted: oklch(0.278 0.033 256.848);
-  --muted-foreground: oklch(0.707 0.022 261.325);
-  --accent: oklch(0.278 0.033 256.848);
-  --accent-foreground: oklch(0.985 0.002 247.839);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.21 0.034 264.665);
-  --sidebar-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-accent: oklch(0.278 0.033 256.848);
-  --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.551 0.027 264.364);
+    --color-background: var(--primary-dark-bg);
+    --color-foreground: var(--primary-dark-fg);
+
+    --color-card: var(--primary-dark-bg);
+    --color-card-foreground: var(--primary-dark-fg);
+
+    --color-popover: var(--primary-dark-bg);
+    --color-popover-foreground: var(--primary-dark-fg);
+
+    --color-primary: var(--primary-dark-accent);
+    --color-primary-foreground: var(--primary-dark-bg);
+
+    --color-secondary: var(--secondary-dark-bg);
+    --color-secondary-foreground: var(--secondary-dark-fg);
+
+    --color-muted: var(--secondary-dark-bg);
+    --color-muted-foreground: var(--secondary-dark-fg);
+
+    --color-accent: var(--primary-dark-accent);
+    --color-accent-foreground: var(--primary-dark-bg);
+
+    --color-border: var(--secondary-dark-fg);
+    --color-input: var(--secondary-dark-fg);
+    --color-ring: var(--primary-dark-accent);
 }
 
 @layer base {
     * {
         @apply border-border outline-ring/50;
     }
+
     body {
         @apply bg-background text-foreground;
+        font-family: "Merriweather", serif;
     }
+
     blockquote {
         @apply font-serif italic pl-4 border-l-4 border-muted;
+    }
+}
+
+/* Typography utilities */
+@layer utilities {
+    .text-pageTitle {
+        font-size: 2.8rem;
+        font-weight: 800;
+        font-style: normal;
+        letter-spacing: normal;
+        text-transform: none;
+        opacity: 1;
+        line-height: 1.1;
+    }
+
+    .text-subheading {
+        font-size: 2.4rem;
+        font-weight: 500;
+        font-style: normal;
+        letter-spacing: normal;
+        text-transform: none;
+        opacity: 1;
+        line-height: 1.2;
+    }
+
+    .text-kicker {
+        font-size: 0.8rem;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.6;
+        line-height: 1.4;
+    }
+
+    .text-sectionTitle {
+        font-size: 2rem;
+        font-weight: 700;
+        font-style: normal;
+        letter-spacing: normal;
+        text-transform: none;
+        opacity: 1;
+        line-height: 1.25;
+    }
+
+    .text-lead {
+        font-size: 1.6rem;
+        font-weight: 300;
+        font-style: italic;
+        letter-spacing: normal;
+        text-transform: none;
+        opacity: 0.7;
+        line-height: 1.6;
+    }
+
+    .text-body {
+        font-size: 1rem;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: normal;
+        text-transform: none;
+        opacity: 1;
+        line-height: 1.7;
+    }
+
+    .text-code {
+        font-size: 1rem;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: normal;
+        text-transform: none;
+        opacity: 0.7;
+        line-height: 1.6;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+    }
+
+    .text-tiny {
+        font-size: 0.8rem;
+        font-weight: 500;
+        font-style: normal;
+        letter-spacing: normal;
+        text-transform: none;
+        opacity: 0.6;
+        line-height: 1.4;
     }
 }

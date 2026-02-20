@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils"
+
 interface CodeBlockProps {
     code: string
     className?: string
@@ -6,10 +8,18 @@ interface CodeBlockProps {
 export default function CodeBlock({ code, className }: CodeBlockProps) {
     return (
         <pre
-            className={
-                className ??
-                "bg-accent text-foreground font-mono text-xs my-6 p-4 leading-6 rounded-md shadow-xs overflow-x-auto"
-            }
+            className={cn(
+                `
+        bg-muted text-muted-foreground
+        font-mono text-sm
+        leading-relaxed
+        rounded-md
+        px-md py-md
+        overflow-x-auto
+        border border-border/20
+        `,
+                className
+            )}
         >
       <code>{code}</code>
     </pre>
