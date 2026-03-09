@@ -79,17 +79,17 @@ export default function Tutorials() {
     // ─────────────────────────────────────────────────────────────
     if (!slug) {
         return (
-            <div className="p-8">
-                <h1 className="text-4xl font-extrabold my-8">Tutorials</h1>
+            <div className="px-md py-2xl">
+                <h1 className="text-pageTitle font-pageTitle my-8">Tutorials</h1>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {list.map((p) => (
                         <NavLink key={p.slug} to={`/tutorials/${p.slug}`} className="no-underline">
-                            <Card className="h-full py-6 flex flex-col gap-2 hover:shadow-lg transition-shadow">
-                                <h3 className="text-lg font-semibold mb-0">{p.title}</h3>
-                                <p className="text-sm opacity-60 mt-0">{new Date(p.date).toLocaleDateString()}</p>
-                                <p className="text-sm text-muted-foreground mt-2 flex-grow">{p.meta.description}</p>
-                                <div className="mt-3 text-primary/80 text-sm">Read →</div>
+                            <Card className="h-full p-6 flex flex-col gap-2 hover:shadow-lg transition-shadow">
+                                <h3 className="text-subheading font-subheading mb-0">{p.title}</h3>
+                                <p className="text-tiny font-tiny opacity-60 mt-0">{new Date(p.date).toLocaleDateString()}</p>
+                                <p className="text-body font-body text-muted-foreground mt-2 flex-grow">{p.meta.description}</p>
+                                <div className="mt-3 text-primary/80 text-body">Read →</div>
                             </Card>
                         </NavLink>
                     ))}

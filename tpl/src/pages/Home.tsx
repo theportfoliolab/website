@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom"
 import { Card } from "@/components/ui/card"
 import type { PostMeta } from "@/components/content/types"
 import TagPill from "@/components/content/tagpill"
+import { Container } from "@/components/layout/pagecontainer"
 
 type LoadedPost = {
     key: string
@@ -90,12 +91,12 @@ export default function Home() {
     }, [])
 
     return (
-        <main className="mx-auto w-full max-w-6xl px-md py-2xl">
+        <Container className="py-lg md:py-2xl">
             {/* HERO */}
-            <section className="grid grid-cols-1 lg:grid-cols-2 gap-2xl items-start">
-                <div className="flex flex-col gap-lg">
-                    <div className="flex flex-col gap-sm">
-                        <p className="text-lead font-body italic">
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-xl md:gap-2xl items-start">
+                <div className="flex flex-col gap-md md:gap-lg">
+                    <div className="flex flex-col gap-xs md:gap-sm">
+                        <p className="text-body sm:text-lead font-body italic">
                             Welcome to ThePortfolioLab: Practical experiments in markets, code, and decision making.
                         </p>
                     </div>
@@ -108,21 +109,21 @@ Projects range from strategy backtests and investment analysis to algorithm desi
 Each piece is built on a simple principle: financial ideas should be tested, measured, and understood, not simply accepted.`}
                     </p>
 
-                    <div className="flex flex-wrap gap-sm">
-                        <NavLink to="/articles" className="no-underline">
-              <span className="inline-flex items-center rounded-md px-4 py-2 bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
+                    <div className="flex flex-col sm:flex-row flex-wrap gap-xs sm:gap-sm">
+                        <NavLink to="/articles" className="no-underline w-full sm:w-auto">
+              <span className="inline-flex w-full sm:w-auto justify-center items-center rounded-md px-md py-sm bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
                 Browse Articles →
               </span>
                         </NavLink>
 
-                        <NavLink to="/tutorials" className="no-underline">
-              <span className="inline-flex items-center rounded-md px-4 py-2 bg-secondary text-secondary-foreground hover:opacity-90 transition-opacity">
+                        <NavLink to="/tutorials" className="no-underline w-full sm:w-auto">
+              <span className="inline-flex w-full sm:w-auto justify-center items-center rounded-md px-md py-sm bg-secondary text-secondary-foreground hover:opacity-90 transition-opacity">
                 Browse Tutorials →
               </span>
                         </NavLink>
                     </div>
 
-                    <div className="flex flex-wrap gap-sm pt-sm">
+                    <div className="flex flex-wrap gap-xs md:gap-sm pt-xs md:pt-sm">
                         <TagPill>Quant & markets</TagPill>
                         <TagPill>Python</TagPill>
                         <TagPill>Data work</TagPill>
@@ -131,7 +132,7 @@ Each piece is built on a simple principle: financial ideas should be tested, mea
                 </div>
 
                 {/* FEATURED */}
-                <div className="flex flex-col gap-md">
+                <div className="flex flex-col gap-md mt-sm lg:mt-0">
                     <div className="flex items-baseline justify-between">
                         <h2 className="text-sectionTitle font-sectionTitle">Featured</h2>
                         <span className="text-tiny opacity-70">Newest work</span>
@@ -194,6 +195,6 @@ Each piece is built on a simple principle: financial ideas should be tested, mea
                     </div>
                 </div>
             </section>
-        </main>
+        </Container>
     )
 }

@@ -1,17 +1,18 @@
-// src/components/layout/PageContainer.tsx
+// src/components/layout/pagecontainer.tsx
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-export function PageContainer({
-                                  children,
-                                  className,
-                              }: {
+type ContainerProps = {
     children: React.ReactNode
     className?: string
-}) {
+}
+
+export function Container({ children, className }: ContainerProps) {
     return (
-        <div className={cn("max-w-6xl mx-auto px-xl", className)}>
+        <div className={cn("w-full mx-auto max-w-6xl px-md md:px-xl", className)}>
             {children}
         </div>
     )
 }
+
+export const PageContainer = Container

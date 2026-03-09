@@ -26,13 +26,13 @@ export function Header() {
                 className="
           mx-auto max-w-6xl
           px-md md:px-xl
-          pt-xl pb-lg
-          flex flex-col gap-sm
+          pt-md pb-sm md:pt-xl md:pb-lg
+          flex flex-col gap-xs md:gap-sm
           md:flex-row md:items-center md:justify-between md:gap-lg
         "
             >
                 {/* Logo */}
-                <Logo className="h-14 md:h-16 self-start md:self-auto" />
+                <Logo className="h-10 sm:h-11 md:h-16 self-start md:self-auto" />
 
                 {/* Navigation */}
                 <NavigationMenu viewport={false} className="self-stretch md:self-auto">
@@ -40,7 +40,7 @@ export function Header() {
                         className="
               flex w-full items-center justify-between
               md:w-auto md:justify-end
-              gap-md font-medium text-body tracking-[0.02em]
+              gap-sm md:gap-md font-medium text-body tracking-[0.02em]
               md:translate-y-[1px]
             "
                     >
@@ -48,7 +48,10 @@ export function Header() {
                             <NavigationMenuItem key={page} className="flex-1 md:flex-none">
                                 <NavigationMenuLink
                                     asChild
-                                    className={cn(navigationMenuTriggerStyle(), "w-full md:w-auto px-md py-sm")}
+                                    className={cn(
+                                        navigationMenuTriggerStyle(),
+                                        "w-full md:w-auto px-sm py-xs md:px-md md:py-sm"
+                                    )}
                                 >
                                     <NavLink
                                         to={`/${page.toLowerCase()}`}

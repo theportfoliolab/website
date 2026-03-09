@@ -3,13 +3,13 @@ import React from "react";
 
 export default function Footer() {
     return (
-        <footer className="border-t border-secondary-light-fg dark:border-secondary-dark-fg px-xl py-lg bg-primary-light-bg dark:bg-primary-dark-bg text-primary-light-fg dark:text-primary-dark-fg">
-            <div className="max-w-5xl mx-auto flex items-start justify-between gap-lg">
+        <footer className="border-t border-secondary-light-fg dark:border-secondary-dark-fg px-md md:px-xl py-lg bg-primary-light-bg dark:bg-primary-dark-bg text-primary-light-fg dark:text-primary-dark-fg">
+            <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-start md:items-start justify-between gap-md md:gap-lg">
                 {/* Brand */}
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 max-w-full">
                     <NavLink
                         to="/"
-                        className="font-pageTitle text-pageTitle no-underline text-inherit"
+                        className="font-pageTitle text-subheading sm:text-pageTitle no-underline text-inherit"
                     >
                         ThePortfolioLab
                     </NavLink>
@@ -19,7 +19,7 @@ export default function Footer() {
                 </div>
 
                 {/* Navigation columns */}
-                <div className="ml-auto flex text-right gap-lg">
+                <div className="w-full md:w-auto ml-0 md:ml-auto flex flex-wrap md:flex-nowrap text-left md:text-right gap-md md:gap-lg">
                     <FooterColumn title="Pages">
                         {["Tutorials", "Articles", "About"].map((page) => (
                             <FooterNavLink key={page} to={`/${page.toLowerCase()}`}>
@@ -45,7 +45,7 @@ export default function Footer() {
 /* Column wrapper */
 function FooterColumn({ title, children }: { title: React.ReactNode; children?: React.ReactNode }) {
     return (
-        <div className="min-w-[120px]">
+        <div className="min-w-0 sm:min-w-[120px]">
             <div className="font-subheading text-subheading mb-sm">{title}</div>
             <div className="flex flex-col gap-sm text-body font-body">{children}</div>
         </div>

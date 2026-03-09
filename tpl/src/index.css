@@ -134,6 +134,14 @@
     --font-tiny-transform: none;
     --font-tiny-opacity: 0.6;
     --font-tiny-lineHeight: 1.4;
+
+    /* ---- mobile typography tokens ---- */
+    --font-pageTitle-mobile-size: 2.1rem;
+    --font-subheading-mobile-size: 1.55rem;
+    --font-sectionTitle-mobile-size: 1.35rem;
+    --font-lead-mobile-size: 1.1rem;
+    --font-body-mobile-size: 0.95rem;
+    --font-tiny-mobile-size: 0.75rem;
 }
 
 /* Actual theme values used by semantic tokens above */
@@ -206,7 +214,7 @@
 /* Typography utilities */
 @layer utilities {
     .text-pageTitle {
-        font-size: 2.8rem;
+        font-size: var(--font-pageTitle-mobile-size);
         font-weight: 800;
         font-style: normal;
         letter-spacing: normal;
@@ -216,7 +224,7 @@
     }
 
     .text-subheading {
-        font-size: 2.4rem;
+        font-size: var(--font-subheading-mobile-size);
         font-weight: 500;
         font-style: normal;
         letter-spacing: normal;
@@ -236,7 +244,7 @@
     }
 
     .text-sectionTitle {
-        font-size: 2rem;
+        font-size: var(--font-sectionTitle-mobile-size);
         font-weight: 700;
         font-style: normal;
         letter-spacing: normal;
@@ -246,7 +254,7 @@
     }
 
     .text-lead {
-        font-size: 1.6rem;
+        font-size: var(--font-lead-mobile-size);
         font-weight: 300;
         font-style: italic;
         letter-spacing: normal;
@@ -256,7 +264,7 @@
     }
 
     .text-body {
-        font-size: 1rem;
+        font-size: var(--font-body-mobile-size);
         font-weight: 400;
         font-style: normal;
         letter-spacing: normal;
@@ -278,12 +286,38 @@
     }
 
     .text-tiny {
-        font-size: 0.8rem;
+        font-size: var(--font-tiny-mobile-size);
         font-weight: 500;
         font-style: normal;
         letter-spacing: normal;
         text-transform: none;
         opacity: 0.6;
         line-height: 1.4;
+    }
+
+    @media (min-width: 48rem) {
+        .text-pageTitle {
+            font-size: var(--font-pageTitle-size);
+        }
+
+        .text-subheading {
+            font-size: var(--font-subheading-size);
+        }
+
+        .text-sectionTitle {
+            font-size: var(--font-sectionTitle-size);
+        }
+
+        .text-lead {
+            font-size: var(--font-lead-size);
+        }
+
+        .text-body {
+            font-size: var(--font-body-size);
+        }
+
+        .text-tiny {
+            font-size: var(--font-tiny-size);
+        }
     }
 }
