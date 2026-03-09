@@ -1,4 +1,4 @@
-import{i as e,o as t,r as n}from"./index-BI8FQMgX.js";var r=t(n(),1);function i({src:t,alt:n,title:i,caption:a,className:o}){return(0,r.jsxs)(`figure`,{className:e(`w-full h-auto rounded-md border border-border/20`,o),children:[i&&(0,r.jsx)(`h3`,{className:`text-sectionTitle`,children:i}),(0,r.jsx)(`img`,{src:t,alt:n,className:`rounded-md object-cover w-full`}),a&&(0,r.jsx)(`figcaption`,{className:`text-tiny`,children:a})]})}function a({code:t,className:n}){return(0,r.jsx)(`pre`,{className:e(`
+import{i as e,o as t,r as n}from"./index-BpPtaAoR.js";var r=t(n(),1);function i({src:t,alt:n,title:i,caption:a,className:o}){return(0,r.jsxs)(`figure`,{className:e(`w-full h-auto rounded-md border border-border/20`,o),children:[i&&(0,r.jsx)(`h3`,{className:`text-sectionTitle`,children:i}),(0,r.jsx)(`img`,{src:t,alt:n,className:`rounded-md object-cover w-full`}),a&&(0,r.jsx)(`figcaption`,{className:`text-tiny`,children:a})]})}function a({code:t,className:n}){return(0,r.jsx)(`pre`,{className:e(`
         bg-muted text-muted-foreground
         font-mono text-sm
         leading-relaxed
