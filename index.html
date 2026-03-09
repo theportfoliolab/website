@@ -19,13 +19,27 @@
     <!-- Optional: GitHub Pages SPA fallback -->
     <script type="text/javascript">
         // If user refreshes a subpage on GitHub Pages, redirect to index.html
-        if (location.pathname !== '/' && !document.getElementById('root').innerHTML) {
+        if (location.pathname !== '/') {
             window.location.href = '/';
         }
     </script>
+    <script>
+        (function () {
+            const key = "tpl-theme";
+            const stored = localStorage.getItem(key);
+            const preference = stored === "light" || stored === "dark" || stored === "auto"
+                ? stored
+                : "auto";
+            const hour = new Date().getHours();
+            const autoDark = hour >= 18 || hour < 6;
+            const resolved = preference === "auto" ? (autoDark ? "dark" : "light") : preference;
+            document.documentElement.classList.toggle("dark", resolved === "dark");
+            document.documentElement.dataset.theme = resolved;
+        })();
+    </script>
 
-  <script type="module" crossorigin src="/assets/index-BpPtaAoR.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-DgnPaR0v.css">
+  <script type="module" crossorigin src="/assets/index-D7a6sxqF.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-I3rQtpGT.css">
 </head>
 <body>
 <div id="root"></div>
