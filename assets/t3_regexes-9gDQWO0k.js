@@ -1,4 +1,4 @@
-import{a as e,i as t,n,o as r,r as i}from"./index-DxiG2V-D.js";import{t as a}from"./text-BdTWEETo.js";var o=r(i(),1);function s({href:n,children:r,className:i}){let a=n.startsWith(`http`),s=`
+import{a as e,i as t,n,r,s as i}from"./index-Bh-m3a3A.js";import{t as a}from"./text-BHlF0QQh.js";var o=i(r(),1);function s({href:n,children:r,className:i}){let a=n.startsWith(`http`),s=`
     font-body
     text-primary-light-link dark:text-primary-dark-link
     underline underline-offset-4
