@@ -1,37 +1,9 @@
-import{n as e,o as t,r as n}from"./index-CS41XcpE.js";import{t as r}from"./text-Bv7hthU5.js";var i=t(n(),1);const a={title:`Symbolic Encoding for Financial Time Series`,description:`A practical introduction to symbolic encoding for financial time series, covering QSE, SAX, VRE, and the performance benefits of preprocessing data into symbolic sequences.`,date:`2026-03-10`,tags:[`python`,`finance`,`analysis`,`time series`,`regex`],type:`article`,slug:`a3_symbolic_encoding`};function o(){return(0,i.jsxs)(e,{children:[(0,i.jsx)(r,{heading:`Introduction`,content:`Financial time series analysis often involves repeatedly searching for patterns such as volatility regimes, structural transitions, or unusual behaviour in the data.
+import{n as e,o as t,r as n}from"./index-DxiG2V-D.js";import{t as r}from"./text-BdTWEETo.js";var i=t(n(),1);const a={title:`Symbolic Encoding for Financial Time Series`,description:`A practical introduction to symbolic encoding for financial time series, covering QSE, SAX, VRE, and the performance benefits of preprocessing data into symbolic sequences.`,date:`2026-03-10`,tags:[`python`,`finance`,`analysis`,`time series`,`regex`],type:`article`,slug:`a3_symbolic_encoding`};function o(){return(0,i.jsxs)(e,{children:[(0,i.jsx)(r,{heading:`Introduction`,content:`Financial time series analysis often involves repeatedly searching for patterns such as volatility regimes, structural transitions, or unusual behaviour in the data.
 These tasks are usually performed directly on the raw numeric series, requiring repeated computation of rolling statistics, thresholds, and comparisons across the dataset.
-As the number of ideas being tested grows, this workflow can quickly become computationally expensive.
-
-An alternative approach is to convert the time series into a symbolic representation before performing analysis.
+As the number of ideas being tested grows, this workflow can quickly become computationally expensive.`}),(0,i.jsx)(r,{content:`An alternative approach is to convert the time series into a symbolic representation before performing analysis.
 Instead of repeatedly computing signals on the raw data, we preprocess the series once and encode each observation as a symbol from a small alphabet.
-The resulting sequence can then be analysed using efficient string-processing techniques such as regular expressions and pattern matching.
-
-Formally, we can think of a time series as a numeric sequence
-
-X = (x1, x2, ..., xn)
-
-where each value represents an observation such as a daily return. Symbolic encoding transforms this sequence into a symbolic sequence
-
-S = (s1, s2, ..., sn)
-
-where each symbol belongs to a finite alphabet, for example
-
-Σ = {A, B, C, D, E}.
-
-The goal of symbolic encoding is therefore to construct a mapping
-
-f: X -> S
-
-that preserves useful structural information in the series while allowing the data to be analysed using efficient string-based algorithms.
-
-Once this representation has been constructed, searching for patterns such as volatility clusters or regime transitions becomes a string search problem rather than a repeated numerical computation.
-This can significantly reduce the cost of exploratory analysis, allowing analysts to test many hypotheses quickly.
-
-In this article, I introduce three methods of symbolic encoding for financial time series:`,bullets:[`Quantile Symbolic Encoding (QSE), which discretises observations relative to the distribution of the dataset`,`Symbolic Aggregate approXimation (SAX), which normalises the series and encodes deviations from the mean`,`Volatility Regime Encoding (VRE), which focuses on encoding market volatility regimes`]}),(0,i.jsx)(r,{content:`Finally, I demonstrate how symbolic preprocessing can make exploratory regime detection dramatically cheaper by comparing raw numerical searches with regex-based searches on encoded sequences.`}),(0,i.jsx)(r,{heading:`Preparing Data`,content:`Before running the examples in this article, it helps to clean the raw financial dataset so that the structure is consistent and easy to work with.
-
-The small script below performs a few basic preparation steps. It assumes you have a CSV file containing daily OHLCV market data (date, open, high, low, close, volume). The script:`,bullets:[`standardises column names`,`sorts the data chronologically`,`removes duplicate rows`,`ensures numeric values are correctly formatted`,`removes invalid price data`,`computes daily log returns, which are used throughout the examples in this article`]}),(0,i.jsx)(r,{lead:`To use the script:`,bullets:[`Create a folder called data in your project directory.`,`Place your raw CSV file in that folder.`,`Run the script from the command line: python load_and_clean.py your_data.csv`,`The script will read the file from the data folder, clean it, and save a new dataset called data/your_data_cleaned.csv`],content:`This cleaned dataset can then be used directly with the encoding and benchmarking examples in the rest of the article.
-
-The script is intentionally simple so you can easily adapt it to your own data sources.`}),(0,i.jsx)(r,{code:`"""
+The resulting sequence can then be analysed using efficient string-processing techniques such as regular expressions and pattern matching.`}),(0,i.jsx)(r,{content:`Formally, we can think of a time series as a numeric sequence`}),(0,i.jsx)(r,{content:`X = (x1, x2, ..., xn)`}),(0,i.jsx)(r,{content:`where each value represents an observation such as a daily return. Symbolic encoding transforms this sequence into a symbolic sequence`}),(0,i.jsx)(r,{content:`S = (s1, s2, ..., sn)`}),(0,i.jsx)(r,{content:`where each symbol belongs to a finite alphabet, for example`}),(0,i.jsx)(r,{content:`Σ = {A, B, C, D, E}.`}),(0,i.jsx)(r,{content:`The goal of symbolic encoding is therefore to construct a mapping`}),(0,i.jsx)(r,{content:`f: X -> S`}),(0,i.jsx)(r,{content:`that preserves useful structural information in the series while allowing the data to be analysed using efficient string-based algorithms.`}),(0,i.jsx)(r,{content:`Once this representation has been constructed, searching for patterns such as volatility clusters or regime transitions becomes a string search problem rather than a repeated numerical computation.
+This can significantly reduce the cost of exploratory analysis, allowing analysts to test many hypotheses quickly.`}),(0,i.jsx)(r,{content:`In this article, I introduce three methods of symbolic encoding for financial time series:`,bullets:[`Quantile Symbolic Encoding (QSE), which discretises observations relative to the distribution of the dataset`,`Symbolic Aggregate approXimation (SAX), which normalises the series and encodes deviations from the mean`,`Volatility Regime Encoding (VRE), which focuses on encoding market volatility regimes`]}),(0,i.jsx)(r,{content:`Finally, I demonstrate how symbolic preprocessing can make exploratory regime detection dramatically cheaper by comparing raw numerical searches with regex-based searches on encoded sequences.`}),(0,i.jsx)(r,{heading:`Preparing Data`,content:`Before running the examples in this article, it helps to clean the raw financial dataset so that the structure is consistent and easy to work with.`}),(0,i.jsx)(r,{content:`The small script below performs a few basic preparation steps. It assumes you have a CSV file containing daily OHLCV market data (date, open, high, low, close, volume). The script:`,bullets:[`standardises column names`,`sorts the data chronologically`,`removes duplicate rows`,`ensures numeric values are correctly formatted`,`removes invalid price data`,`computes daily log returns, which are used throughout the examples in this article`]}),(0,i.jsx)(r,{lead:`To use the script:`,bullets:[`Create a folder called data in your project directory.`,`Place your raw CSV file in that folder.`,`Run the script from the command line: python load_and_clean.py your_data.csv`,`The script will read the file from the data folder, clean it, and save a new dataset called data/your_data_cleaned.csv`],content:`This cleaned dataset can then be used directly with the encoding and benchmarking examples in the rest of the article.`}),(0,i.jsx)(r,{content:`The script is intentionally simple so you can easily adapt it to your own data sources.`}),(0,i.jsx)(r,{code:`"""
 Load and clean daily data for symbolic time series analysis.
 
 Input file: data/<filename>.csv
@@ -163,21 +135,10 @@ def main():
 
 if __name__ == "__main__":
     main()`}),(0,i.jsx)(r,{heading:`Quantile Symbolic Encoding`,content:`The simplest way to convert a numeric time series into a symbolic sequence is to separate the data into discrete bins using quantiles.
-Instead of recording the exact value of each observation (for example the closing price of every day), we classify it according to where it lies in the distribution of the series.
-
-In Quantile Symbolic Encoding (QSE), we first define a series of symbols, each one representing an equally sized probability interval.
+Instead of recording the exact value of each observation (for example the closing price of every day), we classify it according to where it lies in the distribution of the series.`}),(0,i.jsx)(r,{content:`In Quantile Symbolic Encoding (QSE), we first define a series of symbols, each one representing an equally sized probability interval.
 Each data point is then assigned a symbol according to the interval that it falls into.
-Here, I have divided the data into five intervals (quintiles), producing the symbol set A-E.
-
-We can apply this encoding to the daily log returns of a time series:`,bullets:[`A = lowest 20% of daily log returns`,`B = 20–40%`,`C = 40–60%`,`D = 60–80%`,`E = highest 20%`]}),(0,i.jsx)(r,{content:`For example, a sequence of returns might be encoded as follows:
-
-Returns:   -0.018  -0.005   0.001   0.012   0.027
-Symbols:      A       B       C       D       E
-
-This encoding preserves the relative position of each value in the distribution, but discards the exact numerical magnitude.
-Although we lose some information about the exact magnitude, we gain the ability to apply efficient string-based analysis methods.
-
-This encoding is relatively simple to implement using quantile thresholds and binning. The following function maps each observation in a series to one of five symbols based on its quintile.`}),(0,i.jsx)(r,{code:`import pandas as pd
+Here, I have divided the data into five intervals (quintiles), producing the symbol set A-E.`}),(0,i.jsx)(r,{content:`We can apply this encoding to the daily log returns of a time series:`,bullets:[`A = lowest 20% of daily log returns`,`B = 20–40%`,`C = 40–60%`,`D = 60–80%`,`E = highest 20%`]}),(0,i.jsx)(r,{content:`For example, a sequence of returns might be encoded as follows:`}),(0,i.jsx)(r,{content:`Returns:   -0.018  -0.005   0.001   0.012   0.027`}),(0,i.jsx)(r,{content:`Symbols:      A       B       C       D       E`}),(0,i.jsx)(r,{content:`This encoding preserves the relative position of each value in the distribution, but discards the exact numerical magnitude.
+Although we lose some information about the exact magnitude, we gain the ability to apply efficient string-based analysis methods.`}),(0,i.jsx)(r,{content:`This encoding is relatively simple to implement using quantile thresholds and binning. The following function maps each observation in a series to one of five symbols based on its quintile.`}),(0,i.jsx)(r,{code:`import pandas as pd
 import numpy as np
 
 
@@ -234,15 +195,10 @@ def quantile_symbolic_encoding(series):
 Because it only captures relative positions within the distribution, it does not preserve information about the shape or temporal structure of the series.
 More sophisticated encodings, such as Symbolic Aggregate approXimation (SAX), attempt to address this limitation.`}),(0,i.jsx)(r,{heading:`Symbolic Aggregate approXimation`,lead:`How can we preserve information about the shape or local structure of a time series?`,content:`Enter Symbolic Aggregate approXimation (SAX): an alternative method of encoding which first normalises the time series.
 In other words, the encoding can focus on deviation relative to the series itself, rather than an absolute scale.`}),(0,i.jsx)(r,{lead:`The SAX Encoding Process`,content:`First, the series is converted to z-scores by taking each value, subtracting the mean, and dividing by the standard deviation.
-This rescales the data so that the series has a mean of zero, and a standard deviation of 1.
-
-After normalisation, values can be interpreted in terms of their distance from the average behaviour of the series:`,bullets:[`z-score = 0 -> typical value`,`z-score = 1 -> one standard deviation above average`,`z-score = -1 -> one standard deviation below average`]}),(0,i.jsx)(r,{content:`At this point, SAX divides the standard normal distribution into equal probability regions, and each region is assigned a symbol in a similar fashion to QSE.
-
-Using five symbols, the encoding on daily log returns might look like:`,bullets:[`A = very low daily return relative to the series`,`B = moderately low daily return`,`C = near the average`,`D = moderately high daily return`,`E = very high daily return`]}),(0,i.jsx)(r,{content:`Because these thresholds are derived from the standard normal distribution, the encoding becomes independent of the scale of the original data.
+This rescales the data so that the series has a mean of zero, and a standard deviation of 1.`}),(0,i.jsx)(r,{content:`After normalisation, values can be interpreted in terms of their distance from the average behaviour of the series:`,bullets:[`z-score = 0 -> typical value`,`z-score = 1 -> one standard deviation above average`,`z-score = -1 -> one standard deviation below average`]}),(0,i.jsx)(r,{content:`At this point, SAX divides the standard normal distribution into equal probability regions, and each region is assigned a symbol in a similar fashion to QSE.
+`}),(0,i.jsx)(r,{content:`Using five symbols, the encoding on daily log returns might look like:`,bullets:[`A = very low daily return relative to the series`,`B = moderately low daily return`,`C = near the average`,`D = moderately high daily return`,`E = very high daily return`]}),(0,i.jsx)(r,{content:`Because these thresholds are derived from the standard normal distribution, the encoding becomes independent of the scale of the original data.
 The key benefit of this is that two time series with very different magnitudes, such as a stock trading at $50 and one trading at $150,
-can produce comparable symbolic representations if their underlying behaviour is similar.
-
-The key point here is that SAX captures information about relative behaviour within the signal, rather than information about absolute values.`}),(0,i.jsx)(r,{heading:`Implementation`,content:`If we compare SAX with QSE, most of the encoding process is actually the same. The key differences are:`,bullets:[`SAX first normalises the data (new step).`,`The thresholds are derived from the standard normal distribution instead of the dataset itself.`,`The symbolic assignment step is identical to QSE.`]}),(0,i.jsx)(r,{content:`In the full SAX algorithm, an additional preprocessing step called Piecewise Aggregate Approximation (PAA) is often applied before symbol assignment.
+can produce comparable symbolic representations if their underlying behaviour is similar.`}),(0,i.jsx)(r,{content:`The key point here is that SAX captures information about relative behaviour within the signal, rather than information about absolute values.`}),(0,i.jsx)(r,{heading:`Implementation`,content:`If we compare SAX with QSE, most of the encoding process is actually the same. The key differences are:`,bullets:[`SAX first normalises the data (new step).`,`The thresholds are derived from the standard normal distribution instead of the dataset itself.`,`The symbolic assignment step is identical to QSE.`]}),(0,i.jsx)(r,{content:`In the full SAX algorithm, an additional preprocessing step called Piecewise Aggregate Approximation (PAA) is often applied before symbol assignment.
 PAA compresses the time series by averaging neighbouring points into segments.
 For simplicity, the implementation below omits this step, but the location where it would normally occur is shown in the code.`}),(0,i.jsx)(r,{code:`import numpy as np
 import pandas as pd
@@ -321,29 +277,13 @@ def sax_symbolic_encoding(series, n_symbols=5):
         labels=alphabet
     )
 
-    return symbols.astype(str)`}),(0,i.jsx)(r,{content:`To reiterate, the differences between QSE and SAX can be described as:
-
-QSE
-data -> quantiles -> symbols
-
-SAX
-data -> normalize -> (PAA) -> Gaussian breakpoints -> symbols`}),(0,i.jsx)(r,{heading:`Why SAX Is Useful`,bullets:[`Scale independent: normalised data focuses on relative behaviour.`,`Shape awareness: deviations from the mean are preserved in the encoding, allowing patterns related to the structure of the signal to be captured.`,`Comparability between time series: different time series can be compared symbolically even if they have very different magnitudes.`],content:`As always, there are also some limitations.
+    return symbols.astype(str)`}),(0,i.jsx)(r,{content:`To reiterate, the differences between QSE and SAX can be described as:`}),(0,i.jsx)(r,{content:`QSE`}),(0,i.jsx)(r,{content:`data -> quantiles -> symbols`}),(0,i.jsx)(r,{content:`SAX`}),(0,i.jsx)(r,{content:`data -> normalize -> (PAA) -> Gaussian breakpoints -> symbols`}),(0,i.jsx)(r,{heading:`Why SAX Is Useful`,bullets:[`Scale independent: normalised data focuses on relative behaviour.`,`Shape awareness: deviations from the mean are preserved in the encoding, allowing patterns related to the structure of the signal to be captured.`,`Comparability between time series: different time series can be compared symbolically even if they have very different magnitudes.`],content:`As always, there are also some limitations.
 We assume that the normalised data follows a standard normal distribution, which may not always be the case in real financial data.
 In addition, the implementation here omits a step called Piecewise Aggregate Approximation, which compresses the time series before encoding.
-The simplified implementation here allows the core concept to be illustrated more clearly.`}),(0,i.jsx)(r,{heading:`Volatility Regime Encoding`,content:`While SAX focuses on the structure of the signal itself, another useful perspective is to encode market regimes, such as periods of high or low volatility.
-
-This is where Volatility Regime Encoding (VRE) comes in.
-
-Instead of encoding the value of the time series directly, VRE encodes the volatility of the series over time.
-In financial markets, volatility often occurs in clusters: calm periods tend to remain calm, while turbulent periods tend to produce sustained sequences of large price movements.
-
-By encoding volatility, we can symbolically represent these regime shifts.`}),(0,i.jsx)(r,{lead:`How VRE works`,content:`Conceptually, the process is:`,bullets:[`Measure the rolling volatility of the time series using a sliding window`,`Divide the volatility distribution into quantile intervals`,`Assign a symbol to each volatility regime`]}),(0,i.jsx)(r,{content:`Here, the symbols refer to how volatile the market is for a given security:`,bullets:[`A = very low volatility`,`B = low volatility`,`C = moderate volatility`,`D = high volatility`,`E = very high volatility`]}),(0,i.jsx)(r,{content:`Unlike QSE and SAX, which encode the value of the signal itself such as closing price, VRE encodes a derived property of the signal.
+The simplified implementation here allows the core concept to be illustrated more clearly.`}),(0,i.jsx)(r,{heading:`Volatility Regime Encoding`,content:`While SAX focuses on the structure of the signal itself, another useful perspective is to encode market regimes, such as periods of high or low volatility.`}),(0,i.jsx)(r,{content:`This is where Volatility Regime Encoding (VRE) comes in.`}),(0,i.jsx)(r,{content:`Instead of encoding the value of the time series directly, VRE encodes the volatility of the series over time.
+In financial markets, volatility often occurs in clusters: calm periods tend to remain calm, while turbulent periods tend to produce sustained sequences of large price movements.`}),(0,i.jsx)(r,{content:`By encoding volatility, we can symbolically represent these regime shifts.`}),(0,i.jsx)(r,{lead:`How VRE works`,content:`Conceptually, the process is:`,bullets:[`Measure the rolling volatility of the time series using a sliding window`,`Divide the volatility distribution into quantile intervals`,`Assign a symbol to each volatility regime`]}),(0,i.jsx)(r,{content:`Here, the symbols refer to how volatile the market is for a given security:`,bullets:[`A = very low volatility`,`B = low volatility`,`C = moderate volatility`,`D = high volatility`,`E = very high volatility`]}),(0,i.jsx)(r,{content:`Unlike QSE and SAX, which encode the value of the signal itself such as closing price, VRE encodes a derived property of the signal.
 The resulting symbolic sequence highlights transitions between calm and turbulent market conditions.
-This makes VRE useful for identifying volatility regimes, market shocks, or prolonged periods of stability or instability.
-
-The implementation follows the same symbolic binning pattern used in QSE and SAX.
-
-The key difference is that we first compute rolling volatility, then discretise that derived series into symbolic regimes.`}),(0,i.jsx)(r,{code:`import pandas as pd
+This makes VRE useful for identifying volatility regimes, market shocks, or prolonged periods of stability or instability.`}),(0,i.jsx)(r,{content:`The implementation follows the same symbolic binning pattern used in QSE and SAX.`}),(0,i.jsx)(r,{content:`The key difference is that we first compute rolling volatility, then discretise that derived series into symbolic regimes.`}),(0,i.jsx)(r,{code:`import pandas as pd
 import numpy as np
 import string
 
@@ -417,22 +357,10 @@ def volatility_regime_encoding(series, window=20, n_symbols=5):
     symbols = symbols.astype(str).replace('nan', 'X')
 
     return symbols`}),(0,i.jsx)(r,{heading:`Why VRE Is Useful`,bullets:[`Regime detection: easily find transitions between calm and turbulent market environments.`,`Clustering behaviour: pattern matching on the encoded sequence can be used to find volatility clusters.`,`Efficient pattern searching: as with all of the encoding techniques shown here, string-based tools can be used to find complex patterns more efficiently.`]}),(0,i.jsx)(r,{heading:`Limitations of VRE`,content:`The resulting encoding is heavily affected by the window length used for calculating rolling volatility.
-A short window may produce an encoding that is too noisy to accurately find regime switches, while a long window may smooth out meaningful changes in volatility.
-
-In addition, discretisation of volatility into symbols means some information about the exact magnitude of volatility changes is discarded.`}),(0,i.jsx)(r,{heading:`Performance of String-Based Algorithms vs Calculations on Raw Data`,content:`Now that we have a few methods of encoding a time series, we should look at why this is useful.
-
-Up to this point, the focus has been on what symbolic encoding preserves.
+A short window may produce an encoding that is too noisy to accurately find regime switches, while a long window may smooth out meaningful changes in volatility.`}),(0,i.jsx)(r,{content:`In addition, discretisation of volatility into symbols means some information about the exact magnitude of volatility changes is discarded.`}),(0,i.jsx)(r,{heading:`Performance of String-Based Algorithms vs Calculations on Raw Data`,content:`Now that we have a few methods of encoding a time series, we should look at why this is useful.`}),(0,i.jsx)(r,{content:`Up to this point, the focus has been on what symbolic encoding preserves.
 The next question is whether symbolic preprocessing is useful in practice.
-For exploratory analysis, the answer is yes: once a time series has been encoded, many different pattern searches can be performed much more cheaply than repeated calculations on the raw data.
-
-Consider exactly when these performance improvements can be seen: a single regex search on an encoded sequence is unlikely to produce noticeable performance gains, because the cost of encoding still has to be paid.
-The real benefit becomes apparent when we can use that encoded sequence for multiple operations, and earn back that initial computation cost.
-
-For this demonstration, I will measure compute time for this somewhat arbitrary task:
-
-Find the periods where volatility remains elevated for several days.
-
-This is a realistic task used in regime detection, risk monitoring, and market stress detection.`}),(0,i.jsx)(r,{lead:`Raw data approach`,content:`With no encoding, we must perform the following steps:`,bullets:[`Compute rolling volatility`,`Compute quantiles`,`Check thresholds`,`Scan for consecutive returns`]}),(0,i.jsx)(r,{lead:`And in Python:`,code:`rolling_vol = returns.rolling(20).std()
+For exploratory analysis, the answer is yes: once a time series has been encoded, many different pattern searches can be performed much more cheaply than repeated calculations on the raw data.`}),(0,i.jsx)(r,{content:`Consider exactly when these performance improvements can be seen: a single regex search on an encoded sequence is unlikely to produce noticeable performance gains, because the cost of encoding still has to be paid.
+The real benefit becomes apparent when we can use that encoded sequence for multiple operations, and earn back that initial computation cost.`}),(0,i.jsx)(r,{content:`For this demonstration, I will measure compute time for this somewhat arbitrary task:`}),(0,i.jsx)(r,{content:`Find the periods where volatility remains elevated for several days.`}),(0,i.jsx)(r,{content:`This is a realistic task used in regime detection, risk monitoring, and market stress detection.`}),(0,i.jsx)(r,{lead:`Raw data approach`,content:`With no encoding, we must perform the following steps:`,bullets:[`Compute rolling volatility`,`Compute quantiles`,`Check thresholds`,`Scan for consecutive returns`]}),(0,i.jsx)(r,{lead:`And in Python:`,code:`rolling_vol = returns.rolling(20).std()
 threshold = rolling_vol.quantile(0.8)
 
 high_vol = rolling_vol > threshold
@@ -447,40 +375,14 @@ for i, val in enumerate(high_vol):
     else:
         if run_start is not None and i - run_start >= 5:
             clusters.append((run_start, i))
-        run_start = None`}),(0,i.jsx)(r,{lead:`Encoded approach`,content:`If we pre-encode the volatility using VRE, the problem becomes a string search.
-
-For example, if our encoded sequence is:
-
-AACCDDDEEEEEDDCCBAA...
-
-and we know that EEEEE is the volatility cluster that we want to detect, then we can express this as a regex:
-
-E{5,}`}),(0,i.jsx)(r,{code:`import re
+        run_start = None`}),(0,i.jsx)(r,{lead:`Encoded approach`,content:`If we pre-encode the volatility using VRE, the problem becomes a string search.`}),(0,i.jsx)(r,{content:`For example, if our encoded sequence is:`}),(0,i.jsx)(r,{content:`AACCDDDEEEEEDDCCBAA...`}),(0,i.jsx)(r,{content:`and we know that EEEEE is the volatility cluster that we want to detect, then we can express this as a regex:`}),(0,i.jsx)(r,{content:`E{5,}`}),(0,i.jsx)(r,{code:`import re
 
 symbol_string = "".join(symbols)
 
-clusters = [m.span() for m in re.finditer(r"E{5,}", symbol_string)]`}),(0,i.jsx)(r,{content:`Note that we did that in just three lines of code.
-
-We are taking advantage of the fact that regex engines like the one in Python's re package are highly optimised, and because we are working on simple characters no repeated numeric computation is required.
-
-So how much faster is it?
-
-In theory, each individual pass over the dataset has time complexity O(n).
+clusters = [m.span() for m in re.finditer(r"E{5,}", symbol_string)]`}),(0,i.jsx)(r,{content:`Note that we did that in just three lines of code.`}),(0,i.jsx)(r,{content:`We are taking advantage of the fact that regex engines like the one in Python's re package are highly optimised, and because we are working on simple characters no repeated numeric computation is required.`}),(0,i.jsx)(r,{content:`So how much faster is it?`}),(0,i.jsx)(r,{content:`In theory, each individual pass over the dataset has time complexity O(n).
 However, exploratory analysis rarely involves only one search.
 Testing k different regime definitions on raw data behaves like O(kn), because the numerical computations must be repeated for every hypothesis.
-With symbolic encoding, the preprocessing cost is paid once, and subsequent pattern searches operate directly on the encoded sequence.
-
-But it is just as easy to set up a practical test to demonstrate the time savings.
-
-To make the comparison fair, I benchmark three stages separately:`,bullets:[`Raw detection: compute rolling volatility, threshold it, and scan for clusters.`,`Encoding cost: construct the symbolic volatility sequence once.`,`Regex search on encoded data: search the encoded sequence for the target pattern.`]}),(0,i.jsx)(r,{content:`This shows where the real advantage of symbolic preprocessing appears: the encoding has an upfront cost, but once it has been paid, repeated searches become much cheaper.`}),(0,i.jsx)(r,{heading:`Benchmark Script`,content:`To demonstrate the practical benefit of symbolic encoding, the following script compares two approaches to detecting volatility regimes.
-
-The script accepts a CSV file containing cleaned market data and reads the log_return column. It then performs three steps:
-
-First, it runs a raw numerical search to identify periods where volatility remains elevated for several consecutive days, in this case 3-8 day windows.
-
-Next, it encodes the return series using Volatility Regime Encoding (VRE), converting the numeric time series into a sequence of symbols.
-
-Finally, it performs a large number of regex searches on the encoded sequence, exploring different volatility patterns, including the 3-8 day volatility regimes computed in the raw data approach.`}),(0,i.jsx)(r,{code:`"""
+With symbolic encoding, the preprocessing cost is paid once, and subsequent pattern searches operate directly on the encoded sequence.`}),(0,i.jsx)(r,{content:`But it is just as easy to set up a practical test to demonstrate the time savings.`}),(0,i.jsx)(r,{content:`To make the comparison fair, I benchmark three stages separately:`,bullets:[`Raw detection: compute rolling volatility, threshold it, and scan for clusters.`,`Encoding cost: construct the symbolic volatility sequence once.`,`Regex search on encoded data: search the encoded sequence for the target pattern.`]}),(0,i.jsx)(r,{content:`This shows where the real advantage of symbolic preprocessing appears: the encoding has an upfront cost, but once it has been paid, repeated searches become much cheaper.`}),(0,i.jsx)(r,{heading:`Benchmark Script`,content:`To demonstrate the practical benefit of symbolic encoding, the following script compares two approaches to detecting volatility regimes.`}),(0,i.jsx)(r,{content:`The script accepts a CSV file containing cleaned market data and reads the log_return column. It then performs three steps:`}),(0,i.jsx)(r,{content:`First, it runs a raw numerical search to identify periods where volatility remains elevated for several consecutive days, in this case 3-8 day windows.`}),(0,i.jsx)(r,{content:`Next, it encodes the return series using Volatility Regime Encoding (VRE), converting the numeric time series into a sequence of symbols.`}),(0,i.jsx)(r,{content:`Finally, it performs a large number of regex searches on the encoded sequence, exploring different volatility patterns, including the 3-8 day volatility regimes computed in the raw data approach.`}),(0,i.jsx)(r,{code:`"""
 Demonstration: raw volatility search vs symbolic regex search.
 
 Assumes input CSV is already cleaned and contains:
@@ -657,26 +559,14 @@ Matches found: 131
 
 Encoding time: 0.002050 s
 
-Regex searches completed in same time window: 829`}),(0,i.jsx)(r,{content:`Using the encoding + regex approach, I was able to explore over 800 more hypotheses in the same amount of time compared to repeatedly working on raw data alone.
-
-The performance gain here is somewhat exaggerated by the repeated benchmark, but it illustrates an important idea: once the data has been encoded, exploring alternative pattern definitions becomes extremely cheap.`}),(0,i.jsx)(r,{content:`In a real-world analysis workflow, this difference becomes meaningful very quickly.
+Regex searches completed in same time window: 829`}),(0,i.jsx)(r,{content:`Using the encoding + regex approach, I was able to explore over 800 more hypotheses in the same amount of time compared to repeatedly working on raw data alone.`}),(0,i.jsx)(r,{content:`The performance gain here is somewhat exaggerated by the repeated benchmark, but it illustrates an important idea: once the data has been encoded, exploring alternative pattern definitions becomes extremely cheap.`}),(0,i.jsx)(r,{content:`In a real-world analysis workflow, this difference becomes meaningful very quickly.
 You are likely working through an idea, iterating and refining it, not just running one query and calling it a day.
 Being able to adjust thresholds, tune parameters, experiment with different regime definitions,
 or test new pattern structures without waiting for repeated numerical computations makes exploratory research far more efficient.
-An analyst can test many more ideas quickly and cheaply before committing to more in-depth modelling.
-
-Symbolic encoding opens the door to a different style of time series analysis.
-Instead of repeatedly computing indicators on raw data, we can preprocess a dataset once and then explore patterns rapidly using string-based methods.
-
-The examples shown here are only a starting point.
+An analyst can test many more ideas quickly and cheaply before committing to more in-depth modelling.`}),(0,i.jsx)(r,{content:`Symbolic encoding opens the door to a different style of time series analysis.
+Instead of repeatedly computing indicators on raw data, we can preprocess a dataset once and then explore patterns rapidly using string-based methods.`}),(0,i.jsx)(r,{content:`The examples shown here are only a starting point.
 Once a time series has been encoded, it becomes easy to experiment with new ideas:
 searching for regime transitions, identifying recurring behavioural motifs, or building libraries of symbolic patterns that describe different market conditions.
-Because these searches are computationally inexpensive, analysts can test many hypotheses quickly and refine them iteratively.`}),(0,i.jsx)(r,{heading:`Experiments to Try`,content:`If you want to explore symbolic encoding further, here are a few practical experiments you can try using the techniques introduced in this article:`}),(0,i.jsx)(r,{lead:`1. Detect regime transitions`,content:`Instead of searching for single regimes, try detecting transitions between regimes. For example:
-
-A{3,}E{3,}
-
-could represent a shift from calm markets to high volatility. Searching for these transitions can help identify periods where market conditions changed rapidly.`}),(0,i.jsx)(r,{lead:`2. Compare patterns across assets`,content:`Apply the same encoding method to different assets, for example SPY, QQQ, or individual equities, and compare their symbolic sequences.
+Because these searches are computationally inexpensive, analysts can test many hypotheses quickly and refine them iteratively.`}),(0,i.jsx)(r,{heading:`Experiments to Try`,content:`If you want to explore symbolic encoding further, here are a few practical experiments you can try using the techniques introduced in this article:`}),(0,i.jsx)(r,{lead:`1. Detect regime transitions`,content:`Instead of searching for single regimes, try detecting transitions between regimes. For example:`}),(0,i.jsx)(r,{content:`A{3,}E{3,}`}),(0,i.jsx)(r,{content:`could represent a shift from calm markets to high volatility. Searching for these transitions can help identify periods where market conditions changed rapidly.`}),(0,i.jsx)(r,{lead:`2. Compare patterns across assets`,content:`Apply the same encoding method to different assets, for example SPY, QQQ, or individual equities, and compare their symbolic sequences.
 Because SAX normalises the data, you can directly compare patterns across time series with very different price levels or volatility scales.`}),(0,i.jsx)(r,{lead:`3. Explore parameter sensitivity`,content:`Small changes to encoding parameters can dramatically change the symbolic sequence.
-Try adjusting the number of symbols, the rolling volatility window in VRE, and the segment length in SAX, and observe how these changes affect the patterns that appear in the encoded data.
-
-The most interesting applications will likely come from combining symbolic encodings with domain knowledge and creative pattern design. The tools are simple, but the space of possible experiments is surprisingly large.`})]})}export{o as default,a as meta};
+Try adjusting the number of symbols, the rolling volatility window in VRE, and the segment length in SAX, and observe how these changes affect the patterns that appear in the encoded data.`}),(0,i.jsx)(r,{content:`The most interesting applications will likely come from combining symbolic encodings with domain knowledge and creative pattern design. The tools are simple, but the space of possible experiments is surprisingly large.`})]})}export{o as default,a as meta};
