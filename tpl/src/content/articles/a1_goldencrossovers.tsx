@@ -8,13 +8,13 @@ import all_results from "@/content/articles/a1_goldencrossovers/all_results.png"
 import crossover_parameters from "@/content/articles/a1_goldencrossovers/crossover_parameters.png"
 
 export const meta: PostMeta = {
-    title: "Can the Golden Cross Beat Passive Investment?",
+    title: "Can the Golden Cross Strategy Beat Buy and Hold?",
     description:
-        "A comparison of the Golden Cross technical trading strategy against simple Buy & Hold over a 10-year horizon.",
+        "A 10-year comparison of the Golden Cross trading strategy versus buy and hold across BHP, Apple, and Bitcoin.",
     date: "2025-02-10",
     tags: ["algorithms", "python", "portfolio management", "technical analysis"],
     type: "article",
-    slug: "a1_goldencrossovers",
+    slug: "golden-cross-vs-buy-and-hold",
 }
 
 export default function Article() {

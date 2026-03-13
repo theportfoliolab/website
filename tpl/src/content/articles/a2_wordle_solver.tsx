@@ -6,13 +6,13 @@ import model_score_distribution from "@/content/articles/a2_wordle_solver/model_
 
 
 export const meta: PostMeta = {
-    title: "Solving Wordle: A Novice Approach",
+    title: "How to Solve Wordle with Greedy Heuristics and Dynamic Programming",
     description:
-        "An exploratory investigation into solving Wordle using greedy heuristics and dynamic programming.",
+        "An exploratory Wordle solver built with greedy heuristics, information gain, and dynamic programming.",
     date: "2025-12-28",
     tags: ["algorithms", "python", "dynamic programming", "information theory", "fun", "off topic"],
     type: "article",
-    slug: "a2_wordle_solver"
+    slug: "wordle-solver-greedy-dynamic-programming"
 }
 
 export default function Article() {

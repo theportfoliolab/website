@@ -7,6 +7,7 @@ const THEME_STORAGE_KEY = "tpl-theme"
 const DEFAULT_THEME: ThemePreference = "auto"
 const AUTO_DARK_START_HOUR = 18
 const AUTO_DARK_END_HOUR = 6
+const canUseDOM = typeof window !== "undefined" && typeof document !== "undefined"
 
 type ThemeContextValue = {
     theme: ThemePreference
@@ -27,12 +28,14 @@ function resolveTheme(theme: ThemePreference): ResolvedTheme {
 }
 
 function applyResolvedTheme(theme: ResolvedTheme) {
+    if (!canUseDOM) return
     const root = document.documentElement
     root.classList.toggle("dark", theme === "dark")
     root.dataset.theme = theme
 }
 
 function getInitialTheme(): ThemePreference {
+    if (!canUseDOM) return DEFAULT_THEME
     const stored = window.localStorage.getItem(THEME_STORAGE_KEY)
     if (stored === "light" || stored === "dark" || stored === "auto") {
         return stored
@@ -43,9 +46,12 @@ function getInitialTheme(): ThemePreference {
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [theme, setThemeState] = React.useState<ThemePreference>(() => getInitialTheme())
-    const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>(() => resolveTheme(getInitialTheme()))
+    const [resolvedTheme, setResolvedTheme] = React.useState<ResolvedTheme>(() =>
+        resolveTheme(getInitialTheme())
+    )
 
     React.useEffect(() => {
+        if (!canUseDOM) return
         const nextResolved = resolveTheme(theme)
         setResolvedTheme(nextResolved)
         applyResolvedTheme(nextResolved)
@@ -53,6 +59,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     }, [theme])
 
     React.useEffect(() => {
+        if (!canUseDOM) return
         if (theme !== "auto") return
         const interval = window.setInterval(() => {
             const nextResolved = resolveTheme("auto")

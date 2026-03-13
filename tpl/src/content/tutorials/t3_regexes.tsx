@@ -7,13 +7,13 @@ import type { PostMeta } from "@/components/content/types"
 // Metadata (REQUIRED for routing)
 // ─────────────────────────────────────────────
 export const meta: PostMeta = {
-    title: "Introduction to Regular Expressions in Python",
+    title: "Regular Expressions in Python: A Practical Introduction",
     description:
-        "A tutorial introducing regular expressions (regex) in Python. Covers characters, patterns, and matching, as well as a simple python implementation.",
+        "A practical introduction to regular expressions in Python, covering syntax, matching, grouping, quantifiers, and example code.",
     date: "2026-02-10",
     tags: ["python", "analysis", "regex"],
     type: "tutorial",
-    slug: "t3_regexes"
+    slug: "python-regular-expressions-introduction"
 }
 
 // ─────────────────────────────────────────────

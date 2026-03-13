@@ -1,98 +1,34 @@
-// src/pages/Articles.tsx
-import * as React from "react"
 import { NavLink, useParams } from "react-router-dom"
 import { Card, CardDescription } from "@/components/ui/card"
-import type { PostMeta } from "@/components/content/types"
 import ArticleLayout from "@/components/layout/articlelayout"
-
-// Import all article components + metadata
-const articleModules = import.meta.glob("@/content/articles/*.tsx") as Record<
-    string,
-    () => Promise<{ default: React.ComponentType<any>; meta: PostMeta }>
->
+import { articlePosts, getArticleBySlug } from "@/content/registry"
+import { formatIsoDate } from "@/lib/date"
+import NotFound from "./NotFound"
 
 export default function Articles() {
     const { slug } = useParams<{ slug?: string }>()
 
-    const [list, setList] = React.useState<
-        { slug: string; title: string; date: string; key: string; meta: PostMeta }[]
-    >([])
-    const [Component, setComponent] = React.useState<React.ComponentType<any> | null>(null)
-    const [meta, setMeta] = React.useState<PostMeta | null>(null)
-
-    // ─────────────────────────────────────────────────────────────
-    // Load metadata for all posts
-    // ─────────────────────────────────────────────────────────────
-    React.useEffect(() => {
-        const loadAll = async () => {
-            const entries: { slug: string; title: string; date: string; key: string; meta: PostMeta }[] =
-                []
-
-            for (const [key, loader] of Object.entries(articleModules)) {
-                const mod = await loader()
-                entries.push({
-                    key,
-                    slug: mod.meta.slug,
-                    title: mod.meta.title,
-                    date: mod.meta.date,
-                    meta: mod.meta,
-                })
-            }
-
-            // Newest → Oldest
-            entries.sort((a, b) => b.date.localeCompare(a.date))
-            setList(entries)
-        }
-
-        loadAll()
-    }, [])
-
-    // ─────────────────────────────────────────────────────────────
-    // If a slug is provided → load that article
-    // ─────────────────────────────────────────────────────────────
-    React.useEffect(() => {
-        if (!slug) {
-            setComponent(null)
-            setMeta(null)
-            return
-        }
-
-        const loadOne = async () => {
-            const match = list.find((p) => p.slug === slug)
-            if (!match) {
-                setComponent(null)
-                setMeta(null)
-                return
-            }
-
-            const mod = await articleModules[match.key]()
-            setComponent(() => mod.default)
-            setMeta(mod.meta)
-        }
-
-        loadOne()
-    }, [slug, list])
-
-    // ─────────────────────────────────────────────────────────────
-    // LIST VIEW
-    // ─────────────────────────────────────────────────────────────
     if (!slug) {
         return (
             <div className="px-md py-2xl rounded-lg bg-primary-light-bg dark:bg-primary-dark-bg text-primary-light-fg dark:text-primary-dark-fg">
                 <h1 className="text-pageTitle font-pageTitle my-8">Articles</h1>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {list.map((p) => (
-                        <NavLink key={p.slug} to={`/articles/${p.slug}`} className="no-underline">
+                    {articlePosts.map((post) => (
+                        <NavLink
+                            key={post.meta.slug}
+                            to={`/articles/${post.meta.slug}`}
+                            className="no-underline"
+                        >
                             <Card className="h-full p-6 flex flex-col gap-2 hover:shadow-lg transition-shadow">
-                                <h3 className="text-subheading font-subheading mb-0">{p.title}</h3>
+                                <h3 className="text-subheading font-subheading mb-0">{post.meta.title}</h3>
                                 <p className="text-tiny font-tiny opacity-60 mt-0">
-                                    {new Date(p.date).toLocaleDateString()}
+                                    {formatIsoDate(post.meta.date)}
                                 </p>
                                 <CardDescription className="text-muted-foreground mt-2 flex-grow">
-                                    {p.meta.description}
+                                    {post.meta.description}
                                 </CardDescription>
-                                <div className="mt-3 text-primary/80 text-body">Read →</div>
+                                <div className="mt-3 text-primary/80 text-body">Read -&gt;</div>
                             </Card>
                         </NavLink>
                     ))}
@@ -101,21 +37,15 @@ export default function Articles() {
         )
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // ARTICLE VIEW
-    // ─────────────────────────────────────────────────────────────
-    if (!meta) {
-        // Loading state while we resolve the slug
-        return (
-            <main className="mx-auto w-full max-w-3xl px-md py-2xl rounded-lg bg-primary-light-bg dark:bg-primary-dark-bg text-primary-light-fg dark:text-primary-dark-fg">
-                <p>Loading…</p>
-            </main>
-        )
+    const article = getArticleBySlug(slug)
+    if (!article) {
+        return <NotFound />
     }
+    const Component = article.Component
 
     return (
-        <ArticleLayout meta={meta}>
-            {Component ? <Component /> : <p>Loading…</p>}
+        <ArticleLayout meta={article.meta}>
+            <Component />
         </ArticleLayout>
     )
 }

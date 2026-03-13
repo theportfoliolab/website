@@ -11,10 +11,12 @@ import Contact from "./pages/Contact"
 import NotFound from "./pages/NotFound"
 
 import { MainLayout } from "@/components/layout/MainLayout"
+import { DocumentMetadata } from "@/components/DocumentMetadata"
 
 function App() {
     return (
         <MainLayout>
+            <DocumentMetadata />
             <Routes>
                 <Route path="/" element={<Home />} />
 

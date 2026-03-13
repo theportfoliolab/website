@@ -9,13 +9,12 @@ import {
 import { Logo } from "@/components/ui/logo";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "@/lib/theme";
+import { formatIsoDate } from "@/lib/date";
 
 const NAV_PAGES = ["Articles", "Tutorials", "About"] as const;
 
 export function Header() {
-    const { theme, resolvedTheme, toggleTheme } = useTheme()
-    const themeLabel =
-        theme === "auto" ? `Auto (${resolvedTheme})` : theme === "dark" ? "Dark" : "Light"
+    const { toggleTheme } = useTheme()
 
     return (
         <header
@@ -84,7 +83,7 @@ export function Header() {
           "
                     aria-label="Cycle theme mode"
                 >
-                    Theme: {themeLabel}
+                    Toggle theme
                 </button>
             </div>
         </header>
@@ -106,7 +105,7 @@ export function ContentHeader({ title, description, date, tags }: ContentHeaderP
                 {description}
             </h4>
             <p className="text-tiny font-tiny text-secondary-light-fg dark:text-secondary-dark-fg opacity-80 my-xs">
-                Published on {new Date(date).toLocaleDateString()}
+                Published on {formatIsoDate(date)}
             </p>
 
             {tags && (

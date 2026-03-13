@@ -6,13 +6,13 @@ import type { PostMeta } from "@/components/content/types"
 // Metadata (REQUIRED for routing)
 // ─────────────────────────────────────────────
 export const meta: PostMeta = {
-    title: "Data Cleaning in Pandas",
+    title: "How to Clean Financial Data in Pandas",
     description:
-        "A tutorial on detecting, inspecting, and cleaning real-world financial data using pandas.",
+        "A practical pandas tutorial on cleaning financial data, handling missing values, fixing types, and preparing datasets for analysis.",
     date: "2025-02-20",
     tags: ["python", "pandas", "data cleaning"],
     type: "tutorial",
-    slug: "t2_data_cleaning_pandas"
+    slug: "clean-financial-data-in-pandas"
 }
 
 // ─────────────────────────────────────────────

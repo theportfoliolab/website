@@ -5,11 +5,11 @@ import type { PostMeta } from "@/components/content/types"
 export const meta: PostMeta = {
     title: "Symbolic Encoding for Financial Time Series",
     description:
-        "A practical introduction to symbolic encoding for financial time series, covering QSE, SAX, VRE, and the performance benefits of preprocessing data into symbolic sequences.",
+        "A practical guide to symbolic encoding for financial time series using QSE, SAX, and volatility regime encoding.",
     date: "2026-03-10",
     tags: ["python", "finance", "analysis", "time series", "regex"],
     type: "article",
-    slug: "a3_symbolic_encoding"
+    slug: "symbolic-encoding-financial-time-series"
 }
 
 export default function Article() {

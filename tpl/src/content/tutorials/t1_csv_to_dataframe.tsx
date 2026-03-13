@@ -1,4 +1,3 @@
-import ArticleLayout from "@/components/layout/articlelayout"
 import { Text } from "@/components/content/text"
 import type { PostMeta } from "@/components/content/types"
 
@@ -6,13 +5,13 @@ import type { PostMeta } from "@/components/content/types"
 // Metadata (REQUIRED for routing)
 // ─────────────────────────────────────────────
 export const meta: PostMeta = {
-    title: "Working With CSVs and DataFrames in Python",
+    title: "How to Work With CSV Files and Pandas DataFrames in Python",
     description:
-        "A tutorial introducing CSV files and DataFrames in Python using pandas. Covers loading, exploring, selecting, modifying, and saving data.",
+        "A beginner-friendly Python tutorial on CSV files and pandas DataFrames, including loading, exploring, modifying, and saving data.",
     date: "2025-02-12",
     tags: ["python", "pandas", "data cleaning", "csv"],
     type: "tutorial",
-    slug: "t1_csv_to_dataframe",
+    slug: "python-csv-and-pandas-dataframes",
 }
 
 // ─────────────────────────────────────────────
@@ -20,7 +19,7 @@ export const meta: PostMeta = {
 // ─────────────────────────────────────────────
 export default function Tutorial() {
     return (
-        <ArticleLayout meta={meta}>
+        <>
             <Text
                 heading="Introduction"
                 content={`Financial analysis using Python usually involves some kind of series,
@@ -195,6 +194,6 @@ print(df[["Date", "High", "Low", "Range"]].head())`}
                 content={`Best Practice:
 Keep a backup…`}
             />
-        </ArticleLayout>
+        </>
     )
 }
