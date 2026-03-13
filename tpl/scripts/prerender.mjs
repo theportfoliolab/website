@@ -76,3 +76,18 @@ for (const route of prerenderRoutes) {
 
 const notFoundHtml = injectTemplate(render(notFoundRoute.path), notFoundRoute)
 await fs.writeFile(path.join(distDir, "404.html"), notFoundHtml)
+
+const sitemapEntries = prerenderRoutes
+    .map((route) => {
+        const lastmod = route.lastModified ? `\n    <lastmod>${route.lastModified}</lastmod>` : ""
+        return `  <url>\n    <loc>${route.canonicalUrl}</loc>${lastmod}\n  </url>`
+    })
+    .join("\n")
+
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapEntries}
+</urlset>
+`
+
+await fs.writeFile(path.join(distDir, "sitemap.xml"), sitemapXml)

@@ -7,6 +7,7 @@ export type PrerenderRoute = {
     description: string
     canonicalUrl: string
     robots?: string
+    lastModified?: string
 }
 
 const siteName = siteConfig.name
@@ -54,6 +55,7 @@ const articleRoutes = articlePosts.map((post) =>
         path: `/articles/${post.meta.slug}`,
         title: `${post.meta.title} | ${siteName}`,
         description: post.meta.description,
+        lastModified: post.meta.date,
     })
 )
 
@@ -62,6 +64,7 @@ const tutorialRoutes = tutorialPosts.map((post) =>
         path: `/tutorials/${post.meta.slug}`,
         title: `${post.meta.title} | ${siteName}`,
         description: post.meta.description,
+        lastModified: post.meta.date,
     })
 )
 
