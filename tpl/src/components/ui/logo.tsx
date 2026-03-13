@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
-import logoLightUrl from "@/assets/logo.svg";
-import logoDarkUrl from "@/assets/logo-dark.svg";
+import { SiteLogoSvg } from "@/components/ui/site-logo-svg";
 
 interface LogoProps {
     className?: string;
@@ -14,16 +13,7 @@ export function Logo({ className }: LogoProps) {
             aria-label="Home"
             className={cn("inline-flex items-center shrink-0 leading-none", className)}
         >
-            <img
-                src={logoLightUrl}
-                alt="ThePortfolioLab Logo"
-                className="h-full w-auto md:-translate-y-1 dark:hidden"
-            />
-            <img
-                src={logoDarkUrl}
-                alt="ThePortfolioLab Logo"
-                className="h-full w-auto md:-translate-y-1 hidden dark:inline"
-            />
+            <SiteLogoSvg className="h-full w-auto md:-translate-y-1 text-primary-light-fg dark:text-primary-dark-fg" />
         </Link>
     );
 }

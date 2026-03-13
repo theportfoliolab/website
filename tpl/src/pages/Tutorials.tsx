@@ -1,7 +1,7 @@
 // src/pages/Tutorials.tsx
 import * as React from "react"
 import { NavLink, useParams } from "react-router-dom"
-import { Card } from "@/components/ui/card"
+import { Card, CardDescription } from "@/components/ui/card"
 import type { PostMeta } from "@/components/content/types"
 
 // ✅ use the same layout as articles
@@ -79,7 +79,7 @@ export default function Tutorials() {
     // ─────────────────────────────────────────────────────────────
     if (!slug) {
         return (
-            <div className="px-md py-2xl">
+            <div className="px-md py-2xl rounded-lg bg-primary-light-bg dark:bg-primary-dark-bg text-primary-light-fg dark:text-primary-dark-fg">
                 <h1 className="text-pageTitle font-pageTitle my-8">Tutorials</h1>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -88,7 +88,9 @@ export default function Tutorials() {
                             <Card className="h-full p-6 flex flex-col gap-2 hover:shadow-lg transition-shadow">
                                 <h3 className="text-subheading font-subheading mb-0">{p.title}</h3>
                                 <p className="text-tiny font-tiny opacity-60 mt-0">{new Date(p.date).toLocaleDateString()}</p>
-                                <p className="text-body font-body text-muted-foreground mt-2 flex-grow">{p.meta.description}</p>
+                                <CardDescription className="text-muted-foreground mt-2 flex-grow">
+                                    {p.meta.description}
+                                </CardDescription>
                                 <div className="mt-3 text-primary/80 text-body">Read →</div>
                             </Card>
                         </NavLink>
@@ -103,7 +105,7 @@ export default function Tutorials() {
     // ─────────────────────────────────────────────────────────────
     if (!meta) {
         return (
-            <main className="mx-auto w-full max-w-6xl px-md py-2xl">
+            <main className="mx-auto w-full max-w-6xl px-md py-2xl rounded-lg bg-primary-light-bg dark:bg-primary-dark-bg text-primary-light-fg dark:text-primary-dark-fg">
                 <p>Loading…</p>
             </main>
         )

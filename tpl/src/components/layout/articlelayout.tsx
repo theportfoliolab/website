@@ -12,7 +12,9 @@ interface ArticleLayoutProps {
 
 export default function ArticleLayout({ meta, children, className }: ArticleLayoutProps) {
     return (
-        <div className={`mx-auto w-full min-w-0 max-w-6xl px-md py-2xl ${className ?? ""}`}>
+        <div
+            className={`mx-auto w-full min-w-0 max-w-6xl px-md py-2xl rounded-lg bg-primary-light-bg dark:bg-primary-dark-bg text-primary-light-fg dark:text-primary-dark-fg ${className ?? ""}`}
+        >
             <ContentHeader
                 title={meta.title}
                 description={meta.description}

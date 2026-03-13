@@ -54,7 +54,7 @@
     --color-popover-foreground: var(--primary-light-fg);
 
     --color-primary: var(--primary-light-accent);
-    --color-primary-foreground: var(--primary-light-bg);
+    --color-primary-foreground: var(--primary-light-fg);
 
     --color-secondary: var(--secondary-light-bg);
     --color-secondary-foreground: var(--secondary-light-fg);
@@ -64,6 +64,8 @@
 
     --color-accent: var(--primary-light-accent);
     --color-accent-foreground: var(--primary-light-bg);
+    --color-destructive: var(--destructive-light-bg);
+    --color-destructive-foreground: var(--destructive-light-fg);
 
     /* keep these if you rely on them */
     --color-border: var(--secondary-light-fg);
@@ -79,7 +81,7 @@
     --font-pageTitle-opacity: 1;
     --font-pageTitle-lineHeight: 1.1;
 
-    --font-subheading-size: 3.2rem;
+    --font-subheading-size: 2rem;
     --font-subheading-weight: 500;
     --font-subheading-style: normal;
     --font-subheading-letterSpacing: normal;
@@ -137,7 +139,7 @@
 
     /* ---- mobile typography tokens ---- */
     --font-pageTitle-mobile-size: 2.1rem;
-    --font-subheading-mobile-size: 1.55rem;
+    --font-subheading-mobile-size: 1.3rem;
     --font-sectionTitle-mobile-size: 1.35rem;
     --font-lead-mobile-size: 1.1rem;
     --font-body-mobile-size: 0.95rem;
@@ -166,6 +168,13 @@
     --secondary-dark-fg: #EEEFE6;
     --secondary-dark-accent: #98BD92;
     --secondary-dark-link: #91A5F7;
+
+    --destructive-light-bg: #464F54;
+    --destructive-light-fg: #FDFBF7;
+    --destructive-dark-bg: #EEEFE6;
+    --destructive-dark-fg: #0E0C21;
+
+    --logo-accent: var(--primary-light-accent);
 }
 
 /* Dark mode: switch the semantic aliases, not every utility name */
@@ -180,7 +189,7 @@
     --color-popover-foreground: var(--primary-dark-fg);
 
     --color-primary: var(--primary-dark-accent);
-    --color-primary-foreground: var(--primary-dark-bg);
+    --color-primary-foreground: var(--primary-dark-fg);
 
     --color-secondary: var(--secondary-dark-bg);
     --color-secondary-foreground: var(--secondary-dark-fg);
@@ -190,10 +199,22 @@
 
     --color-accent: var(--primary-dark-accent);
     --color-accent-foreground: var(--primary-dark-bg);
+    --color-destructive: var(--destructive-dark-bg);
+    --color-destructive-foreground: var(--destructive-dark-fg);
 
     --color-border: var(--secondary-dark-fg);
     --color-input: var(--secondary-dark-fg);
     --color-ring: var(--primary-dark-accent);
+
+    --logo-accent: var(--primary-dark-accent);
+}
+
+.site-logo .logo-ink {
+    fill: var(--logo-ink, currentColor);
+}
+
+.site-logo .logo-accent {
+    fill: var(--logo-accent, #3FC083);
 }
 
 @layer base {

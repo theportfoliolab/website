@@ -58,7 +58,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
             className={cn(
                 `
         text-secondary-light-fg dark:text-secondary-dark-fg
-        text-body font-body opacity-80
+        text-[0.9rem] leading-relaxed font-body opacity-80
         `,
                 className
             )}

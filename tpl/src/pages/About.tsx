@@ -12,7 +12,7 @@ export default function About() {
             <div className="flex flex-row gap-10 items-start max-md:flex-col">
 
                 {/* Left column — text */}
-                <div className="flex-1 space-y-4 leading-relaxed text-gray-800">
+                <div className="flex-1 space-y-4 leading-relaxed text-foreground/90">
                     <p>
                         ThePortfolioLab is a personal blog built to explore quantitative thinking, algorithmic trading,
                         investment analysis, and applied programming. This website brings

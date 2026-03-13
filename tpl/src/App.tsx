@@ -8,6 +8,7 @@ import About from "./pages/About"
 import Articles from "./pages/Articles"
 import Tutorials from "./pages/Tutorials"
 import Contact from "./pages/Contact"
+import NotFound from "./pages/NotFound"
 
 import { MainLayout } from "@/components/layout/MainLayout"
 
@@ -25,6 +26,7 @@ function App() {
 
                 <Route path="/tutorials" element={<Tutorials />} />
                 <Route path="/tutorials/:slug" element={<Tutorials />} />
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </MainLayout>
     )

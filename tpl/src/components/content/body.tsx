@@ -15,7 +15,7 @@ export default function Body({ children, className }: BodyProps) {
         flex flex-col
         gap-lg
         font-body text-body
-        text-foreground
+        text-primary-light-fg dark:text-primary-dark-fg
         leading-relaxed
         `,
                 className

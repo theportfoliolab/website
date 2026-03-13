@@ -12,11 +12,11 @@ interface ContentHeaderProps {
 export function ContentHeader({ title, description, date, tags, className }: ContentHeaderProps) {
     return (
         <header className={cn("w-full mb-2xl", className)}>
-            <h1 className="font-pageTitle leading-[1.1] my-sm break-words text-[2.4rem] sm:text-[3rem] lg:text-pageTitle">
+            <h1 className="font-pageTitle leading-[1.1] my-sm break-words text-[2.4rem] sm:text-[3rem] lg:text-pageTitle text-primary-light-fg dark:text-primary-dark-fg">
                 {title}
             </h1>
-            <p className="text-subheading text-muted-foreground">{description}</p>
-            <p className="text-tiny text-muted-foreground">
+            <p className="text-subheading text-secondary-light-fg dark:text-secondary-dark-fg">{description}</p>
+            <p className="text-tiny text-secondary-light-fg dark:text-secondary-dark-fg">
                 Published on {new Date(date).toLocaleDateString()}
             </p>
             {tags?.length ? <TagList tags={tags} /> : null}

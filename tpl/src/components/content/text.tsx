@@ -31,26 +31,26 @@ export function Text({
                      }: TextProps) {
     return (
         <section className={cn("flex flex-col gap-md", className)}>
-            {title && <h2 className="text-pageTitle">{title}</h2>}
+            {title && <h2 className="text-pageTitle text-primary-light-fg dark:text-primary-dark-fg">{title}</h2>}
 
-            {heading && <h3 className="text-sectionTitle">{heading}</h3>}
+            {heading && <h3 className="text-sectionTitle text-primary-light-fg dark:text-primary-dark-fg">{heading}</h3>}
 
-            {lead && <p className="text-lead">{lead}</p>}
+            {lead && <p className="text-lead text-primary-light-fg/80 dark:text-primary-dark-fg/80">{lead}</p>}
 
             {quote && (
-                <blockquote className="pl-md border-l-4 border-muted text-body italic opacity-80">
+                <blockquote className="pl-md border-l-4 border-muted text-body text-primary-light-fg/80 dark:text-primary-dark-fg/80 italic opacity-80">
                     {quote}
                 </blockquote>
             )}
 
-            {content && <p className="text-body">{content}</p>}
+            {content && <p className="text-body text-primary-light-fg dark:text-primary-dark-fg">{content}</p>}
 
             {code && <CodeBlock code={code} />}
 
             {bullets?.length ? (
                 <ul className="list-disc list-outside pl-lg flex flex-col gap-sm">
                     {bullets.map((b, i) => (
-                        <li key={i} className="text-body">
+                        <li key={i} className="text-body text-primary-light-fg dark:text-primary-dark-fg">
                             {b}
                         </li>
                     ))}

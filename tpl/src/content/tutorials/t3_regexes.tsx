@@ -1,4 +1,4 @@
-import Body from "@/components/content/body"
+ import Body from "@/components/content/body"
 import { Text } from "@/components/content/text.tsx"
 import Link from "@/components/content/link.tsx";
 import type { PostMeta } from "@/components/content/types"

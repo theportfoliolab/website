@@ -16,12 +16,19 @@
     <!-- Optional: SEO / description -->
     <meta name="description" content="The Portfolio Lab – Finance and tech projects hub" />
 
-    <!-- Optional: GitHub Pages SPA fallback -->
-    <script type="text/javascript">
-        // If user refreshes a subpage on GitHub Pages, redirect to index.html
-        if (location.pathname !== '/' && !document.getElementById('root').innerHTML) {
-            window.location.href = '/';
-        }
+    <script>
+        (function () {
+            const key = "tpl-theme";
+            const stored = localStorage.getItem(key);
+            const preference = stored === "light" || stored === "dark" || stored === "auto"
+                ? stored
+                : "auto";
+            const hour = new Date().getHours();
+            const autoDark = hour >= 18 || hour < 6;
+            const resolved = preference === "auto" ? (autoDark ? "dark" : "light") : preference;
+            document.documentElement.classList.toggle("dark", resolved === "dark");
+            document.documentElement.dataset.theme = resolved;
+        })();
     </script>
 
 </head>

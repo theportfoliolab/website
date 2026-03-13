@@ -21,13 +21,13 @@ export function Subsection({
     return (
         <section className={cn("flex flex-col gap-md", className)}>
             {title && (
-                <h3 className="font-sectionTitle text-sectionTitle">
+                <h3 className="font-sectionTitle text-sectionTitle text-primary-light-fg dark:text-primary-dark-fg">
                     {title}
                 </h3>
             )}
 
             {subtitle && (
-                <p className="font-body text-body opacity-80">
+                <p className="font-body text-body text-primary-light-fg/80 dark:text-primary-dark-fg/80 opacity-80">
                     {subtitle}
                 </p>
             )}

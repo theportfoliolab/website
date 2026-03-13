@@ -1,7 +1,7 @@
 // src/pages/Articles.tsx
 import * as React from "react"
 import { NavLink, useParams } from "react-router-dom"
-import { Card } from "@/components/ui/card"
+import { Card, CardDescription } from "@/components/ui/card"
 import type { PostMeta } from "@/components/content/types"
 import ArticleLayout from "@/components/layout/articlelayout"
 
@@ -78,7 +78,7 @@ export default function Articles() {
     // ─────────────────────────────────────────────────────────────
     if (!slug) {
         return (
-            <div className="px-md py-2xl">
+            <div className="px-md py-2xl rounded-lg bg-primary-light-bg dark:bg-primary-dark-bg text-primary-light-fg dark:text-primary-dark-fg">
                 <h1 className="text-pageTitle font-pageTitle my-8">Articles</h1>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -89,9 +89,9 @@ export default function Articles() {
                                 <p className="text-tiny font-tiny opacity-60 mt-0">
                                     {new Date(p.date).toLocaleDateString()}
                                 </p>
-                                <p className="text-body font-body text-muted-foreground mt-2 flex-grow">
+                                <CardDescription className="text-muted-foreground mt-2 flex-grow">
                                     {p.meta.description}
-                                </p>
+                                </CardDescription>
                                 <div className="mt-3 text-primary/80 text-body">Read →</div>
                             </Card>
                         </NavLink>
@@ -107,7 +107,7 @@ export default function Articles() {
     if (!meta) {
         // Loading state while we resolve the slug
         return (
-            <main className="mx-auto w-full max-w-3xl px-md py-2xl">
+            <main className="mx-auto w-full max-w-3xl px-md py-2xl rounded-lg bg-primary-light-bg dark:bg-primary-dark-bg text-primary-light-fg dark:text-primary-dark-fg">
                 <p>Loading…</p>
             </main>
         )

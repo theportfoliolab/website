@@ -3,12 +3,15 @@ import { BrowserRouter } from "react-router-dom"
 import { StrictMode } from "react"
 import "./index.css"
 import App from "./App"
+import { ThemeProvider } from "@/lib/theme"
 
 const root = createRoot(document.getElementById("root")!)
 root.render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>
 )

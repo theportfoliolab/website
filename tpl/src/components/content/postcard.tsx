@@ -1,6 +1,6 @@
 // src/components/content/postcard.tsx
 import { NavLink } from "react-router-dom";
-import { Card } from "@/components/ui/card";
+import { Card, CardDescription } from "@/components/ui/card";
 import type { PostMeta } from "./types";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +19,7 @@ export function PostCard({ meta, className }: PostCardProps) {
                 <p className="text-sm opacity-60 mt-0">
                     {meta.type} · {new Date(meta.date).toLocaleDateString()}
                 </p>
-                <p className="text-sm text-muted-foreground mt-2 flex-grow">{meta.description}</p>
+                <CardDescription className="text-muted-foreground mt-2 flex-grow">{meta.description}</CardDescription>
                 <div className="mt-3 text-primary/80 text-sm">Open →</div>
             </Card>
         </NavLink>

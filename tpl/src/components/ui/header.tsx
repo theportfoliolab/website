@@ -8,10 +8,15 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Logo } from "@/components/ui/logo";
 import { NavLink } from "react-router-dom";
+import { useTheme } from "@/lib/theme";
 
 const NAV_PAGES = ["Articles", "Tutorials", "About"] as const;
 
 export function Header() {
+    const { theme, resolvedTheme, toggleTheme } = useTheme()
+    const themeLabel =
+        theme === "auto" ? `Auto (${resolvedTheme})` : theme === "dark" ? "Dark" : "Light"
+
     return (
         <header
             className="
@@ -67,6 +72,20 @@ export function Header() {
                         ))}
                     </NavigationMenuList>
                 </NavigationMenu>
+
+                <button
+                    type="button"
+                    onClick={toggleTheme}
+                    className="
+            self-start md:self-auto
+            cursor-pointer rounded-md border border-border
+            bg-background px-sm py-xs text-tiny font-tiny
+            hover:bg-muted transition-colors
+          "
+                    aria-label="Cycle theme mode"
+                >
+                    Theme: {themeLabel}
+                </button>
             </div>
         </header>
     );

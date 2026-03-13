@@ -1,7 +1,7 @@
 // src/pages/Home.tsx
 import * as React from "react"
 import { NavLink } from "react-router-dom"
-import { Card } from "@/components/ui/card"
+import { Card, CardDescription } from "@/components/ui/card"
 import type { PostMeta } from "@/components/content/types"
 import TagPill from "@/components/content/tagpill"
 import { Container } from "@/components/layout/pagecontainer"
@@ -157,9 +157,9 @@ Each piece is built on a simple principle: financial ideas should be tested, mea
                                             {p.meta.title}
                                         </h3>
 
-                                        <p className="text-body opacity-80 mt-sm">
+                                        <CardDescription className="mt-sm">
                                             {p.meta.description}
-                                        </p>
+                                        </CardDescription>
 
                                         <div className="mt-md text-primary/80 text-sm">Open →</div>
                                     </Card>
