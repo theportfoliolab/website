@@ -12,7 +12,8 @@ export const meta: PostMeta = {
     date: "2025-12-28",
     tags: ["algorithms", "python", "dynamic programming", "information theory", "fun", "off topic"],
     type: "article",
-    slug: "wordle-solver-greedy-dynamic-programming"
+    slug: "wordle-solver-greedy-dynamic-programming",
+    nextInSeriesSlug: "golden-cross-vs-buy-and-hold",
 }
 
 export default function Article() {

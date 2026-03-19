@@ -9,7 +9,8 @@ export const meta: PostMeta = {
     date: "2026-03-10",
     tags: ["python", "finance", "analysis", "time series", "regex"],
     type: "article",
-    slug: "symbolic-encoding-financial-time-series"
+    slug: "symbolic-encoding-financial-time-series",
+    nextInSeriesSlug: "python-regular-expressions-introduction",
 }
 
 export default function Article() {

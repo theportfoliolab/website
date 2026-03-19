@@ -36,6 +36,10 @@ export const allPosts = [...articlePosts, ...tutorialPosts].sort((a, b) =>
     b.meta.date.localeCompare(a.meta.date)
 )
 
+export function getPostBySlug(slug: string) {
+    return allPosts.find((post) => post.meta.slug === slug) ?? null
+}
+
 export function getArticleBySlug(slug: string) {
     return articlePosts.find((post) => post.meta.slug === slug) ?? null
 }

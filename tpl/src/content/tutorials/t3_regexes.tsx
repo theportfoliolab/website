@@ -13,7 +13,8 @@ export const meta: PostMeta = {
     date: "2026-02-10",
     tags: ["python", "analysis", "regex"],
     type: "tutorial",
-    slug: "python-regular-expressions-introduction"
+    slug: "python-regular-expressions-introduction",
+    nextInSeriesSlug: "symbolic-encoding-financial-time-series",
 }
 
 // ─────────────────────────────────────────────

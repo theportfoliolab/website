@@ -14,7 +14,7 @@ export function PostCard({ meta, className }: PostCardProps) {
 
     return (
         <NavLink to={postUrl} className="no-underline">
-            <Card className={cn("h-full py-6 flex flex-col gap-2 hover:shadow-lg transition-shadow", className)}>
+            <Card className={cn("h-full p-6 flex flex-col gap-2 hover:shadow-lg transition-shadow", className)}>
                 <h3 className="text-lg font-semibold mb-0">{meta.title}</h3>
                 <p className="text-sm opacity-60 mt-0">
                     {meta.type} · {formatIsoDate(meta.date)}

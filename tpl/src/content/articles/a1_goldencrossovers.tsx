@@ -15,6 +15,7 @@ export const meta: PostMeta = {
     tags: ["algorithms", "python", "portfolio management", "technical analysis"],
     type: "article",
     slug: "golden-cross-vs-buy-and-hold",
+    nextInSeriesSlug: "python-csv-and-pandas-dataframes",
 }
 
 export default function Article() {

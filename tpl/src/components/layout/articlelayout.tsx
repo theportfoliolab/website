@@ -2,6 +2,7 @@
 import type { ReactNode } from "react"
 import Body from "@/components/content/body"
 import ContentHeader from "@/components/content/contentheader"
+import SeriesFooter from "@/components/content/series-footer"
 import type { PostMeta } from "@/components/content/types"
 
 interface ArticleLayoutProps {
@@ -26,6 +27,8 @@ export default function ArticleLayout({ meta, children, className }: ArticleLayo
             <Body className="w-full">
                 {children}
             </Body>
+
+            <SeriesFooter currentPost={meta} />
         </div>
     )
 }

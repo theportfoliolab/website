@@ -12,7 +12,8 @@ export const meta: PostMeta = {
     date: "2025-02-20",
     tags: ["python", "pandas", "data cleaning"],
     type: "tutorial",
-    slug: "clean-financial-data-in-pandas"
+    slug: "clean-financial-data-in-pandas",
+    nextInSeriesSlug: "symbolic-encoding-financial-time-series",
 }
 
 // ─────────────────────────────────────────────

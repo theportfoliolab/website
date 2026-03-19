@@ -5,10 +5,10 @@ export interface PostMeta {
     tags: string[]
     type: "article" | "tutorial"
     slug: string
+    nextInSeriesSlug?: string
 }
 
 export interface Post {
     meta: PostMeta
     Component: React.ComponentType<any>
 }
-

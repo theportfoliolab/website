@@ -5,6 +5,7 @@ export interface PostMeta {
     tags: string[];
     type: "article" | "tutorial";
     slug: string;
+    nextInSeriesSlug?: string;
 }
 
 export interface Post {
