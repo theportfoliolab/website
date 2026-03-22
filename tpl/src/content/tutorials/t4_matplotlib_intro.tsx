@@ -28,8 +28,6 @@ export const meta: PostMeta = {
 export default function Tutorial() {
     return (
         <Body>
-            <Text title="Introduction to Matplotlib (Python Tutorial)" lead="A practical guide to creating clean 2D charts from scratch" />
-
             <Text
                 heading="1. Introduction"
                 lead="What this tutorial covers:"
