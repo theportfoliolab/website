@@ -12,11 +12,13 @@ import NotFound from "./pages/NotFound"
 
 import { MainLayout } from "@/components/layout/MainLayout"
 import { DocumentMetadata } from "@/components/DocumentMetadata"
+import { ScrollToTop } from "@/components/ScrollToTop"
 
 function App() {
     return (
         <MainLayout>
             <DocumentMetadata />
+            <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Home />} />
 

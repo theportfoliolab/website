@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom"
 import aboutImg from "@/assets/about-image.jpg"
 
 export default function About() {
@@ -51,13 +50,15 @@ export default function About() {
 
             {/* Contact button */}
             <div className="mt-10">
-                <NavLink
-                    to="/contact"
+                <a
+                    href="https://www.linkedin.com/in/asher-mckee-9b0182392/"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition"
                 >
                     Contact Me
-                </NavLink>
+                </a>
             </div>
         </div>
-    );
+    )
 }
