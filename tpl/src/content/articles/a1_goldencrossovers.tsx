@@ -6,6 +6,7 @@ import type { PostMeta } from "@/components/content/types"
 import average_bh from "@/content/articles/a1_goldencrossovers/average_bh.png"
 import all_results from "@/content/articles/a1_goldencrossovers/all_results.png"
 import crossover_parameters from "@/content/articles/a1_goldencrossovers/crossover_parameters.png"
+import out_of_sample from "@/content/articles/a1_goldencrossovers/out_of_sample.png"
 
 export const meta: PostMeta = {
     title: "Can the Golden Cross Strategy Beat Buy and Hold?",
@@ -21,6 +22,19 @@ export const meta: PostMeta = {
 export default function Article() {
     return (
         <>
+            <Text
+                lead="The golden cross is one of the most popular trading signals. It looks convincing—but when you test it properly, the results are far less impressive."
+                content="In this article, I compare a range of golden crossover strategies to a simple buy and hold approach across multiple assets. More importantly, I test whether the ‘best’ parameters actually hold up when applied to new data."
+            />
+            <Text
+                heading="TL;DR"
+                bullets={[
+                    "Golden cross signals are lagging indicators",
+                    "They generally underperform buy and hold over long horizons",
+                    "Optimising parameters can make results look better than they really are",
+                    "The ‘best’ parameters often fail when tested on new data (overfitting)",
+                ]}
+            />
             <Text
                 lead="Proponents of technical analysis of security pricing would have you believe that through superior trading methods, abnormal returns can be achieved. Investopedia defines the golden cross as:"
                 quote="“a pattern that occurs on a chart when a short term moving average crosses over a longer-term moving average to the upside.”"
@@ -83,6 +97,31 @@ export default function Article() {
 
             <Text
                 content="Here, we can make a better comparison between the two strategies. For all stocks, the Buy and Hold produced higher average return, but also at a higher volatility than the golden crossover. And it’s by no small margin—around 5-10% greater returns from the average Buy and Hold."
+            />
+
+            <Text
+                heading="Can we optimise the Golden Cross?"
+                lead="At this point, you might argue that the issue isn’t the strategy itself, but the parameters. Perhaps there is a ‘best’ combination of moving averages that performs well."
+                content="To test this, I selected the parameter set that produced the highest return for each asset over the historical sample, then applied those same parameters to a different portion of the data."
+            />
+
+            <ImageBlock
+                src={out_of_sample}
+                alt="Out of sample performance of optimised golden cross parameters"
+                className="w-full"
+            />
+
+            <Text
+                content="If the strategy is genuinely robust, we would expect similar performance when applied to new data. However, the results change significantly. The parameter combinations that appeared optimal in one sample often fail to replicate their performance out of sample."
+            />
+
+            <Text
+                lead="This is a classic example of overfitting."
+                content="By selecting parameters that perform best on historical data, we are not discovering a reliable strategy, we are simply finding patterns that happened to work in that specific sample. When applied to new data, those patterns often disappear."
+            />
+
+            <Text
+                content="In other words, we’re not finding a strategy: we’re optimising our losses."
             />
 
             <Text
