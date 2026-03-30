@@ -22,6 +22,18 @@ export const meta: PostMeta = {
 export default function Tutorial() {
     return (
         <Body>
+            <section className="flex flex-col gap-sm rounded-md border border-muted/40 bg-secondary-light-bg/40 p-md dark:bg-secondary-dark-bg/40">
+                <p className="text-lead text-primary-light-fg dark:text-primary-dark-fg">
+                    Here for the charts?{" "}
+                    <a
+                        href="#reusable-chart-templates"
+                        className="font-body text-primary-light-link underline underline-offset-4 transition-opacity hover:opacity-80 dark:text-primary-dark-link"
+                    >
+                        Click here to skip to the reusable templates
+                    </a>
+                </p>
+            </section>
+
             <Text
                 heading="From Basic Charts to Professional Visuals"
                 content={
@@ -764,6 +776,7 @@ if __name__ == "__main__":
     main()`}
             />
 
+            <div id="reusable-chart-templates" />
             <Text
                 heading="3. Building Reusable Chart Templates"
                 content={`So far, we have learned how to build charts step by step.
