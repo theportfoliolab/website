@@ -20,23 +20,6 @@ COLORS = {
 
 DEFAULT_LOGO_PATH = "logo.png"
 
-
-def add_logo_watermark(ax, logo_path=DEFAULT_LOGO_PATH, zoom=0.6, alpha=0.12):
-    image = mpimg.imread(logo_path)
-    imagebox = OffsetImage(image, zoom=zoom, alpha=alpha)
-
-    ab = AnnotationBbox(
-        imagebox,
-        (0.98, 0.02),
-        xycoords="axes fraction",
-        box_alignment=(1, 0),
-        frameon=False,
-        zorder=10,
-    )
-
-    ax.add_artist(ab)
-
-
 def setup_matplotlib_style():
     plt.rcParams["figure.figsize"] = (12, 7)
     plt.rcParams["figure.dpi"] = 100
@@ -73,6 +56,22 @@ def setup_matplotlib_style():
     plt.rcParams["grid.alpha"] = 0.25
     plt.rcParams["grid.linestyle"] = "--"
     plt.rcParams["grid.linewidth"] = 0.8
+
+
+def add_logo_watermark(ax, logo_path=DEFAULT_LOGO_PATH, zoom=0.6, alpha=0.12):
+    image = mpimg.imread(logo_path)
+    imagebox = OffsetImage(image, zoom=zoom, alpha=alpha)
+
+    ab = AnnotationBbox(
+        imagebox,
+        (0.98, 0.02),
+        xycoords="axes fraction",
+        box_alignment=(1, 0),
+        frameon=False,
+        zorder=10,
+    )
+
+    ax.add_artist(ab)
 
 
 def style_axes(fig, ax, grid=True, zero_line=False, watermark=True, watermark_path=DEFAULT_LOGO_PATH):
