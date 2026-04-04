@@ -9,6 +9,17 @@ COLORS = {
     "border": "#464F54",
 }
 
+SERIES_COLORS = [
+    "#3FC083",
+    "#0A95FF",
+    "#FF8A65",
+    "#7E57C2",
+    "#26A69A",
+    "#EC407A",
+    "#AB47BC",
+    "#FFA726",
+]
+
 def setup_matplotlib_style():
     plt.rcParams["figure.facecolor"] = COLORS["bg"]
     plt.rcParams["axes.facecolor"] = COLORS["bg"]
@@ -25,9 +36,7 @@ def setup_matplotlib_style():
     plt.rcParams["axes.titlesize"] = 16
     plt.rcParams["axes.labelsize"] = 12
 
-    plt.rcParams["axes.prop_cycle"] = cycler(
-        color=[COLORS["accent"], COLORS["benchmark"]]
-    )
+    plt.rcParams["axes.prop_cycle"] = cycler(color=SERIES_COLORS)
 
     plt.rcParams["axes.grid"] = False
     plt.rcParams["axes.axisbelow"] = True
@@ -108,4 +117,57 @@ def plot_excess_return(dates, excess_returns):
     ax.set_ylabel("Excess Return")
 
     plt.tight_layout()
+    plt.show()
+
+from pathlib import Path
+from analytics.calculations import cumulative_growth
+
+from pathlib import Path
+from analytics.calculations import cumulative_growth
+
+def plot_cumulative_performance(df, save_path: str | None = None):
+    fig, ax = plt.subplots()
+    style_axes(fig, ax, grid=True, zero_line=False)
+
+    # Plot each fund
+    for fund_name, group in df.groupby("fund_name"):
+        group = group.sort_values("date")
+
+        fund_cum = cumulative_growth(group["fund"])
+
+        ax.plot(
+            group["date"],
+            fund_cum,
+            linewidth=2.2,
+            zorder=3,
+            label=fund_name,
+        )
+
+    # Plot benchmark (assumes shared benchmark across funds)
+    benchmark_series = df.sort_values("date").drop_duplicates("date")
+    benchmark_cum = cumulative_growth(benchmark_series["benchmark"])
+
+    ax.plot(
+        benchmark_series["date"],
+        benchmark_cum,
+        linewidth=2.0,
+        linestyle="--",
+        color=COLORS["benchmark"],
+        zorder=2,
+        label="Benchmark",
+    )
+
+    ax.set_title("Fund Performance Comparison")
+    ax.set_xlabel("Date")
+    ax.set_ylabel("Growth Index")
+    ax.legend(frameon=False)
+
+    plt.tight_layout()
+
+    if save_path:
+        output_path = Path(save_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        plt.savefig(output_path, dpi=150)
+        print(f"\nChart saved to: {output_path}")
+
     plt.show()

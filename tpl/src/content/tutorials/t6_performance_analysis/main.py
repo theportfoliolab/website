@@ -1,7 +1,6 @@
-import pandas as pd
-
 from analytics.calculations import cumulative_growth, drawdown, excess_return
 from analytics.summaries import build_summary_table
+from analytics.transforms import load_returns
 from reporting.charts import (
     setup_matplotlib_style,
     plot_cumulative_performance,
@@ -9,52 +8,63 @@ from reporting.charts import (
     plot_excess_return,
 )
 
-def load_returns(path: str) -> pd.DataFrame:
-    df = pd.read_csv(path, parse_dates=["date"])
+import argparse
 
-    required_cols = {"date", "fund", "benchmark"}
-    if not required_cols.issubset(df.columns):
-        raise ValueError("Missing required columns")
-
-    df = df.sort_values("date")
-
-    if df["date"].duplicated().any():
-        raise ValueError("Duplicate dates detected")
-
-    if df.isnull().any().any():
-        raise ValueError("Missing values detected")
-
-    return df
-
-
-def main():
-    setup_matplotlib_style()
-
-    df = load_returns("data/sample_returns.csv")
-
-    fund = df["fund"]
-    benchmark = df["benchmark"]
-    dates = df["date"]
-
-    fund_cum = cumulative_growth(fund)
-    benchmark_cum = cumulative_growth(benchmark)
-
-    fund_dd = drawdown(fund_cum)
-    excess = excess_return(fund, benchmark)
-
-    summary = build_summary_table(
-        fund_cumulative=fund_cum,
-        benchmark_cumulative=benchmark_cum,
-        fund_drawdown=fund_dd,
-        excess_returns=excess,
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Fund performance comparison tool"
     )
 
-    print(summary)
+    parser.add_argument(
+        "input_path",
+        help="Path to a CSV file or folder of CSV files"
+    )
 
-    plot_cumulative_performance(dates, fund_cum, benchmark_cum)
-    plot_drawdown(dates, fund_dd)
-    plot_excess_return(dates, excess)
+    return parser.parse_args()
+
+
+from analytics.summaries import (
+    run_analysis,
+    rank_funds,
+    apply_monitoring_flags,
+)
+
+from analytics.transforms import load_returns
+from analytics.summaries import (
+    run_analysis,
+    rank_funds,
+    apply_monitoring_flags,
+)
+from reporting.outputs import format_summary, export_summary, print_flags
+from reporting.charts import (
+    setup_matplotlib_style,
+    plot_cumulative_performance,
+)
+
+def main():
+    args = parse_args()
+
+    setup_matplotlib_style()
+
+    df = load_returns(args.input_path)
+
+    if df["fund_name"].nunique() < 2:
+        print("Warning: only one fund identified, comparison output will be limited.")
+
+    summary = run_analysis(df)
+    ranked = rank_funds(summary)
+    monitored = apply_monitoring_flags(df, ranked)
+
+    formatted = format_summary(monitored)
+
+    export_summary(formatted)
+    print_flags(formatted)
+    print("\nFormatted summary:")
+    print(formatted)
+
+    plot_cumulative_performance(df, save_path="output/fund_comparison.png")
 
 
 if __name__ == "__main__":
     main()
+

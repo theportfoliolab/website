@@ -1,4 +1,5 @@
 import Body from "@/components/content/body"
+import Disclaimer from "@/components/content/disclaimer"
 import Link from "@/components/content/link"
 import { BlockMath } from "@/components/content/math"
 import { Text } from "@/components/content/text"
@@ -12,31 +13,32 @@ export const meta: PostMeta = {
     tags: ["python", "finance", "pandas", "matplotlib", "performance analysis"],
     type: "tutorial",
     slug: "fund-manager-performance-analysis-tool-python",
+    nextInSeriesSlug: "fund-manager-performance-analysis-tool-python-part-2",
 }
 
 export default function Tutorial() {
     return (
         <Body>
-            <section className="flex flex-col gap-sm rounded-md border border-muted/40 bg-secondary-light-bg/40 p-md dark:bg-secondary-dark-bg/40">
-                <p className="text-lead text-primary-light-fg dark:text-primary-dark-fg">
-                    This tutorial focuses on the performance analysis core. Ranking,
-                    ESG assessment, and monitoring will be added in the next part.
-                </p>
-            </section>
+            <Disclaimer
+                linkHref="/tutorials/fund-manager-performance-analysis-tool-python-part-2"
+                linkLabel="Continue to Part 2"
+            >
+                This tutorial focuses on the performance analysis core. Multi fund analysis including ranking and monitoring is covered in Part 2 of this series.
+            </Disclaimer>
 
             <Text
                 heading="From Raw Returns to Investment Reporting"
                 content={
                     <>
                         In investment management, performance analysis is more than just calculating returns.
-                        <br />
-                        <br />
-                        Analysts are expected to take multiple return series from different managers, align them to a benchmark, calculate consistent metrics, and present the results in a way that supports reporting and decision making with greater context than simple figures can provide.
-                        <br />
-                        <br />
-                        This tutorial builds the core workflow for a single fund (multi fund comparison is built in part 2):
                     </>
                 }
+            />
+
+            <Text
+                content={`Analysts are expected to take multiple return series from different managers, align them to a benchmark, calculate consistent metrics, and present the results in a way that supports reporting and decision making with greater context than simple figures can provide.
+
+This tutorial builds the core workflow for a single fund (multi fund comparison is built in part 2):`}
                 bullets={[
                     "Load and validate return data",
                     "Align fund and benchmark series",
@@ -94,7 +96,7 @@ Some focus on absolute return, others on risk, and others on consistency or benc
             />
 
             <Text
-                content={`Each of these metrics captures a different dimension of performance, and no single measure should be used in isolation.`}
+                content={`Each of these metrics captures a different dimension of performance, and no single measure should be used in isolation. Feel free to add any of these functions yourself, and use them throughout the tutorial.`}
             />
 
             <Text
@@ -121,7 +123,7 @@ Instead, we separate responsibilities:
                 content={`Responsibilities:`}
                 bullets={[
                     "calculations.py: Core metric logic. Converts raw return data into measurable quantities",
-                    "transforms.py: Builds aligned time series used in performance analysis",
+                    "transforms.py: Loads and validates input data, and builds aligned series used in performance analysis",
                     "summaries.py: Aggregates results into structured performance comparisons",
                     "charts.py: Visual output of the analysis",
                     "main.py: Orchestrates the full workflow",
@@ -186,8 +188,6 @@ In practice, this might be:
                 }
             />
 
-
-
             <Text
                 heading="4. Load and Validate Data"
                 content={`Our first step is to bring our data into Python.
@@ -243,13 +243,12 @@ The goal here is not realism of scale, but to give us clean, predictable data so
             />
 
             <Text
-                content={`We will put our loading logic into our main script.
-
-Copy the following script into main.py:`}
+                content={`We will put our loading logic into transforms.py, so that main.py can stay focused on running the workflow.
+`}
             />
 
             <Text
-                lead="File loading script:"
+                lead="Function addition (analytics/transforms.py):"
                 code={`import pandas as pd
 
 def load_returns(path: str) -> pd.DataFrame:
@@ -267,16 +266,7 @@ def load_returns(path: str) -> pd.DataFrame:
     if df.isnull().any().any():
         raise ValueError("Missing values detected")
 
-    return df
-
-
-def main():
-    df = load_returns("data/sample_returns.csv")
-    print(df.head())
-
-
-if __name__ == "__main__":
-    main()`}
+    return df`}
             />
 
             <Text
@@ -292,6 +282,23 @@ if __name__ == "__main__":
                 content={`This validation step is not optional.
 
 Bad input data will silently break every downstream calculation, so it is better to fail early with clear errors than to produce incorrect results later.`}
+            />
+
+            <Text
+                content={`Now update main.py so it imports and uses this loader:`}
+            />
+
+            <Text
+                lead="Main workflow update (main.py):"
+                code={`from analytics.transforms import load_returns
+
+def main():
+    df = load_returns("data/sample_returns.csv")
+    print(df.head())
+
+
+if __name__ == "__main__":
+    main()`}
             />
 
             <Text
@@ -315,12 +322,11 @@ Bad input data will silently break every downstream calculation, so it is better
 Only the relevant additions will be shown in each step, rather than repeating the full script every time.`}
             />
 
-
             <Text
                 heading="5. Building our Performance Metrics"
-                />
+            />
             <Text
-                lead={'5.1: Cumulative growth'}
+                lead={"5.1: Cumulative growth"}
                 content={`Monthly returns tell us what happened in a single period.
 
 But investors do not experience returns in isolation. Each month builds on the last, so we need to track how an investment grows over time.`}
@@ -367,7 +373,7 @@ Thankfully, NumPy (via pandas) provides a built in way to compute this efficient
             />
 
             <Text
-                lead={"Add this function to calculations.py (this is part of our analytics layer):"}
+                lead={"Function addition (analytics/calculations.py):"}
                 code={`import numpy as np
 import pandas as pd
 
@@ -400,27 +406,9 @@ This is one of the most important transformations in the entire pipeline, becaus
             />
 
             <Text
-                lead="Code checkpoint (main.py):"
-                code={`import pandas as pd
-from analytics.calculations import cumulative_growth
-
-def load_returns(path: str) -> pd.DataFrame:
-    df = pd.read_csv(path, parse_dates=["date"])
-
-    required_cols = {"date", "fund", "benchmark"}
-    if not required_cols.issubset(df.columns):
-        raise ValueError("Missing required columns")
-
-    df = df.sort_values("date")
-
-    if df["date"].duplicated().any():
-        raise ValueError("Duplicate dates detected")
-
-    if df.isnull().any().any():
-        raise ValueError("Missing values detected")
-
-    return df
-
+                lead="Main workflow update (main.py):"
+                code={`from analytics.calculations import cumulative_growth
+from analytics.transforms import load_returns
 
 def main():
     df = load_returns("data/sample_returns.csv")
@@ -519,7 +507,7 @@ First, we track the running maximum (the highest value reached so far), then com
             />
 
             <Text
-                lead={"Add this function to calculations.py (alongside cumulative_growth):"}
+                lead={"Function addition (analytics/calculations.py):"}
                 code={`def drawdown(cumulative: pd.Series) -> pd.Series:
     peak = cumulative.cummax()
     return (cumulative - peak) / peak`}
@@ -557,27 +545,9 @@ They show risk in a way that volatility alone cannot.`}
             />
 
             <Text
-                lead="Code checkpoint (main.py):"
-                code={`import pandas as pd
-from analytics.calculations import cumulative_growth, drawdown
-
-def load_returns(path: str) -> pd.DataFrame:
-    df = pd.read_csv(path, parse_dates=["date"])
-
-    required_cols = {"date", "fund", "benchmark"}
-    if not required_cols.issubset(df.columns):
-        raise ValueError("Missing required columns")
-
-    df = df.sort_values("date")
-
-    if df["date"].duplicated().any():
-        raise ValueError("Duplicate dates detected")
-
-    if df.isnull().any().any():
-        raise ValueError("Missing values detected")
-
-    return df
-
+                lead="Main workflow update (main.py):"
+                code={`from analytics.calculations import cumulative_growth, drawdown
+from analytics.transforms import load_returns
 
 def main():
     df = load_returns("data/sample_returns.csv")
@@ -635,7 +605,7 @@ By comparing the fund to its benchmark, we can isolate the manager's contributio
             />
 
             <Text
-                lead={"Add this function to calculations.py (alongside cumulative_growth and drawdown):"}
+                lead={"Function addition (analytics/calculations.py):"}
                 code={`def excess_return(fund: pd.Series, benchmark: pd.Series) -> pd.Series:
     return fund - benchmark`}
             />
@@ -662,27 +632,9 @@ By comparing the fund to its benchmark, we can isolate the manager's contributio
             />
 
             <Text
-                lead="Code checkpoint (main.py):"
-                code={`import pandas as pd
-from analytics.calculations import cumulative_growth, drawdown, excess_return
-
-def load_returns(path: str) -> pd.DataFrame:
-    df = pd.read_csv(path, parse_dates=["date"])
-
-    required_cols = {"date", "fund", "benchmark"}
-    if not required_cols.issubset(df.columns):
-        raise ValueError("Missing required columns")
-
-    df = df.sort_values("date")
-
-    if df["date"].duplicated().any():
-        raise ValueError("Duplicate dates detected")
-
-    if df.isnull().any().any():
-        raise ValueError("Missing values detected")
-
-    return df
-
+                lead="Main workflow update (main.py):"
+                code={`from analytics.calculations import cumulative_growth, drawdown, excess_return
+from analytics.transforms import load_returns
 
 def main():
     df = load_returns("data/sample_returns.csv")
@@ -737,11 +689,7 @@ Charts are useful for pattern recognition, but reporting usually also needs a sm
             />
 
             <Text
-                content={`Create analytics/summaries.py, then add the following code:`}
-            />
-
-            <Text
-                lead="Code checkpoint:"
+                lead="Function addition (analytics/summaries.py):"
                 code={`import pandas as pd
 
 def build_summary_table(
@@ -771,7 +719,7 @@ def build_summary_table(
             />
 
             <Text
-                content={`This function does not calculate anything new. It organises our existing outputs into a format that is easier to inspect and easier to report.`}
+                content={`This function does not calculate anything new. It organises our existing outputs into a format that is easier to inspect and report.`}
             />
 
             <Text
@@ -783,29 +731,10 @@ def build_summary_table(
             />
 
             <Text
-                lead="Code checkpoint:"
-                code={`import pandas as pd
-
-from analytics.calculations import cumulative_growth, drawdown, excess_return
+                lead="Main workflow update (main.py):"
+                code={`from analytics.calculations import cumulative_growth, drawdown, excess_return
 from analytics.summaries import build_summary_table
-
-def load_returns(path: str) -> pd.DataFrame:
-    df = pd.read_csv(path, parse_dates=["date"])
-
-    required_cols = {"date", "fund", "benchmark"}
-    if not required_cols.issubset(df.columns):
-        raise ValueError("Missing required columns")
-
-    df = df.sort_values("date")
-
-    if df["date"].duplicated().any():
-        raise ValueError("Duplicate dates detected")
-
-    if df.isnull().any().any():
-        raise ValueError("Missing values detected")
-
-    return df
-
+from analytics.transforms import load_returns
 
 def main():
     df = load_returns("data/sample_returns.csv")
@@ -868,15 +797,13 @@ For this tutorial, we will use a small set of chart types that fit naturally wit
             <Text
                 content={`The code in this chapter is a cut down version of that charting system.
 
-The goal here is not to build a full plotting framework. Instead, we want a small reporting layer that produces clean charts, keeps the code organised, and gives us only the features we actually need for this performance analysis tool.`}
+The goal here is not to build a full plotting framework. We just need something that produces clean charts, keeps the code organised, and gives us the features we actually need for this performance analysis tool.`}
             />
 
             <Text
                 content={`We will place this code in reporting/charts.py.
 
-If you have not yet created that file, do that now.
-
-Your project structure should now look something like:`}
+A reminder of our project structure:`}
                 code={`project/
 ├── analytics/
 │   ├── calculations.py
@@ -893,7 +820,7 @@ Your project structure should now look something like:`}
             />
 
             <Text
-                lead="charts.py:"
+                lead="Function additions (reporting/charts.py):"
                 code={`import matplotlib.pyplot as plt
 from cycler import cycler
 
@@ -924,6 +851,7 @@ We only keep the colours that are actually needed here:`}
             />
 
             <Text
+                lead="Function addition (reporting/charts.py):"
                 code={`def setup_matplotlib_style():
     plt.rcParams["figure.facecolor"] = COLORS["bg"]
     plt.rcParams["axes.facecolor"] = COLORS["bg"]
@@ -963,6 +891,7 @@ The main idea is to define the project wide chart style once, then keep the char
             />
 
             <Text
+                lead="Function addition (reporting/charts.py):"
                 code={`def style_axes(fig, ax, grid=True, zero_line=False):
     fig.patch.set_facecolor(COLORS["bg"])
     ax.set_facecolor(COLORS["bg"])
@@ -1006,6 +935,7 @@ Start with cumulative performance:`}
             />
 
             <Text
+                lead="Function addition (reporting/charts.py):"
                 code={`def plot_cumulative_performance(dates, fund_cumulative, benchmark_cumulative):
     fig, ax = plt.subplots()
     style_axes(fig, ax, grid=True, zero_line=False)
@@ -1033,6 +963,7 @@ Because both series are expressed as growth indices, we can compare them directl
             />
 
             <Text
+                lead="Function addition (reporting/charts.py):"
                 code={`def plot_drawdown(dates, fund_drawdown):
     fig, ax = plt.subplots()
     style_axes(fig, ax, grid=True, zero_line=True)
@@ -1058,6 +989,7 @@ That zero line matters because drawdown is measured relative to the previous pea
             />
 
             <Text
+                lead="Function addition (reporting/charts.py):"
                 code={`def plot_excess_return(dates, excess_returns):
     fig, ax = plt.subplots()
     style_axes(fig, ax, grid=True, zero_line=True)
@@ -1083,7 +1015,7 @@ Positive values indicate outperformance, negative values indicate underperforman
             />
 
             <Text
-                lead="Code checkpoint (charts.py):"
+                lead="Module checkpoint (reporting/charts.py):"
                 code={`import matplotlib.pyplot as plt
 from cycler import cycler
 
@@ -1202,35 +1134,16 @@ def plot_excess_return(dates, excess_returns):
             />
 
             <Text
-                lead="Code checkpoint (main.py):"
-                code={`import pandas as pd
-
-from analytics.calculations import cumulative_growth, drawdown, excess_return
+                lead="Main workflow update (main.py):"
+                code={`from analytics.calculations import cumulative_growth, drawdown, excess_return
 from analytics.summaries import build_summary_table
+from analytics.transforms import load_returns
 from reporting.charts import (
     setup_matplotlib_style,
     plot_cumulative_performance,
     plot_drawdown,
     plot_excess_return,
 )
-
-def load_returns(path: str) -> pd.DataFrame:
-    df = pd.read_csv(path, parse_dates=["date"])
-
-    required_cols = {"date", "fund", "benchmark"}
-    if not required_cols.issubset(df.columns):
-        raise ValueError("Missing required columns")
-
-    df = df.sort_values("date")
-
-    if df["date"].duplicated().any():
-        raise ValueError("Duplicate dates detected")
-
-    if df.isnull().any().any():
-        raise ValueError("Missing values detected")
-
-    return df
-
 
 def main():
     setup_matplotlib_style()
@@ -1281,10 +1194,9 @@ This is handled in main.py, which acts as the entry point for our analysis.`}
 
             <Text
                 lead="Imports in main.py:"
-                code={`import pandas as pd
-
-from analytics.calculations import cumulative_growth, drawdown, excess_return
+                code={`from analytics.calculations import cumulative_growth, drawdown, excess_return
 from analytics.summaries import build_summary_table
+from analytics.transforms import load_returns
 from reporting.charts import (
     setup_matplotlib_style,
     plot_cumulative_performance,
@@ -1298,10 +1210,11 @@ from reporting.charts import (
             />
 
             <Text
+                lead="Main workflow update (main.py):"
                 code={`def main():
     setup_matplotlib_style()
 
-    df = load_returns("sample_returns.csv")
+    df = load_returns("data/sample_returns.csv")
 
     fund = df["fund"]
     benchmark = df["benchmark"]
@@ -1331,7 +1244,6 @@ if __name__ == "__main__":
     main()`}
             />
 
-
             <Text
                 content={`At this point, you have a working performance analysis tool for a single fund.
 
@@ -1354,11 +1266,9 @@ This system is designed to analyse a single fund against its benchmark.
             />
 
             <Text
-                content={`This is not yet a full multi manager analysis system.
+                content={`This is the single fund foundation that Part 2 builds on.
 
-Instead, it forms the foundation that everything else will build on.
-
-By structuring the logic into reusable components, we can now extend this system to handle multiple funds, comparisons, and more advanced reporting in later steps.`}
+By structuring the logic into reusable components, we are ready to extend the system into a multi fund comparison workflow with grouped analysis, ranking, monitoring, and structured outputs for reporting.`}
             />
 
             <Text
@@ -1378,7 +1288,7 @@ By structuring the logic into reusable components, we can now extend this system
             />
 
             <Text
-                content={`This is where the system starts to become a true performance analysis tool, rather than a single fund calculator.`}
+                content={`This is where the system becomes a true multi fund reporting pipeline, rather than a single fund analysis script.`}
             />
         </Body>
     )

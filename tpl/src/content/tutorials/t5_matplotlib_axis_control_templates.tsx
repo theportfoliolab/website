@@ -1,4 +1,5 @@
 import Body from "@/components/content/body"
+import Disclaimer from "@/components/content/disclaimer"
 import ImageBlock from "@/components/content/imageblock"
 import Link from "@/components/content/link"
 import { Text } from "@/components/content/text"
@@ -22,17 +23,12 @@ export const meta: PostMeta = {
 export default function Tutorial() {
     return (
         <Body>
-            <section className="flex flex-col gap-sm rounded-md border border-muted/40 bg-secondary-light-bg/40 p-md dark:bg-secondary-dark-bg/40">
-                <p className="text-lead text-primary-light-fg dark:text-primary-dark-fg">
-                    Here for the charts?{" "}
-                    <a
-                        href="#reusable-chart-templates"
-                        className="font-body text-primary-light-link underline underline-offset-4 transition-opacity hover:opacity-80 dark:text-primary-dark-link"
-                    >
-                        Click here to skip to the reusable templates
-                    </a>
-                </p>
-            </section>
+            <Disclaimer
+                linkHref="#reusable-chart-templates"
+                linkLabel="Click here to skip to the reusable templates"
+            >
+                Here for the charts?
+            </Disclaimer>
 
             <Text
                 heading="From Basic Charts to Professional Visuals"
@@ -42,17 +38,16 @@ export default function Tutorial() {
                         <Link href="https://theportfoliolab.nz/tutorials/introduction-to-matplotlib-python-tutorial">
                             Introduction to Matplotlib (Python Tutorial)
                         </Link>. We plotted data, added labels, formatted axes, and produced something that is already far more useful than raw numbers in a table.
-                        <br />
-                        <br />
-                        These charts work, but they do not yet look like something you would include in an article, report, or serious analysis project.
-                        <br />
-                        <br />
-                        This is the gap we are going to close.
-                        <br />
-                        <br />
-                        In this tutorial, we will start moving away from quick plots towards deliberate, well structured charts. The goal is not just to make things look nicer, but to build a workflow that is:
                     </>
                 }
+            />
+
+            <Text
+                content={`These charts work, but they do not yet look like something you would include in an article, report, or serious analysis project.
+
+This is the gap we are going to close.
+
+In this tutorial, we will start moving away from quick plots towards deliberate, well structured charts. The goal is not just to make things look nicer, but to build a workflow that is:`}
                 bullets={["Consistent", "Reusable", "Suitable for real analysis and publication"]}
             />
 
@@ -1372,11 +1367,12 @@ That is exactly the point of this tutorial series.`}
                         <Link href="https://theportfoliolab.nz/tutorials/introduction-to-matplotlib-python-tutorial">
                             Introduction to Matplotlib (Python Tutorial)
                         </Link>.
-                        <br />
-                        <br />
-                        That might mean:
                     </>
                 }
+            />
+
+            <Text
+                content={`That might mean:`}
                 bullets={[
                     "using pandas data instead of toy arrays",
                     "adding custom tick formatting for dates, percentages, or currency",
