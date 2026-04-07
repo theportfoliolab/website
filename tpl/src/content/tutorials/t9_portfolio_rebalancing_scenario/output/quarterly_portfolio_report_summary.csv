@@ -1,0 +1,2 @@
+fund_name,final_fund_value,final_benchmark_value,max_drawdown,average_excess_return,return_rank,drawdown_rank,excess_rank,composite_score,underperformance_flag,drawdown_breach_flag,requires_review
+Current_Portfolio_Quarterly,7.24,10.46,-4.46,-0.49,1.0,1.0,1.0,1.0,True,False,True

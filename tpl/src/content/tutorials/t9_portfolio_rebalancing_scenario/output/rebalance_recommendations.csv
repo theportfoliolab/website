@@ -1,0 +1,6 @@
+ticker,action,rationale
+QQQ,Reduce,"Strong return, but less aligned with the goal of steadier growth due to higher drawdown sensitivity."
+VNQ,Reduce,Weak analysis-window performance and limited evidence that it improved stability in this sample.
+VOO,Increase,Delivered strong growth with lower drawdown than the more concentrated growth sleeve.
+IEFA,Increase modestly,Kept to support diversification despite weaker near-term returns.
+AGG,Increase modestly,Used as a stabiliser to support the mandate even though returns were soft in the analysis window.

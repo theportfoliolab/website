@@ -8,63 +8,34 @@ from reporting.charts import (
     plot_excess_return,
 )
 
-import argparse
-
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Fund performance comparison tool"
-    )
-
-    parser.add_argument(
-        "input_path",
-        help="Path to a CSV file or folder of CSV files"
-    )
-
-    return parser.parse_args()
-
-
-from analytics.summaries import (
-    run_analysis,
-    rank_funds,
-    apply_monitoring_flags,
-)
-
-from analytics.transforms import load_returns
-from analytics.summaries import (
-    run_analysis,
-    rank_funds,
-    apply_monitoring_flags,
-)
-from reporting.outputs import format_summary, export_summary, print_flags
-from reporting.charts import (
-    setup_matplotlib_style,
-    plot_cumulative_performance,
-)
-
 def main():
-    args = parse_args()
-
     setup_matplotlib_style()
 
-    df = load_returns(args.input_path)
+    df = load_returns("data/sample_returns.csv")
 
-    if df["fund_name"].nunique() < 2:
-        print("Warning: only one fund identified, comparison output will be limited.")
+    fund = df["fund"]
+    benchmark = df["benchmark"]
+    dates = df["date"]
 
-    summary = run_analysis(df)
-    ranked = rank_funds(summary)
-    monitored = apply_monitoring_flags(df, ranked)
+    fund_cum = cumulative_growth(fund)
+    benchmark_cum = cumulative_growth(benchmark)
 
-    formatted = format_summary(monitored)
+    fund_dd = drawdown(fund_cum)
+    excess = excess_return(fund, benchmark)
 
-    export_summary(formatted)
-    print_flags(formatted)
-    print("\nFormatted summary:")
-    print(formatted)
+    summary = build_summary_table(
+        fund_cumulative=fund_cum,
+        benchmark_cumulative=benchmark_cum,
+        fund_drawdown=fund_dd,
+        excess_returns=excess,
+    )
 
-    plot_cumulative_performance(df, save_path="output/fund_comparison.png")
+    print(summary)
+
+    plot_cumulative_performance(dates, fund_cum, benchmark_cum)
+    plot_drawdown(dates, fund_dd)
+    plot_excess_return(dates, excess)
 
 
 if __name__ == "__main__":
     main()
-

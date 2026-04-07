@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import pandas as pd
 
 def format_summary(df: pd.DataFrame) -> pd.DataFrame:
@@ -36,8 +34,6 @@ def format_summary(df: pd.DataFrame) -> pd.DataFrame:
 
     numeric_cols = [col for col in column_order if col not in non_numeric_cols]
 
-    formatted = formatted[column_order]
-
     for col in percentage_cols:
         if col in {"final_fund_value", "final_benchmark_value"}:
             formatted[col] = (formatted[col] - 1) * 100
@@ -46,14 +42,16 @@ def format_summary(df: pd.DataFrame) -> pd.DataFrame:
 
     formatted[numeric_cols] = formatted[numeric_cols].round(2)
 
+    formatted = formatted[column_order]
+
     return formatted
 
+from pathlib import Path
 
 def export_summary(df: pd.DataFrame, path: str = "output/fund_report_summary.csv") -> None:
     output_path = Path(path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(output_path, index=False)
-
 
 def print_flags(df: pd.DataFrame) -> None:
     flagged = df[df["requires_review"]]

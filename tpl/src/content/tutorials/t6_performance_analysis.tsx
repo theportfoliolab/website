@@ -6,7 +6,7 @@ import { Text } from "@/components/content/text"
 import type { PostMeta } from "@/components/content/types"
 
 export const meta: PostMeta = {
-    title: "Building a Fund Performance Analysis Workflow in Python",
+    title: "Building a Fund Performance Analysis Workflow in Python Part 1: Core Metrics and Reporting",
     description:
         "A practical tutorial on building a performance analysis pipeline for fund managers, including data alignment, metrics, summaries, and reporting charts.",
     date: "2026-04-01",
@@ -36,7 +36,7 @@ export default function Tutorial() {
             />
 
             <Text
-                content={`Analysts are expected to take multiple return series from different managers, align them to a benchmark, calculate consistent metrics, and present the results in a way that supports reporting and decision making with greater context than simple figures can provide.
+                content={`Analysts are expected to take multiple return series from different managers, align them to a benchmark, calculate consistent metrics, and present the results in a way that supports reporting and decision making with much more context than simple figures can provide.
 
 This tutorial builds the core workflow for a single fund (multi fund comparison is built in part 2):`}
                 bullets={[
@@ -46,6 +46,10 @@ This tutorial builds the core workflow for a single fund (multi fund comparison 
                     "Generate summary tables and reporting charts",
                     "Assemble a reusable analysis workflow",
                 ]}
+            />
+
+            <Text
+                content={`If you are starting from a clean environment, make sure pandas, matplotlib, and cycler are installed before you begin. The later charting chapters assume those packages are already available.`}
             />
 
             <Text
@@ -101,7 +105,7 @@ Some focus on absolute return, others on risk, and others on consistency or benc
 
             <Text
                 heading="2. Project Structure"
-                content={`We will not build this as a single script. That would get messy very quickly.
+                content={`We will not build this as a single script, because that would get messy very quickly.
 
 We want a modular structure that we can easily update, test, and reuse.
 
@@ -285,7 +289,7 @@ Bad input data will silently break every downstream calculation, so it is better
             />
 
             <Text
-                content={`Now update main.py so it imports and uses this loader:`}
+                content={`Open main.py and replace the import block and main() with the following. This is the first full main.py checkpoint, so keep the boilerplate here:`}
             />
 
             <Text
@@ -402,7 +406,7 @@ This is one of the most important transformations in the entire pipeline, becaus
             />
 
             <Text
-                content={`To make sure this is working, update main.py so it now imports and uses cumulative_growth:`}
+                content={`Open main.py and update the imports at the top, then replace the body of main() with the following. This is a partial update, so you do not need to repeat the boilerplate:`}
             />
 
             <Text
@@ -417,11 +421,7 @@ def main():
     benchmark_cum = cumulative_growth(df["benchmark"])
 
     print(fund_cum.tail())
-    print(benchmark_cum.tail())
-
-
-if __name__ == "__main__":
-    main()`}
+    print(benchmark_cum.tail())`}
             />
 
             <Text
@@ -541,7 +541,7 @@ They show risk in a way that volatility alone cannot.`}
             />
 
             <Text
-                content={`Now update main.py so it also calculates and prints the drawdown series:`}
+                content={`Still in main.py, update the imports if needed, then replace the body of main() with the following:`}
             />
 
             <Text
@@ -555,11 +555,7 @@ def main():
     fund_cum = cumulative_growth(df["fund"])
     fund_dd = drawdown(fund_cum)
 
-    print(fund_dd)
-
-
-if __name__ == "__main__":
-    main()`}
+    print(fund_dd)`}
             />
 
             <Text
@@ -628,7 +624,7 @@ By comparing the fund to its benchmark, we can isolate the manager's contributio
             />
 
             <Text
-                content={`Now update main.py so it also calculates and prints excess return:`}
+                content={`Still in main.py, update the imports if needed, then replace the body of main() with the following:`}
             />
 
             <Text
@@ -640,11 +636,7 @@ def main():
     df = load_returns("data/sample_returns.csv")
 
     excess = excess_return(df["fund"], df["benchmark"])
-    print(excess)
-
-
-if __name__ == "__main__":
-    main()`}
+    print(excess)`}
             />
 
             <Text
@@ -727,7 +719,7 @@ def build_summary_table(
             />
 
             <Text
-                content={`Now update main.py so it builds and prints the summary table:`}
+                content={`Still in main.py, add the new summary import at the top if it is not already present, remove any imports that are now unused, and replace the body of main() with the following:`}
             />
 
             <Text
@@ -751,11 +743,7 @@ def main():
         excess_returns=excess,
     )
 
-    print(summary)
-
-
-if __name__ == "__main__":
-    main()`}
+    print(summary)`}
             />
 
             <Text
@@ -1130,7 +1118,7 @@ def plot_excess_return(dates, excess_returns):
             />
 
             <Text
-                content={`Now update main.py so it imports the chart functions and produces the reporting visuals:`}
+                content={`Open main.py and tidy the import block so it includes the chart helpers and only the calculation imports you still use. Then replace the body of main() with the following:`}
             />
 
             <Text
@@ -1157,11 +1145,7 @@ def main():
 
     plot_cumulative_performance(df["date"], fund_cum, benchmark_cum)
     plot_drawdown(df["date"], fund_dd)
-    plot_excess_return(df["date"], excess)
-
-
-if __name__ == "__main__":
-    main()`}
+    plot_excess_return(df["date"], excess)`}
             />
 
             <Text
@@ -1189,7 +1173,7 @@ This is handled in main.py, which acts as the entry point for our analysis.`}
             />
 
             <Text
-                content={`Check that your imports in main.py so they include the functions we have built:`}
+                content={`Check that your imports in main.py include the functions we have built:`}
             />
 
             <Text
@@ -1206,7 +1190,7 @@ from reporting.charts import (
             />
 
             <Text
-                content={`Now extend the main function to run the full analysis pipeline: Performing the calculations, generating the summary table, and generating the charts for that fund.`}
+                content={`Now extend the body of main() so it runs the full analysis pipeline, performing the calculations, generating the summary table, and producing the charts for that fund. This next snippet is a full main.py checkpoint, so the boilerplate should be included:`}
             />
 
             <Text
@@ -1272,7 +1256,7 @@ By structuring the logic into reusable components, we are ready to extend the sy
             />
 
             <Text
-                content={`At this point, you could call your individual fund analysis project done, or you could go back to Chapter 1 and add any more of the performance metric outputs as you desire, like downside deviation or tracking error. Implement them in calculations.py, and then don't forget to import them into main.py`}
+                content={`At this point, you could call your individual fund analysis project done, or you could go back to Chapter 1 and add more of the performance metric outputs you want, such as downside deviation or tracking error. Implement them in calculations.py, and then do not forget to import them into main.py.`}
             />
 
             <Text

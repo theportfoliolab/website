@@ -4,13 +4,14 @@ import { Text } from "@/components/content/text"
 import type { PostMeta } from "@/components/content/types"
 
 export const meta: PostMeta = {
-    title: "Building a Fund Performance Analysis Workflow in Python Part 2",
+    title: "Building a Fund Performance Analysis Workflow in Python Part 2: Multi Fund Comparison and Monitoring",
     description:
         "A direct follow on from Part 1, extending the fund performance analysis workflow into a multi fund comparison, ranking, monitoring, and reporting system.",
     date: "2026-04-02",
     tags: ["python", "finance", "pandas", "performance analysis"],
     type: "tutorial",
     slug: "fund-manager-performance-analysis-tool-python-part-2",
+    nextInSeriesSlug: "fund-manager-performance-analysis-tool-python-part-3",
 }
 
 export default function Tutorial() {
@@ -31,12 +32,16 @@ In Part 1, we built a performance analysis pipeline for a single fund. In this t
             />
 
             <Text
+                content={`If you are starting from a clean environment, make sure pandas, matplotlib, and cycler are installed before continuing. Part 2 still depends on the same core packages introduced in Part 1.`}
+            />
+
+            <Text
                 heading="From Single Fund Analysis to Manager Comparison"
                 content={`Part 1 of this tutorial ended with a system that can produce performance metrics for a single fund.
 
 In practice, funds are rarely evaluated in isolation. Analysts are typically working across a group of managers, where the goal is to understand relative performance rather than absolute results.
 
-Instead of asking whether a fund performed well on its own, we want to understand which managers are adding value, which are underperforming, and how those outcomes compare on a consistent basis. Hence why we must add support for multiple funds to our analysis pipeline.`}
+Instead of asking whether a fund performed well on its own, we want to understand which managers are adding value, which are underperforming, and how those outcomes compare on a consistent basis. That is why we now need to add support for multiple funds to the analysis pipeline.`}
             />
 
             <Text
@@ -147,8 +152,6 @@ It contains three funds over the same six monthly periods, all compared against 
                 lead="Function update (analytics/transforms.py):"
                 code={`from pathlib import Path
 
-import pandas as pd
-
 def load_returns(path: str) -> pd.DataFrame:
     input_path = Path(path)
 
@@ -198,7 +201,7 @@ def load_returns(path: str) -> pd.DataFrame:
             />
 
             <Text
-                content={`First, import argparse and define a simple argument parser:`}
+                content={`Open main.py. At the top of the file, add the argparse import if it is not already present, then add the helper below your imports:`}
                 code={`import argparse
 
 def parse_args():
@@ -215,7 +218,7 @@ def parse_args():
             />
 
             <Text
-                content={`Then update your main() function:`}
+                content={`Still in main.py, replace the body of main() with the following:`}
                 code={`def main():
     args = parse_args()
 
@@ -294,10 +297,8 @@ In Part 1, we built the core single fund calculations and the summary logic in a
             />
 
             <Text
-                lead="Function updates (analytics/summaries.py):"
-                code={`import pandas as pd
-
-from analytics.calculations import cumulative_growth, drawdown, excess_return
+                lead="Function addition (analytics/summaries.py):"
+                code={`from analytics.calculations import cumulative_growth, drawdown, excess_return
 
 def summarise_fund_metrics(
     fund_cumulative: pd.Series,
@@ -988,8 +989,7 @@ The trade off is that if we later add many more fields, we would need to keep th
             />
 
             <Text
-                content={`Thus we now have a more usable reporting layer.
-`}
+                content={`So at this point, we have a more usable reporting layer.`}
             />
 
             <Text
@@ -1058,15 +1058,15 @@ def setup_matplotlib_style():
             />
 
             <Text
-                content={`This does not need to be a perfect house style yet, but it gives us enough distinct colours that a larger multi fund comparison chart is still readable.`}
+                content={`This does not need to be a perfect house style yet, but it does give us enough distinct colours that a larger multi fund comparison chart is still readable.`}
             />
 
             <Text
-                content={`Now add this new chart function to charts.py:`}
+                content={`Now let's improve our chart function in charts.py:`}
             />
 
             <Text
-                lead="Function addition (reporting/charts.py):"
+                lead="Function update (reporting/charts.py):"
                 code={`from pathlib import Path
 from analytics.calculations import cumulative_growth
 
@@ -1134,7 +1134,7 @@ We will revisit chart design and styling in Part 3.`}
 
             <Text
                 lead="5.6 Bringing the Output Layer Together"
-                content={`We can now update main.py to run the full workflow:`}
+                content={`We can now update main.py to run the full workflow. Before pasting this in, clean up the import block at the top so it only includes helpers that are still used:`}
             />
 
             <Text
