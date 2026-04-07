@@ -140,7 +140,7 @@ We will avoid that by splitting the workflow into two periods:`}
             />
 
             <Text
-                content={`Notice that this leaves room for judgement.
+                content={`Notice that this leaves room for judgement:
 
 The tool does not tell us what to buy or sell. It gives us evidence, and we still need to think about what that evidence means in the context of the mandate.`}
             />
@@ -155,7 +155,7 @@ Instead, open main.py and make a small number of focused changes so the Part 3 w
             />
 
             <Text
-                content={`First, stay at the top of main.py where your existing module level constants already live. Extend that section so it includes both the evaluation window and the revised weights:`}
+                content={`First, stay at the top of main.py where your existing module level constants already live. Extend that section so it includes both the evaluation window and the inherited weights:`}
                 code={`HOLDINGS = ["VOO", "QQQ", "IEFA", "EEM", "VNQ", "AGG"]
 BENCHMARK = "VT"
 PRICE_START = "2023-12-01"
@@ -355,7 +355,7 @@ Likewise, a strong performer can still be a candidate for reduction if its risk 
             />
 
             <Text
-                content={`That is why this tutorial should not hand you the conclusion too early. Look at the inherited portfolio outputs first, and try to write down your own tentative rebalance thesis before adding the next code.`}
+                content={`That is why I have not handed you the conclusion too early: Look at the inherited portfolio outputs first, and try to write down your own tentative rebalance thesis before adding the next code.`}
             />
 
             <Text
@@ -382,7 +382,7 @@ Likewise, a strong performer can still be a candidate for reduction if its risk 
 
             <Text
                 lead="5.2 Drawdown Chart"
-                content={`The drawdown view adds the risk side of the story. This is where we can see whether the weak performers are at least helping to control downside, or whether they are giving us the worst of both worlds.`}
+                content={`The drawdown view adds the risk side of the story: This is where we can see whether the weak performers are at least helping to control downside, or whether they are giving us the worst of both worlds.`}
             />
 
             <ImageBlock
@@ -459,7 +459,7 @@ VNQ                   -3.21%       10.46%    -7.94%     -2.15%      No`}
             />
 
             <Text
-                content={`Whether you agree with those changes is part of the exercise.
+                content={`Whether you agree with those changes is part of the exercise:
 
 The point is not that this is the only valid answer. The point is that the answer should be explainable from the outputs.`}
             />

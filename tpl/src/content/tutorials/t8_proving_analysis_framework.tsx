@@ -37,13 +37,13 @@ export default function Tutorial() {
                 heading="From MVP to Useful Tool"
                 content={`The Part 2 version was an MVP, and it did what an MVP needs to do. It could load data, run the core analysis, rank funds, and export a summary, which was enough to prove that the framework itself made sense.
 
-What it could not yet do was survive contact with a more realistic workflow. It still depended on synthetic datasets, neatly prepared inputs, and a reporting layer that was designed more for clarity than for practical portfolio review.
+What it could not yet do was survive contact with a more realistic workflow: It still depended on synthetic datasets, neatly prepared inputs, and a reporting layer that was designed more for clarity than for practical portfolio review.
 
 Part 3 is where we refine that MVP into something genuinely useful.`}
             />
 
             <Text
-                content={`In this part, we bring the system closer to real analyst workflow. We will introduce live market data, build a weighted portfolio view on top of the Part 2 framework, and improve the reporting so the outputs are more useful in practice.`}
+                content={`Let's bring the system closer to real analyst workflow. We will introduce live market data, build a weighted portfolio view on top of the Part 2 framework, and improve the reporting so the outputs are more useful in practice.`}
             />
 
             <Text
@@ -70,7 +70,7 @@ Part 3 is where we refine that MVP into something genuinely useful.`}
             />
 
             <Text
-                content={`As soon as we do this, the system will start to behave differently. The charts become noisier, the differences become less obvious, and the outputs feel much less clean, which is exactly what we want, because real data is what exposes the strengths and weaknesses of a system.`}
+                content={`As soon as we do this, the system will start to behave differently. The charts become noisier, differences become less obvious, and outputs feel much less clean, which is exactly what we want:  real data is what exposes the strengths and weaknesses of a system.`}
             />
 
             <Text
@@ -280,7 +280,7 @@ from reporting.charts import (
             />
 
             <Text
-                content={`Because main.py is no longer loading CSV files from the command line, you can also remove the old argparse and load_returns related code once it becomes unused. This is also a good point to clean up the import block, so only the helpers still used by main.py remain.`}
+                content={`Because main.py is no longer loading CSV files from the command line, you could also remove the old argparse and load_returns related code if you no longer plan on using data from disk. This is also a good point to clean up the import block, so only the helpers still used by main.py remain.`}
             />
 
             <Text
@@ -321,9 +321,9 @@ The next question is whether the current reporting layer is good enough for this
             />
             <Text
                 heading="3. Finding the Shortcomings"
-                content={`At the end of Chapter 2, we ran our existing analysis suite on real data for the first time. This is the first time the system has been exposed to realistic holdings data within our fictional portfolio review setting, so it is exactly where earlier design shortcuts begin to show themselves.
+                content={`At the end of Chapter 2, we ran our existing analysis suite on real data for the first time. This is the first time the system has been exposed to realistic holdings data with enough scope to simulate an actual portfolio review, so this is exactly where earlier design shortcuts begin to show themselves.
 
-You have probably already noticed some shortcomings in the output layer. That is expected. The earlier versions were built around simple datasets and structural clarity, not polished portfolio reporting.`}
+You have probably already noticed some shortcomings in the output layer: That is expected. The earlier versions were built around simple datasets and structural clarity, not polished portfolio reporting.`}
             />
 
             <Text
@@ -341,7 +341,7 @@ You have probably already noticed some shortcomings in the output layer. That is
                 bullets={[
                     "There is no clear visual emphasis on underperformance versus the benchmark",
                     "Our report contains a lot of volatility information which is not captured in this chart",
-                    "Individual fund performance does not reflect our portfolio and its current weightings",
+                    "Individual fund performance does not reflect a portfolio and its current weightings",
                 ]}
             />
 
@@ -845,7 +845,7 @@ from reporting.charts import (
             />
 
             <Text
-                content={`The difference from the MVP is not that the core calculations changed. The improvement is that the tool now presents the same analysis in a way that is much easier to interpret, which is often what matters most once a workflow stops being purely academic.`}
+                content={`The difference from the MVP is not that the core calculations changed: The improvement is that the tool now presents the same analysis in a way that is much easier to interpret, which is often what matters most once a workflow stops being purely academic.`}
             />
 
             <Text
