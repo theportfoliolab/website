@@ -4,6 +4,7 @@ import "@fontsource/merriweather/700.css"
 import "@fontsource/merriweather/300.css"
 
 import Home from "./pages/Home"
+import Browse from "./pages/Browse"
 import About from "./pages/About"
 import Articles from "./pages/Articles"
 import Tutorials from "./pages/Tutorials"
@@ -21,14 +22,13 @@ function App() {
             <ScrollToTop />
             <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/browse" element={<Browse />} />
 
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
 
-                <Route path="/articles" element={<Articles />} />
                 <Route path="/articles/:slug" element={<Articles />} />
 
-                <Route path="/tutorials" element={<Tutorials />} />
                 <Route path="/tutorials/:slug" element={<Tutorials />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>

@@ -14,9 +14,14 @@ export const meta: PostMeta = {
     description:
         "Using the improved real data workflow to evaluate an imaginary portfolio mandate and test a rebalance scenario.",
     date: "2026-04-07",
-    tags: ["python", "finance", "portfolio analysis", "pandas", "yfinance"],
+    tags: ["finance", "python", "analysis", "pandas"],
     type: "tutorial",
     slug: "fund-manager-performance-analysis-tool-python-part-4",
+    seriesId: "fund-performance-analysis-workflow",
+    seriesTitle: "Fund Manager Performance Analysis Tool",
+    seriesDescription:
+        "Build the workflow from core metrics through to real data, portfolio review, and rebalance evaluation.",
+    homepagePriority: 2,
 }
 
 export default function Tutorial() {

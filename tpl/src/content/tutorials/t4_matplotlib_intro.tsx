@@ -19,10 +19,15 @@ export const meta: PostMeta = {
     title: "Introduction to Matplotlib (Python Tutorial)",
     description: "A practical guide to creating clean 2D charts from scratch.",
     date: "2026-03-23",
-    tags: ["python", "matplotlib", "numpy", "data visualisation"],
+    tags: ["python", "matplotlib", "data"],
     type: "tutorial",
     slug: "introduction-to-matplotlib-python-tutorial",
     nextInSeriesSlug: "symbolic-encoding-financial-time-series",
+    seriesId: "matplotlib-charting-series",
+    seriesEntry: true,
+    seriesTitle: "Matplotlib Charting Series",
+    seriesDescription:
+        "A practical series on building charts in matplotlib, from the basic plotting workflow through to reusable chart templates.",
 }
 
 export default function Tutorial() {

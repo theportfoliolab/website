@@ -14,10 +14,14 @@ export const meta: PostMeta = {
     title: "Matplotlib Axis Control and Reusable Chart Templates",
     description: "A practical follow up to matplotlib basics, covering axis control, advanced tick formatting, and reusable plotting structure.",
     date: "2026-03-27",
-    tags: ["python", "matplotlib", "numpy", "data visualisation"],
+    tags: ["python", "matplotlib", "data"],
     type: "tutorial",
     slug: "matplotlib-axis-control-and-chart-templates",
     nextInSeriesSlug: "introduction-to-matplotlib-python-tutorial",
+    seriesId: "matplotlib-charting-series",
+    seriesTitle: "Matplotlib Charting Series",
+    seriesDescription:
+        "A practical series on building charts in matplotlib, from the basic plotting workflow through to reusable chart templates.",
 }
 
 export default function Tutorial() {

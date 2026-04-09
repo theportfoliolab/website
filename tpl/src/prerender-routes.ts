@@ -32,21 +32,15 @@ const staticRoutes: PrerenderRoute[] = [
             "Learn about The Portfolio Lab, its focus on quantitative finance, programming, and practical analysis.",
     }),
     withCanonical({
+        path: "/browse",
+        title: `Browse | ${siteName}`,
+        description:
+            "Search and filter articles and tutorials across finance, Python, data analysis, and side projects.",
+    }),
+    withCanonical({
         path: "/contact",
         title: `Contact | ${siteName}`,
         description: "Get in touch with The Portfolio Lab.",
-    }),
-    withCanonical({
-        path: "/articles",
-        title: `Articles | ${siteName}`,
-        description:
-            "Browse articles on quantitative finance, markets, algorithms, time series analysis, and Python.",
-    }),
-    withCanonical({
-        path: "/tutorials",
-        title: `Tutorials | ${siteName}`,
-        description:
-            "Browse Python tutorials on data analysis, pandas, regex, and practical programming workflows.",
     }),
 ]
 

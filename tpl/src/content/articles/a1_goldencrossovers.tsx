@@ -13,7 +13,7 @@ export const meta: PostMeta = {
     description:
         "A 10-year comparison of the Golden Cross trading strategy versus buy and hold across BHP, Apple, and Bitcoin.",
     date: "2025-02-10",
-    tags: ["algorithms", "python", "portfolio management", "technical analysis"],
+    tags: ["finance", "python", "analysis", "algorithms"],
     type: "article",
     slug: "golden-cross-vs-buy-and-hold",
     nextInSeriesSlug: "python-csv-and-pandas-dataframes",

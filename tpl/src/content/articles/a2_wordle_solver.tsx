@@ -10,10 +10,12 @@ export const meta: PostMeta = {
     description:
         "An exploratory Wordle solver built with greedy heuristics, information gain, and dynamic programming.",
     date: "2025-12-28",
-    tags: ["algorithms", "python", "dynamic programming", "information theory", "fun", "off topic"],
+    tags: ["algorithms", "python", "projects", "off topic"],
     type: "article",
     slug: "wordle-solver-greedy-dynamic-programming",
     nextInSeriesSlug: "golden-cross-vs-buy-and-hold",
+    homepageClass: "off-topic",
+    homepagePriority: 1,
 }
 
 export default function Article() {

@@ -13,10 +13,15 @@ export const meta: PostMeta = {
     description:
         "Bringing a multi fund performance analysis system into the real world with yfinance, weighted portfolio views, and improved reporting.",
     date: "2026-04-03",
-    tags: ["python", "finance", "portfolio analysis", "pandas", "yfinance"],
+    tags: ["finance", "python", "analysis", "pandas"],
     type: "tutorial",
     slug: "fund-manager-performance-analysis-tool-python-part-3",
     nextInSeriesSlug: "fund-manager-performance-analysis-tool-python-part-4",
+    seriesId: "fund-performance-analysis-workflow",
+    seriesTitle: "Fund Manager Performance Analysis Tool",
+    seriesDescription:
+        "Build the workflow from core metrics through to real data, portfolio review, and rebalance evaluation.",
+    homepagePriority: 1,
 }
 
 export default function Tutorial() {

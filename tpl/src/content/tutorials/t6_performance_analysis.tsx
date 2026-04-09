@@ -10,10 +10,16 @@ export const meta: PostMeta = {
     description:
         "A practical tutorial on building a performance analysis pipeline for fund managers, including data alignment, metrics, summaries, and reporting charts.",
     date: "2026-04-01",
-    tags: ["python", "finance", "pandas", "matplotlib", "performance analysis"],
+    tags: ["finance", "python", "analysis", "pandas", "matplotlib"],
     type: "tutorial",
     slug: "fund-manager-performance-analysis-tool-python",
     nextInSeriesSlug: "fund-manager-performance-analysis-tool-python-part-2",
+    seriesId: "fund-performance-analysis-workflow",
+    seriesEntry: true,
+    seriesTitle: "Fund Manager Performance Analysis Tool",
+    seriesDescription:
+        "Build the workflow from core metrics through to real data, portfolio review, and rebalance evaluation.",
+    homepagePriority: 2,
 }
 
 export default function Tutorial() {

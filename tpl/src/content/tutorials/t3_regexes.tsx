@@ -11,10 +11,15 @@ export const meta: PostMeta = {
     description:
         "A practical introduction to regular expressions in Python, covering syntax, matching, grouping, quantifiers, and example code.",
     date: "2026-02-10",
-    tags: ["python", "analysis", "regex"],
+    tags: ["python", "regex", "analysis"],
     type: "tutorial",
     slug: "python-regular-expressions-introduction",
     nextInSeriesSlug: "symbolic-encoding-financial-time-series",
+    seriesId: "regex-and-symbolic-analysis",
+    seriesEntry: true,
+    seriesTitle: "Regex and Time Series Encoding",
+    seriesDescription:
+        "A small sequence that starts with practical regex in Python, then applies that pattern thinking to symbolic financial time series analysis.",
 }
 
 // ─────────────────────────────────────────────

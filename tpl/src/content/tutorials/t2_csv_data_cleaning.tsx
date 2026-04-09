@@ -7,10 +7,14 @@ export const meta: PostMeta = {
     description:
         "A practical pandas tutorial for cleaning financial time series, aligning dates, normalising frequency, and preparing data for analysis.",
     date: "2026-03-31",
-    tags: ["python", "pandas", "data cleaning", "finance"],
+    tags: ["python", "data", "pandas", "finance"],
     type: "tutorial",
     slug: "clean-financial-data-in-pandas",
     nextInSeriesSlug: "symbolic-encoding-financial-time-series",
+    seriesId: "python-and-pandas-introduction",
+    seriesTitle: "Introduction to Python and Pandas",
+    seriesDescription:
+        "A beginner-friendly starting sequence for loading, inspecting, and cleaning tabular data in Python with pandas.",
 }
 
 export default function Tutorial() {

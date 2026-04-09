@@ -11,7 +11,10 @@ import { NavLink } from "react-router-dom";
 import { useTheme } from "@/lib/theme";
 import { formatIsoDate } from "@/lib/date";
 
-const NAV_PAGES = ["Articles", "Tutorials", "About"] as const;
+const NAV_PAGES = [
+    { label: "Browse", href: "/browse" },
+    { label: "About", href: "/about" },
+] as const;
 
 export function Header() {
     const { toggleTheme } = useTheme()
@@ -49,22 +52,22 @@ export function Header() {
             "
                     >
                         {NAV_PAGES.map((page) => (
-                            <NavigationMenuItem key={page} className="flex-1 md:flex-none">
+                            <NavigationMenuItem key={page.href} className="flex-1 md:flex-none">
                                 <NavigationMenuLink
                                     asChild
                                     className={cn(
                                         navigationMenuTriggerStyle(),
-                                        "w-full md:w-auto px-sm py-xs md:px-md md:py-sm"
+                                        "w-full md:w-auto min-h-12 px-md py-sm md:px-lg md:py-sm text-center whitespace-normal leading-snug"
                                     )}
                                 >
                                     <NavLink
-                                        to={`/${page.toLowerCase()}`}
+                                        to={page.href}
                                         className="
                       text-primary-light-fg dark:text-primary-dark-fg
                       hover:text-primary-light-accent dark:hover:text-primary-dark-accent
                     "
                                     >
-                                        {page}
+                                        {page.label}
                                     </NavLink>
                                 </NavigationMenuLink>
                             </NavigationMenuItem>

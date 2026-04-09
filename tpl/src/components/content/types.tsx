@@ -6,6 +6,12 @@ export interface PostMeta {
     type: "article" | "tutorial"
     slug: string
     nextInSeriesSlug?: string
+    seriesId?: string
+    seriesEntry?: boolean
+    seriesTitle?: string
+    seriesDescription?: string
+    homepageClass?: "off-topic"
+    homepagePriority?: number
 }
 
 export interface Post {

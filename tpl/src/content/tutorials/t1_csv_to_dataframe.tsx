@@ -9,10 +9,15 @@ export const meta: PostMeta = {
     description:
         "A beginner-friendly Python tutorial on CSV files and pandas DataFrames, including loading, exploring, modifying, and saving data.",
     date: "2025-02-12",
-    tags: ["python", "pandas", "data cleaning", "csv"],
+    tags: ["python", "data", "pandas"],
     type: "tutorial",
     slug: "python-csv-and-pandas-dataframes",
     nextInSeriesSlug: "clean-financial-data-in-pandas",
+    seriesId: "python-and-pandas-introduction",
+    seriesEntry: true,
+    seriesTitle: "Introduction to Python and Pandas",
+    seriesDescription:
+        "A beginner-friendly starting sequence for loading, inspecting, and cleaning tabular data in Python with pandas.",
 }
 
 // ─────────────────────────────────────────────

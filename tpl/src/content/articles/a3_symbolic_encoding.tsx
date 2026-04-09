@@ -7,10 +7,14 @@ export const meta: PostMeta = {
     description:
         "A practical guide to symbolic encoding for financial time series using QSE, SAX, and volatility regime encoding.",
     date: "2026-03-10",
-    tags: ["python", "finance", "analysis", "time series", "regex"],
+    tags: ["finance", "python", "analysis", "regex"],
     type: "article",
     slug: "symbolic-encoding-financial-time-series",
     nextInSeriesSlug: "python-regular-expressions-introduction",
+    seriesId: "regex-and-symbolic-analysis",
+    seriesTitle: "Regex and Time Series Encoding",
+    seriesDescription:
+        "A small sequence that starts with practical regex in Python, then applies that pattern thinking to symbolic financial time series analysis.",
 }
 
 export default function Article() {

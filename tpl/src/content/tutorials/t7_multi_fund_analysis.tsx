@@ -8,10 +8,15 @@ export const meta: PostMeta = {
     description:
         "A direct follow on from Part 1, extending the fund performance analysis workflow into a multi fund comparison, ranking, monitoring, and reporting system.",
     date: "2026-04-02",
-    tags: ["python", "finance", "pandas", "performance analysis"],
+    tags: ["finance", "python", "analysis", "pandas"],
     type: "tutorial",
     slug: "fund-manager-performance-analysis-tool-python-part-2",
     nextInSeriesSlug: "fund-manager-performance-analysis-tool-python-part-3",
+    seriesId: "fund-performance-analysis-workflow",
+    seriesTitle: "Fund Manager Performance Analysis Tool",
+    seriesDescription:
+        "Build the workflow from core metrics through to real data, portfolio review, and rebalance evaluation.",
+    homepagePriority: 1,
 }
 
 export default function Tutorial() {
