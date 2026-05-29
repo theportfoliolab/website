@@ -241,44 +241,19 @@ export default function Browse() {
                                                 </NavLink>
                                             </h3>
 
-                                            <CardDescription>{series.description}</CardDescription>
+                                            <p className="text-sm opacity-80">
+                                                {series.description}
+                                            </p>
 
-                                            <div className="flex flex-wrap gap-xs">
-                                                {series.entryPost.tags.map((currentTag) => (
-                                                    <TagPill
-                                                        key={`${series.id}-${currentTag}`}
-                                                        to={getBrowsePath({
-                                                            tag: currentTag,
-                                                            type: series.entryPost.type,
-                                                        })}
-                                                    >
-                                                        {currentTag}
-                                                    </TagPill>
-                                                ))}
-                                            </div>
-
-                                            <div className="mt-sm flex flex-col gap-sm border-t border-border/40 pt-md">
+                                            <div className="mt-xs flex flex-wrap gap-xs">
                                                 {series.posts.map((post, index) => (
-                                                    <div
+                                                    <NavLink
                                                         key={post.slug}
-                                                        className="flex flex-col gap-xs md:flex-row md:items-baseline md:justify-between"
+                                                        to={post.href}
+                                                        className="rounded-full border border-border px-sm py-xs text-tiny no-underline hover:bg-secondary"
                                                     >
-                                                        <div className="min-w-0">
-                                                            <p className="text-tiny opacity-70">
-                                                                Part {index + 1}
-                                                            </p>
-                                                            <NavLink
-                                                                to={post.href}
-                                                                className="text-body no-underline hover:text-primary"
-                                                            >
-                                                                {post.title}
-                                                            </NavLink>
-                                                        </div>
-
-                                                        <p className="text-tiny opacity-70 whitespace-nowrap">
-                                                            {formatIsoDate(post.date)}
-                                                        </p>
-                                                    </div>
+                                                        {index + 1}. {post.title}
+                                                    </NavLink>
                                                 ))}
                                             </div>
                                         </div>
@@ -289,7 +264,7 @@ export default function Browse() {
                             <Card className="p-6">
                                 <h3 className="text-subheading font-subheading">No matching series</h3>
                                 <CardDescription className="mt-sm">
-                                    Try a broader search or clear some filters to see more series.
+                                    Try clearing the filters to see the available series.
                                 </CardDescription>
                             </Card>
                         )}
