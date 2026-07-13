@@ -3,3 +3,5 @@ node_modules/
 tpl/dist-ssr/
 .DS_Store
 tpl/src/content/articles/a4_motif_discovery_series_intro/motif_discovery_project/
+__pycache__/
+*.pyc
