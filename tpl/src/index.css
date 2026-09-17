@@ -20,7 +20,7 @@
     /* ---- radius tokens -> rounded-* ---- */
     --radius-sm: 6px;
     --radius-md: 12px;
-    --radius-lg: 24px;
+    --radius-lg: 16px;
 
     /* ---- colors (light/dark variants as utilities) ---- */
     --color-primary-light-bg: #FDFBF7;

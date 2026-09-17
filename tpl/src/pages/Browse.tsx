@@ -250,7 +250,7 @@ export default function Browse() {
                                                     <NavLink
                                                         key={post.slug}
                                                         to={post.href}
-                                                        className="rounded-full border border-border px-sm py-xs text-tiny no-underline hover:bg-secondary"
+                                                        className="rounded-sm border border-border px-sm py-xs text-tiny no-underline hover:bg-secondary"
                                                     >
                                                         {index + 1}. {post.title}
                                                     </NavLink>

@@ -23,7 +23,7 @@ export const meta: PostMeta = {
     description:
         "A simplified engine and drivetrain model for testing fuel efficient driving strategies in a manual BMW E36 328i.",
     date: "2026-05-20",
-    tags: ["off topic", "python", "modelling", "cars", "aW1nalysis"],
+    tags: ["off topic", "python", "modelling", "cars", "analysis"],
     type: "article",
     slug: "fuel-efficient-driving",
 }

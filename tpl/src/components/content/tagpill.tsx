@@ -12,7 +12,7 @@ interface TagPillProps {
 const tagPillClassName = `
     inline-flex items-center
     px-sm py-xs
-    rounded-full
+    rounded-sm
     text-tiny
     bg-muted
     text-muted-foreground
